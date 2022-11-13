@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="7 2"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="#FF34CDF5"/>
+        <Setter Property="Background" Value="#FF111CBB"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Comic sans MS"/>
+        <Setter Property="BorderBrush" Value="#FF17EF4C"/>
+        <Setter Property="IsTabStop" Value="False"/>
+    </Style>
+</ResourceDictionary>

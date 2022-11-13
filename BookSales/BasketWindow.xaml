@@ -1,0 +1,72 @@
+﻿<Window x:Class="BookSales.BasketWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookSales"
+        mc:Ignorable="d"
+        Title="BasketWindow"
+        MinHeight="450"
+        Height="500" 
+        Background="#FF272727"
+        MinWidth="800"
+        Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock 
+                TextAlignment="Center"
+                Text="Наименование" 
+                Width="300"/>
+            <TextBlock 
+                TextAlignment="Center"
+                Text="Количество" 
+                Width="200"/>
+        </StackPanel>
+        <ItemsControl 
+            x:Name="BasketViewList"
+            Grid.Row="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            TextAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="300"
+                            MaxWidth="300"
+                            TextWrapping="Wrap"
+                            Text="{Binding Book.name}"/>
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            TextAlignment="Center"
+                            Width="75"
+                            MaxWidth="75"
+                            Text="{Binding Count}"/>
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Text="Введите количество: "/>
+                        <TextBox
+                            VerticalAlignment="Center"
+                            Width="50"
+                            Text="1"
+                            x:Name="Count"/>
+                        <Button
+                            Margin="10 0 5 0"
+                            Width="40"
+                            Content="-"
+                            Click="RemoveBook_Click"
+                            CommandParameter="{Binding Text, ElementName=Count}"/>
+                        <Button
+                            Width="40"
+                            Content="+"
+                            Click="AddBook_Click"
+                            CommandParameter="{Binding Text, ElementName=Count}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
