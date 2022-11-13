@@ -119,6 +119,9 @@
     <Compile Include="Pages\MainPages\ClientViewPage.xaml.cs">
       <DependentUpon>ClientViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewUsersPage.xaml.cs">
+      <DependentUpon>ViewUsersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlaceHolder.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPages\ClientViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +236,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Nope.png" />
     <Resource Include="Images\LibraryIcon.png" />
     <Resource Include="Images\BookSalesMain.jpg" />
     <Resource Include="Images\BookSalesAuth.jpg" />

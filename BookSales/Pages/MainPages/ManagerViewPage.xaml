@@ -7,7 +7,7 @@
       mc:Ignorable="d">
     <Grid>
         <Button
-            Content="Посмотреть список книг"
-            Click="ViewBooksBtn_Click"/>
+            Content="Посмотреть список пользователей"
+            Click="ViewUsersBtn_Click"/>
     </Grid>
 </Page>

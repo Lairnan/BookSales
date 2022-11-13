@@ -38,6 +38,7 @@
         </Setter>
     </Style>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MainInputStyle}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Margin" Value="0 5"/>
     </Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource InputBoxStyle}">

@@ -6,15 +6,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ItemsControl}">
-                    <Grid>
-                        <TextBlock
-                            Margin="15 5"
-                            Text="Список пуст"
-                            Visibility="{Binding Path=Items, 
-                                                 RelativeSource={RelativeSource TemplatedParent}, 
-                                                 Converter={StaticResource AnyItemsToVisibilityConverter}}"/>
-                        <ItemsPresenter/>
-                    </Grid>
+                    <ScrollViewer 
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Disabled">
+                        <Grid>
+                            <TextBlock
+                                Margin="15 5"
+                                Text="Список пуст"
+                                Visibility="{Binding Path=Items, 
+                                                     RelativeSource={RelativeSource TemplatedParent}, 
+                                                     Converter={StaticResource AnyItemsToVisibilityConverter}}"/>
+                            <ItemsPresenter/>
+                        </Grid>
+                    </ScrollViewer>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

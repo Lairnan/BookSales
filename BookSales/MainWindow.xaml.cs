@@ -54,6 +54,11 @@ namespace BookSales
                     this.Close();
                     break;
             }
+
+            if(AuthStaticUser.AuthUser != null && AuthStaticUser.AuthUser.Positions.id > 1) 
+            {
+                ViewBooks.Visibility = Visibility.Visible;
+            }
         }
 
         public void DrawAuthUser(Users authUser)
@@ -100,7 +105,16 @@ namespace BookSales
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (MainFrame.Content is ClientViewPage &&
+                AuthStaticUser.AuthUser != null && AuthStaticUser.AuthUser.Positions.id > 1)
+                ViewBooks.Visibility = Visibility.Visible;
             MainFrame.GoBack();
+        }
+
+        private void ViewBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ClientViewPage());
+            ViewBooks.Visibility = Visibility.Collapsed;
         }
     }
 }

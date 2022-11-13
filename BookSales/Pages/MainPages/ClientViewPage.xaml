@@ -34,8 +34,7 @@
                         VerticalAlignment="Center">
                         <TextBlock 
                             Text="{Binding name}" 
-                            FontSize="18" 
-                            TextWrapping="Wrap"/>
+                            FontSize="18"/>
                         <TextBox x:Name="CountAdd" Text="1"/>
                         <Button
                             Content="Добавить"

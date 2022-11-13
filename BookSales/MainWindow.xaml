@@ -81,24 +81,33 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel
-            x:Name="TopPanelBlock"
-            Margin="5 5"
-            Orientation="Horizontal">
+            Margin="5 5">
+            <StackPanel
+                x:Name="TopPanelBlock"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="BackBtn"
+                    Content="Назад"
+                    IsEnabled="False"
+                    Padding="15 5"
+                    Click="BackBtn_Click"/>
+                <Button
+                    x:Name="ExitBtn"
+                    Content="Выйти"
+                    Margin="5 0"
+                    Padding="15 5" 
+                    Click="ExitBtn_Click"/>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    x:Name="AuthUser"/>
+            </StackPanel>
             <Button
-                x:Name="BackBtn"
-                Content="Назад"
-                IsEnabled="False"
-                Padding="15 5"
-                Click="BackBtn_Click"/>
-            <Button
-                x:Name="ExitBtn"
-                Content="Выйти"
-                Margin="5 0"
-                Padding="15 5" 
-                Click="ExitBtn_Click"/>
-            <TextBlock
-                VerticalAlignment="Center"
-                x:Name="AuthUser"/>
+                x:Name="ViewBooks"
+                Content="Перейти к выбору книг"
+                Click="ViewBookBtn_Click"
+                HorizontalAlignment="Left"
+                Margin="0 5"
+                Visibility="Collapsed"/>
         </StackPanel>
         <Frame
             Grid.Row="1"

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookSales.Pages.MainPages.ViewsPages;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BookSales.Pages.MainPages
 {
@@ -25,9 +14,9 @@ namespace BookSales.Pages.MainPages
             InitializeComponent();
         }
 
-        private void ViewBooksBtn_Click(object sender, RoutedEventArgs e)
+        private void ViewUsersBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.MainFrame.Navigate(new ClientViewPage());
+            MainWindow.MainFrame.Navigate(new ViewUsersPage());
         }
     }
 }
