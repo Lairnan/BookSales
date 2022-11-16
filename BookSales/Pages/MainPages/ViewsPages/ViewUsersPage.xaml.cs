@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.Entity;
 using System.Collections.Generic;
+using BookSales.Context;
 
 namespace BookSales.Pages.MainPages.ViewsPages
 {

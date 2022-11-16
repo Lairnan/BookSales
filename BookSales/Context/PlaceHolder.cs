@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderConsist
+    public partial class PlaceHolder
     {
         public int id { get; set; }
-        public int idOrder { get; set; }
         public int idBook { get; set; }
-        public int amount { get; set; }
+        public int idStorage { get; set; }
+        public int stock { get; set; }
     
         public virtual Books Books { get; set; }
-        public virtual Orders Orders { get; set; }
+        public virtual Storage Storage { get; set; }
     }
 }

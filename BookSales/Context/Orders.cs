@@ -7,19 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PlaceHolder
+    public partial class Orders
     {
-        public int id { get; set; }
-        public int idBook { get; set; }
-        public int idStorage { get; set; }
-        public int stock { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Orders()
+        {
+            this.OrderConsist = new HashSet<OrderConsist>();
+        }
     
-        public virtual Books Books { get; set; }
-        public virtual Storage Storage { get; set; }
+        public int id { get; set; }
+        public int idUser { get; set; }
+        public System.DateTime dateOrder { get; set; }
+        public bool paid { get; set; }
+        public bool performed { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderConsist> OrderConsist { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

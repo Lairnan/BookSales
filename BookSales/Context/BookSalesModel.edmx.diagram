@@ -4,28 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2b31f2ec05a94271a4468ee72c120791" Name="Diagram1">
+      <Diagram DiagramId="7e7310f9ff07428aba573a8f6d1ffbc8" Name="Diagram1">
         <EntityTypeShape EntityType="BookSalesModel.Authors" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Books" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Categories" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Genres" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.OrderConsist" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookSalesModel.Orders" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookSalesModel.Orders" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.PlaceHolder" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Positions" Width="1.5" PointX="1.5" PointY="20" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Publishers" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Storage" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BookSalesModel.Users" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
-        <AssociationConnector Association="BookSalesModel.FK__Books__authorId__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__Books__categoryI__32E0915F" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__Books__genreId__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__Books__publisher__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__OrderCons__idBoo__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__PlaceHold__idBoo__38996AB5" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__OrderCons__idOrd__45F365D3" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__Orders__idUser__4316F928" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__PlaceHold__idSto__398D8EEE" ManuallyRouted="false" />
-        <AssociationConnector Association="BookSalesModel.FK__Users__positionI__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Books__authorId__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Books__categoryI__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Books__genreId__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Books__publisher__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__OrderCons__idBoo__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__PlaceHold__idBoo__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__OrderCons__idOrd__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Orders__idUser__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__PlaceHold__idSto__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="BookSalesModel.FK__Users__positionI__534D60F1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -7,25 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Orders
+    public partial class Categories
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Orders()
+        public Categories()
         {
-            this.OrderConsist = new HashSet<OrderConsist>();
+            this.Books = new HashSet<Books>();
         }
     
         public int id { get; set; }
-        public int idUser { get; set; }
-        public System.DateTime dateOrder { get; set; }
+        public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderConsist> OrderConsist { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual ICollection<Books> Books { get; set; }
     }
 }

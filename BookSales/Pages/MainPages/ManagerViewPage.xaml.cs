@@ -18,5 +18,10 @@ namespace BookSales.Pages.MainPages
         {
             MainWindow.MainFrame.Navigate(new ViewUsersPage());
         }
+
+        private void ViewOredersBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.MainFrame.Navigate(new ViewOrdersPage());
+        }
     }
 }

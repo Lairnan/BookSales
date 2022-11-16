@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;

@@ -7,24 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Storage
+    public partial class Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Storage()
+        public Users()
         {
-            this.PlaceHolder = new HashSet<PlaceHolder>();
+            this.Orders = new HashSet<Orders>();
         }
     
         public int id { get; set; }
+        public string surname { get; set; }
         public string name { get; set; }
-        public string address { get; set; }
+        public string patronymic { get; set; }
+        public System.DateTime dateOfBirth { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
+        public int positionId { get; set; }
+        public byte[] image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlaceHolder> PlaceHolder { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual Positions Positions { get; set; }
     }
 }

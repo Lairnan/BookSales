@@ -5,9 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookSales.Pages.MainPages"
       mc:Ignorable="d">
-    <Grid>
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Margin" Value="0 5"/>
+            </Style>
+        </StackPanel.Resources>
         <Button
             Content="Посмотреть список пользователей"
             Click="ViewUsersBtn_Click"/>
-    </Grid>
+        <Button
+            Content="Посмотреть список заказов"
+            Click="ViewOredersBtn_Click"/>
+    </StackPanel>
 </Page>

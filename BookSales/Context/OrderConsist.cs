@@ -7,23 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BookSales
+namespace BookSales.Context
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Genres
+    public partial class OrderConsist
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genres()
-        {
-            this.Books = new HashSet<Books>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int idOrder { get; set; }
+        public int idBook { get; set; }
+        public int amount { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Books> Books { get; set; }
+        public virtual Books Books { get; set; }
+        public virtual Orders Orders { get; set; }
     }
 }
