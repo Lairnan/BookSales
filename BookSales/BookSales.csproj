@@ -72,8 +72,11 @@
     <Compile Include="BasketWindow.xaml.cs">
       <DependentUpon>BasketWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BookingsCosist.cs" />
+    <Compile Include="BookingsConsist.cs" />
     <Compile Include="AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="ConfirmOrderWindow.xaml.cs">
+      <DependentUpon>ConfirmOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Context\Authors.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
     <Compile Include="WindowMoves.cs" />
     <Page Include="AuthWindow.xaml" />
     <Page Include="BasketWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfirmOrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

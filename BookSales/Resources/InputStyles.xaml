@@ -52,12 +52,13 @@
     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource InputBoxStyle}">
     </Style>
     <Style TargetType="{x:Type DatePickerTextBox}" BasedOn="{StaticResource MainInputStyle}">
+        <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
                     <Border 
                         CornerRadius="5"
-                        BorderBrush="#0AD2CF" 
+                        BorderBrush="#0AD2CF"
                         BorderThickness="1">
                         <ScrollViewer x:Name="PART_ContentHost"/>
                     </Border>

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using BookSales.Context;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +17,19 @@ namespace BookSales
         {
             InitializeComponent();
             BasketViewList.ItemsSource = BasketOrder.BasketOrders;
+
+            UpdateOrder();
+        }
+
+        private decimal GetPrice()
+        {
+            decimal price = 0;
+            foreach (var item in BasketOrder.BasketOrders)
+            {
+                price += item.Book.retailPrice * item.Count;
+            }
+
+            return price;
         }
 
         private void RemoveBook_Click(object sender, RoutedEventArgs e)
@@ -24,7 +40,8 @@ namespace BookSales
             int countInt;
             if (string.IsNullOrWhiteSpace(count) || !int.TryParse(count, out countInt)) countInt = 1;
             BasketOrder.Remove(basket.Book, countInt);
-            BasketViewList.Items.Refresh();
+            UpdateOrder();
+
             if (BasketViewList.Items.Count > 0) return;
             var styleTemplate = BasketViewList.Style;
             BasketViewList.Style = null;
@@ -39,7 +56,59 @@ namespace BookSales
             int countInt;
             if (string.IsNullOrWhiteSpace(count) || !int.TryParse(count, out countInt)) countInt = 1;
             BasketOrder.Add(basket.Book, countInt, basket.Stock);
+            UpdateOrder();
+        }
+
+        private void UpdateOrder()
+        {
             BasketViewList.Items.Refresh();
+            if (BasketOrder.BasketOrders.Any()) OrderPrice.Text = $"Итоговая цена является: {GetPrice():0.00} руб.";
+            else OrderPrice.Text = string.Empty;
+
+            OrderBtn.IsEnabled = BasketOrder.BasketOrders.Any();
+        }
+
+        private async void OrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OrderBtn.IsEnabled = false;
+            var confirmWindow = new ConfirmOrderWindow();
+            if(confirmWindow.ShowDialog() == true)
+            {
+                using (var db = new BookSalesEntities())
+                {
+                    var order = GetOrder();
+
+                    db.Orders.Add(order);
+
+                    foreach (var basket in BasketOrder.BasketOrders)
+                    {
+                        var orderConsist = new OrderConsist
+                        {
+                            idOrder = order.id,
+                            idBook = basket.Book.id,
+                            amount = basket.Count
+                        };
+
+                        db.OrderConsist.Add(orderConsist);
+                    }
+                    await db.SaveChangesAsync();
+                    MessageBox.Show("Заказ успешно сформирован");
+                    BasketOrder.BasketOrders.Clear();
+                    UpdateOrder();
+                }
+            }
+            OrderBtn.IsEnabled = true;
+        }
+
+        private Orders GetOrder()
+        {
+            return new Orders
+            {
+                idUser = AuthStaticUser.AuthUser.id,
+                dateOrder = DateTime.Now,
+                paid = true,
+                performed = false
+            }; ;
         }
     }
 }

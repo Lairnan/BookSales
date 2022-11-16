@@ -8,8 +8,8 @@ namespace BookSales
     internal class BasketOrder
     {
         public Books Book { get; set; }
-        public int Count { get; set; }
-        public int Stock { get; set; }
+        public int Count { get; private set; }
+        public int Stock { get; private set; }
 
         public static List<BasketOrder> BasketOrders = new List<BasketOrder>();
 

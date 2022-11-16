@@ -99,7 +99,7 @@ namespace BookSales.Pages.AuthPages
                 {
                     db.Users.Add(user);
                     await db.SaveChangesAsync();
-                    MainWindow.MainFrame.Navigate(new Authorization());
+                    AuthWindow.AuthFrame.Navigate(new Authorization());
                     return true;
                 }
                 catch (Exception ex)

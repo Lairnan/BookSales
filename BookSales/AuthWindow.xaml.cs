@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using BookSales.Context;
 using BookSales.Pages.AuthPages;
 
 namespace BookSales
@@ -25,7 +28,7 @@ namespace BookSales
 			this.MouseMove += windowMoves.DragMoveMouseMove;
 			this.MouseLeftButtonDown += windowMoves.DragMoveLeftBtnDown;
 			this.MouseLeftButtonUp += windowMoves.DragMoveLeftBtnUp;
-		}
+        }
 
 		internal static Frame AuthFrame { get; set; }
 
