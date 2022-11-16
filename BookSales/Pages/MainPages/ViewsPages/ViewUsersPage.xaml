@@ -3,14 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BookSales.Pages.MainPages.ViewsPages"
+      xmlns:local="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal"></StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Поиск: "/>
+            <local:PlaceholderTextBox Placeholder="Введите текст" Width="150"/>
+        </StackPanel>
         <ItemsControl
             x:Name="UsersViewList"
             Grid.Row="1"
@@ -22,8 +25,13 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border CornerRadius="15">
+                    <Border 
+                        Margin="5"
+                        CornerRadius="15"
+                        BorderThickness="3"
+                        BorderBrush="#FF423A14">
                         <Grid
+                            Margin="5"
                             Width="400"
                             Height="200">
                             <Grid.ColumnDefinitions>

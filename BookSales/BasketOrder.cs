@@ -20,9 +20,9 @@ namespace BookSales
                 MessageBox.Show("Такого количества на складе нет");
                 return;
             }
-            if (!BasketOrders.Select(s => s.Book).Contains(book))
+            if (!BasketOrders.Where(s => s.Book.id == book.id).Any())
                 BasketOrders.Add(new BasketOrder { Book = book, Stock = stock});
-            var basket = BasketOrders.Single(s => s.Book == book);
+            var basket = BasketOrders.Single(s => s.Book.id == book.id);
             if (basket.Count >= stock)
             {
                 MessageBox.Show("Товара больше нет в наличии");

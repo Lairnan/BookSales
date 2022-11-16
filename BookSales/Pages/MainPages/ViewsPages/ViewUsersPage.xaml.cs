@@ -52,6 +52,5 @@ namespace BookSales.Pages.MainPages.ViewsPages
     public class UsersViewListClass : Users
     {
         public int Count { get; set; }
-        public Orders order { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace BookSales
                 {
                     case ClientViewPage vb when vb.BooksViewList.IsMouseOver:
                     case Authorization auth when auth.CaptchaRefresh.IsMouseOver:
+                    case Registration reg when reg.ImageBox.IsMouseOver:
                         return;
                 }
             }

@@ -251,5 +251,11 @@
       <LastGenOutput>BookSalesModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlaceholdeWPF\PlaceholderWPF.csproj">
+      <Project>{001eb607-383c-4cf1-8d6e-64dbf6e39d21}</Project>
+      <Name>PlaceholderWPF</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,15 +22,16 @@ namespace BookSales
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {
             BackBtn.IsEnabled = MainFrame.CanGoBack;
-            var windowMoves = new WindowMoves(this);
-            this.MouseMove += windowMoves.DragMoveMouseMove;
-            this.MouseLeftButtonDown += windowMoves.DragMoveLeftBtnDown;
-            this.MouseLeftButtonUp += windowMoves.DragMoveLeftBtnUp;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (AuthStaticUser.AuthUser != null) DrawAuthUser(AuthStaticUser.AuthUser);
+
+            var windowMoves = new WindowMoves(this);
+            this.MouseMove += windowMoves.DragMoveMouseMove;
+            this.MouseLeftButtonDown += windowMoves.DragMoveLeftBtnDown;
+            this.MouseLeftButtonUp += windowMoves.DragMoveLeftBtnUp;
 
             MainFrame = this.CurrentFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
