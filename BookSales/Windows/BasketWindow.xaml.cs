@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BookSales
+namespace BookSales.Windows
 {
     /// <summary>
     /// Логика взаимодействия для BasketWindow.xaml
@@ -17,19 +17,7 @@ namespace BookSales
         {
             InitializeComponent();
             BasketViewList.ItemsSource = BasketOrder.BasketOrders;
-
             UpdateOrder();
-        }
-
-        private decimal GetPrice()
-        {
-            decimal price = 0;
-            foreach (var item in BasketOrder.BasketOrders)
-            {
-                price += item.Book.retailPrice * item.Count;
-            }
-
-            return price;
         }
 
         private void RemoveBook_Click(object sender, RoutedEventArgs e)
@@ -62,7 +50,7 @@ namespace BookSales
         private void UpdateOrder()
         {
             BasketViewList.Items.Refresh();
-            if (BasketOrder.BasketOrders.Any()) OrderPrice.Text = $"Итоговая цена является: {GetPrice():0.00} руб.";
+            if (BasketOrder.BasketOrders.Any()) OrderPrice.Text = $"Итоговая цена является: {BasketOrder.BasketOrders.Sum(s => s.Book.retailPrice * s.Count):0.00} руб.";
             else OrderPrice.Text = string.Empty;
 
             OrderBtn.IsEnabled = BasketOrder.BasketOrders.Any();
@@ -94,6 +82,7 @@ namespace BookSales
                     await db.SaveChangesAsync();
                     MessageBox.Show("Заказ успешно сформирован");
                     BasketOrder.BasketOrders.Clear();
+                    this.Close();
                     UpdateOrder();
                 }
             }
@@ -108,7 +97,7 @@ namespace BookSales
                 dateOrder = DateTime.Now,
                 paid = true,
                 performed = false
-            }; ;
+            };
         }
     }
 }

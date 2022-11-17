@@ -1,4 +1,5 @@
 ﻿using BookSales.Pages.MainPages.ViewsPages;
+using BookSales.Windows;
 using System.Windows;
 using System.Windows.Controls;
 

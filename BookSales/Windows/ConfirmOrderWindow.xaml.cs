@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BookSales
+namespace BookSales.Windows
 {
     /// <summary>
     /// Логика взаимодействия для ConfirmOrderWindow.xaml

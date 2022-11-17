@@ -6,7 +6,7 @@ using System.Windows.Input;
 using BookSales.Context;
 using BookSales.Pages.AuthPages;
 
-namespace BookSales
+namespace BookSales.Windows
 {
 	public partial class AuthWindow : Window
 	{

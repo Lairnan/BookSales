@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Data.Entity;
 using BookSales.Context;
+using BookSales.Windows;
 
 namespace BookSales.Pages.AuthPages
 {

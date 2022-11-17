@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
-namespace BookSales
+namespace BookSales.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -23,6 +23,9 @@ namespace BookSales
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {
             BackBtn.IsEnabled = MainFrame.CanGoBack;
+
+            var frame = sender as Frame;
+            ViewStory.IsEnabled = !(frame.Content is StoryViewPage);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -53,7 +56,7 @@ namespace BookSales
                     break;
                 default:
                     MessageBox.Show("Данное окно не отработано");
-                    this.Close();
+                    this.Close(); 
                     break;
             }
 
@@ -117,6 +120,11 @@ namespace BookSales
         {
             MainFrame.Navigate(new ClientViewPage());
             ViewBooks.Visibility = Visibility.Collapsed;
+        }
+
+        private void ViewStoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new StoryViewPage());
         }
     }
 }

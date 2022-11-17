@@ -1,6 +1,7 @@
 ﻿using BookSales.Context;
 using System.Windows.Controls;
 using System.Linq;
+using System.Data.Entity;
 
 namespace BookSales.Pages.MainPages.ViewsPages
 {
@@ -14,7 +15,7 @@ namespace BookSales.Pages.MainPages.ViewsPages
             InitializeComponent();
             using (var db = new BookSalesEntities())
             {
-                OrdersViewList.ItemsSource = db.Orders.Select(s => new BookingsConsist
+                OrdersViewList.ItemsSource = db.Orders.Include(s => s.Users).Select(s => new BookingsConsist
                 {
                     Order = s
                 }).ToList();
