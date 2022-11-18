@@ -26,6 +26,7 @@ namespace BookSales.Windows
 
             var frame = sender as Frame;
             ViewStory.IsEnabled = !(frame.Content is StoryViewPage);
+            BasketBtn.Visibility = frame.Content is ClientViewPage ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -64,6 +65,11 @@ namespace BookSales.Windows
             {
                 ViewBooks.Visibility = Visibility.Visible;
             }
+        }
+
+        private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
+        {
+            new BasketWindow().ShowDialog();
         }
 
         public void DrawAuthUser(Users authUser)

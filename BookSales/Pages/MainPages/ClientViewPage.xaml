@@ -11,9 +11,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button
-            Content="Перейти в корзину"
-            Click="OpenBasketWindow_Click"/>
         <ItemsControl
             Grid.Row="1"
             Height="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"

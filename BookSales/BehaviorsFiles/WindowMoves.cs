@@ -91,7 +91,7 @@ namespace BookSales
             {
                 case WindowState.Normal:
                     _window.WindowState = WindowState.Maximized;
-                    _window.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+                    _window.MaxWidth = SystemParameters.FullPrimaryScreenWidth;
                     break;
                 case WindowState.Maximized:
                     _window.WindowState = WindowState.Normal;

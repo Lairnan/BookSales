@@ -35,14 +35,8 @@ namespace BookSales.Pages.MainPages
                     "Не удалось добавить товар в корзину",
                     MessageBoxButton.OKCancel, MessageBoxImage.Warning) != MessageBoxResult.OK) return;
 
-                // Open AuthWindow
-                var authWindow = new AuthWindow();
-                authWindow.IsDialog = true;
-                authWindow.ShowDialog();
-
-                // Check if user not log in
-                if (AuthStaticUser.AuthUser == null) return;
-
+                if (IsAuthNull()) return;
+                
                 // Draw auth user in top panel
                 Application.Current.Windows.OfType<MainWindow>().Single().DrawAuthUser(AuthStaticUser.AuthUser);
             }
@@ -61,9 +55,16 @@ namespace BookSales.Pages.MainPages
             BasketOrder.Add(book, countInt, placeHolder.stock);
         }
 
-        private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
+        private bool IsAuthNull()
         {
-            new BasketWindow().ShowDialog();
+            // Open AuthWindow
+            var authWindow = new AuthWindow();
+            authWindow.IsDialog = true;
+            authWindow.ShowDialog();
+
+            // Check if user not log in
+            return AuthStaticUser.AuthUser == null;
+
         }
     }
 }

@@ -20,12 +20,9 @@
     </WindowChrome.WindowChrome>
     <Window.Template>
         <ControlTemplate TargetType="{x:Type Window}">
-            <Border
-                CornerRadius="15"
-                BorderThickness="3"
-                BorderBrush="#FFA51EDA">
+            <Border>
                 <Border.Background>
-                    <ImageBrush ImageSource="../Images/BookSalesAuth.jpg"/>
+                    <ImageBrush ImageSource="../Background/Auth.jpg"/>
                 </Border.Background>
                 <Grid>
                     <Grid.RowDefinitions>

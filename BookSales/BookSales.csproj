@@ -64,17 +64,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AuthStaticUser.cs" />
-    <Compile Include="AuthWindow.xaml.cs">
+    <Compile Include="BehaviorsFiles\AuthStaticUser.cs" />
+    <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
+      <DependentUpon>StoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BasketOrder.cs" />
-    <Compile Include="BasketWindow.xaml.cs">
+    <Compile Include="BehaviorsFiles\BasketOrder.cs" />
+    <Compile Include="Windows\BasketWindow.xaml.cs">
       <DependentUpon>BasketWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BookingsConsist.cs" />
-    <Compile Include="AnyItemsToVisibilityConverter.cs" />
-    <Compile Include="ConfirmOrderWindow.xaml.cs">
+    <Compile Include="BehaviorsFiles\BookingsConsist.cs" />
+    <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="Windows\ConfirmOrderWindow.xaml.cs">
       <DependentUpon>ConfirmOrderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Context\Authors.cs">
@@ -125,7 +128,7 @@
     <Compile Include="Context\Users.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Extension.cs" />
+    <Compile Include="BehaviorsFiles\Extension.cs" />
     <Compile Include="Pages\AuthPages\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
@@ -144,17 +147,21 @@
     <Compile Include="Pages\MainPages\ViewsPages\ViewUsersPage.xaml.cs">
       <DependentUpon>ViewUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowMoves.cs" />
-    <Page Include="AuthWindow.xaml" />
-    <Page Include="BasketWindow.xaml">
+    <Compile Include="BehaviorsFiles\WindowMoves.cs" />
+    <Page Include="Pages\MainPages\StoryViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ConfirmOrderWindow.xaml">
+    <Page Include="Windows\AuthWindow.xaml" />
+    <Page Include="Windows\BasketWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\ConfirmOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -162,7 +169,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -253,7 +260,6 @@
   <ItemGroup>
     <Resource Include="Images\Nope.png" />
     <Resource Include="Images\LibraryIcon.png" />
-    <Resource Include="Images\BookSalesMain.jpg" />
     <Resource Include="Images\BookSalesAuth.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +270,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\BookSalesIcon.png" />
+    <Resource Include="Images\BookSalesIconBlack.png" />
+    <Resource Include="Background\1.jpg" />
+    <Resource Include="Background\2.jpg" />
+    <Resource Include="Background\3.jpg" />
+    <Resource Include="Background\4.jpg" />
+    <Resource Include="Background\5.jpg" />
+    <Resource Include="Background\6.jpg" />
+    <Resource Include="Background\7.jpg" />
+    <Resource Include="Background\8.jpg" />
+    <Resource Include="Background\9.jpg" />
+    <Resource Include="Background\Auth.jpg" />
     <Content Include="Context\BookSalesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookSalesModel.edmx</DependentUpon>
@@ -274,6 +292,7 @@
       <DependentUpon>BookSalesModel.edmx</DependentUpon>
       <LastGenOutput>BookSalesModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\BookSalesMain.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

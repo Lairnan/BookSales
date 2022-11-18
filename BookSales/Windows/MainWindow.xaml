@@ -21,12 +21,9 @@
     </WindowChrome.WindowChrome>
     <Window.Template>
         <ControlTemplate TargetType="{x:Type Window}">
-            <Border
-                CornerRadius="15"
-                BorderThickness="3"
-                BorderBrush="#FFA51EDA">
+            <Border>
                 <Border.Background>
-                    <ImageBrush ImageSource="../Images/BookSalesMain.jpg"/>
+                    <ImageBrush ImageSource="../Background/3.jpg"/>
                 </Border.Background>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -80,6 +77,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel
             Margin="5 5">
@@ -124,5 +122,23 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             NavigationUIVisibility="Hidden"/>
+        <Border
+            x:Name="BasketBtn"
+            CornerRadius="50"
+            Width="50"
+            Height="50"
+            Background="#FF111CBB"
+            BorderBrush="#FF17EF4C"
+            BorderThickness="1"
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Margin="15 30">
+            <Button
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Background="Transparent"
+                Content="Basket"
+                Click="OpenBasketWindow_Click"/>
+        </Border>
     </Grid>
 </Window>
