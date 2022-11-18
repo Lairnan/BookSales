@@ -25,7 +25,6 @@ namespace BookSales.Context
         public string name { get; set; }
         public Nullable<int> authorId { get; set; }
         public Nullable<int> genreId { get; set; }
-        public Nullable<int> categoryId { get; set; }
         public Nullable<int> publisherId { get; set; }
         public int pages { get; set; }
         public System.DateTime releaseDate { get; set; }
@@ -33,7 +32,6 @@ namespace BookSales.Context
         public byte[] image { get; set; }
     
         public virtual Authors Authors { get; set; }
-        public virtual Categories Categories { get; set; }
         public virtual Genres Genres { get; set; }
         public virtual Publishers Publishers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

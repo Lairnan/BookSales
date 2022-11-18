@@ -15,6 +15,7 @@ namespace BookSales.Windows
         public MainWindow()
         {
             InitializeComponent();
+            _windowMoves = new WindowMoves(this);
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.MouseDown += (s, e) => Keyboard.ClearFocus();
             Loaded += OnLoaded;
@@ -32,11 +33,11 @@ namespace BookSales.Windows
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (AuthStaticUser.AuthUser != null) DrawAuthUser(AuthStaticUser.AuthUser);
-
-            var windowMoves = new WindowMoves(this);
-            this.MouseMove += windowMoves.DragMoveMouseMove;
-            this.MouseLeftButtonDown += windowMoves.DragMoveLeftBtnDown;
-            this.MouseLeftButtonUp += windowMoves.DragMoveLeftBtnUp;
+            
+			this.MouseMove += _windowMoves.DragMoveMouseMove;
+			this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
+			this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
+            _windowMoves.SwitchState();
 
             MainFrame = this.CurrentFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
@@ -67,6 +68,8 @@ namespace BookSales.Windows
             }
         }
 
+        private readonly WindowMoves _windowMoves;
+
         private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
         {
             new BasketWindow().ShowDialog();
@@ -89,17 +92,7 @@ namespace BookSales.Windows
 
         private void StateBtn_Click(object sender, RoutedEventArgs e)
         {
-            switch (this.WindowState)
-            {
-                case WindowState.Normal:
-                    this.WindowState = WindowState.Maximized;
-                    this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
-                    break;
-                case WindowState.Maximized:
-                    this.WindowState = WindowState.Normal;
-                    this.MaxWidth = double.PositiveInfinity;
-                    break;
-            }
+            _windowMoves.SwitchState();
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)

@@ -101,9 +101,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookSalesModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Context\Categories.cs">
-      <DependentUpon>BookSalesModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Context\Genres.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>

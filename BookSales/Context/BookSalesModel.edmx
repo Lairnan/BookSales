@@ -23,19 +23,11 @@
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="authorId" Type="int" />
           <Property Name="genreId" Type="int" />
-          <Property Name="categoryId" Type="int" />
           <Property Name="publisherId" Type="int" />
           <Property Name="pages" Type="int" Nullable="false" />
           <Property Name="releaseDate" Type="date" Nullable="false" />
           <Property Name="retailPrice" Type="money" Nullable="false" />
           <Property Name="image" Type="image" />
-        </EntityType>
-        <EntityType Name="Categories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="Genres">
           <Key>
@@ -120,20 +112,6 @@
             </Principal>
             <Dependent Role="Books">
               <PropertyRef Name="authorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Books__categoryI__32E0915F">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Books" Type="Self.Books" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Books">
-              <PropertyRef Name="categoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -252,7 +230,6 @@
         <EntityContainer Name="Хранилище BookSalesModelContainer">
           <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderConsist" EntityType="Self.OrderConsist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -263,10 +240,6 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Books__authorId__30F848ED" Association="Self.FK__Books__authorId__30F848ED">
             <End Role="Authors" EntitySet="Authors" />
-            <End Role="Books" EntitySet="Books" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Books__categoryI__32E0915F" Association="Self.FK__Books__categoryI__32E0915F">
-            <End Role="Categories" EntitySet="Categories" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
           <AssociationSet Name="FK__Books__genreId__31EC6D26" Association="Self.FK__Books__genreId__31EC6D26">
@@ -325,26 +298,16 @@
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="authorId" Type="Int32" />
           <Property Name="genreId" Type="Int32" />
-          <Property Name="categoryId" Type="Int32" />
           <Property Name="publisherId" Type="Int32" />
           <Property Name="pages" Type="Int32" Nullable="false" />
           <Property Name="releaseDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="retailPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Authors" Relationship="Self.FK__Books__authorId__440B1D61" FromRole="Books" ToRole="Authors" />
-          <NavigationProperty Name="Categories" Relationship="Self.FK__Books__categoryI__45F365D3" FromRole="Books" ToRole="Categories" />
           <NavigationProperty Name="Genres" Relationship="Self.FK__Books__genreId__44FF419A" FromRole="Books" ToRole="Genres" />
           <NavigationProperty Name="Publishers" Relationship="Self.FK__Books__publisher__46E78A0C" FromRole="Books" ToRole="Publishers" />
           <NavigationProperty Name="OrderConsist" Relationship="Self.FK__OrderCons__idBoo__59FA5E80" FromRole="Books" ToRole="OrderConsist" />
           <NavigationProperty Name="PlaceHolder" Relationship="Self.FK__PlaceHold__idBoo__4BAC3F29" FromRole="Books" ToRole="PlaceHolder" />
-        </EntityType>
-        <EntityType Name="Categories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Books__categoryI__45F365D3" FromRole="Categories" ToRole="Books" />
         </EntityType>
         <EntityType Name="Genres">
           <Key>
@@ -441,20 +404,6 @@
             </Principal>
             <Dependent Role="Books">
               <PropertyRef Name="authorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Books__categoryI__45F365D3">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Books" Type="Self.Books" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Books">
-              <PropertyRef Name="categoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -573,7 +522,6 @@
         <EntityContainer Name="BookSalesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Authors" EntityType="Self.Authors" />
           <EntitySet Name="Books" EntityType="Self.Books" />
-          <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Genres" EntityType="Self.Genres" />
           <EntitySet Name="OrderConsist" EntityType="Self.OrderConsist" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
@@ -584,10 +532,6 @@
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK__Books__authorId__440B1D61" Association="Self.FK__Books__authorId__440B1D61">
             <End Role="Authors" EntitySet="Authors" />
-            <End Role="Books" EntitySet="Books" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Books__categoryI__45F365D3" Association="Self.FK__Books__categoryI__45F365D3">
-            <End Role="Categories" EntitySet="Categories" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
           <AssociationSet Name="FK__Books__genreId__44FF419A" Association="Self.FK__Books__genreId__44FF419A">
@@ -647,20 +591,11 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="authorId" ColumnName="authorId" />
                 <ScalarProperty Name="genreId" ColumnName="genreId" />
-                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="publisherId" ColumnName="publisherId" />
                 <ScalarProperty Name="pages" ColumnName="pages" />
                 <ScalarProperty Name="releaseDate" ColumnName="releaseDate" />
                 <ScalarProperty Name="retailPrice" ColumnName="retailPrice" />
                 <ScalarProperty Name="image" ColumnName="image" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="BookSalesModel.Categories">
-              <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

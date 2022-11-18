@@ -13,7 +13,8 @@ namespace BookSales.Windows
 		public AuthWindow()
         {
             InitializeComponent();
-			this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            _windowMoves = new WindowMoves(this);
+            this.MaxHeight = SystemParameters.WorkArea.Height;
 			this.MouseDown += (s, e) => Keyboard.ClearFocus();
 			Loaded += OnLoaded;
 		}
@@ -24,11 +25,12 @@ namespace BookSales.Windows
 		{
 			AuthFrame = AFrame;
 			AuthFrame.Content = new Authorization();
-			var windowMoves = new WindowMoves(this);
-			this.MouseMove += windowMoves.DragMoveMouseMove;
-			this.MouseLeftButtonDown += windowMoves.DragMoveLeftBtnDown;
-			this.MouseLeftButtonUp += windowMoves.DragMoveLeftBtnUp;
+			this.MouseMove += _windowMoves.DragMoveMouseMove;
+			this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
+			this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
         }
+
+		private readonly WindowMoves _windowMoves;
 
 		internal static Frame AuthFrame { get; set; }
 
@@ -39,17 +41,7 @@ namespace BookSales.Windows
 
         private void StateBtn_Click(object sender, RoutedEventArgs e)
         {
-			switch(this.WindowState)
-			{
-				case WindowState.Normal:
-					this.WindowState= WindowState.Maximized;
-                    this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
-                    break;
-				case WindowState.Maximized:
-                    this.WindowState = WindowState.Normal;
-                    this.MaxWidth = double.PositiveInfinity;
-                    break;
-			}
+			_windowMoves.SwitchState();
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)

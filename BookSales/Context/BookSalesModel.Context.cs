@@ -27,7 +27,6 @@ namespace BookSales.Context
     
         public virtual DbSet<Authors> Authors { get; set; }
         public virtual DbSet<Books> Books { get; set; }
-        public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<Genres> Genres { get; set; }
         public virtual DbSet<OrderConsist> OrderConsist { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }

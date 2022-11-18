@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookSales"
         mc:Ignorable="d"
-        Title="Книжный магазин" 
-        WindowState="Maximized"
+        Title="Книжный магазин"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="True"
         Icon="../Images/LibraryIcon.png"
         MinHeight="450"
-        Height="500" 
+        Height="500"
         MinWidth="600"
         Width="800">
     <WindowChrome.WindowChrome>

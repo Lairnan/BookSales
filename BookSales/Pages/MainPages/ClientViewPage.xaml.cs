@@ -18,7 +18,7 @@ namespace BookSales.Pages.MainPages
             InitializeComponent();
             using(var db = new BookSalesEntities())
             {
-                BooksViewList.ItemsSource = db.Books.Include(s => s.Categories).Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList();
+                BooksViewList.ItemsSource = db.Books.Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList();
                 PlaceHolders = db.PlaceHolder.ToList();
             }
         }

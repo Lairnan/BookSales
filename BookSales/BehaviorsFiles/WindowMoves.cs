@@ -31,15 +31,12 @@ namespace BookSales
             }
             if (e.ClickCount == 2)
             {
-                if (_window.ResizeMode == ResizeMode.CanResize || _window.ResizeMode == ResizeMode.CanResizeWithGrip)
-                {
-                    SwitchState();
-                }
+                SwitchState();
 
                 return;
             }
 
-            if (_window.WindowState == WindowState.Maximized)
+            if (isMax)
             {
                 _mRestoreIfMove = true;
                 return;
@@ -85,21 +82,54 @@ namespace BookSales
             _window.DragMove();
         }
 
-        private void SwitchState()
+        private bool isMax { get; set; }
+        private Size oldSize { get; set; }
+        private Point oldPoint { get; set; }
+
+        public void SwitchState()
         {
-            switch (_window.WindowState)
+            if (!isMax) Maximize(_window);
+            else Normal(_window);
+        }
+
+        private object _lock = new object();
+
+        public void Maximize(Window wnd)
+        {
+            lock (_lock)
             {
-                case WindowState.Normal:
-                    _window.WindowState = WindowState.Maximized;
-                    _window.MaxWidth = SystemParameters.FullPrimaryScreenWidth;
-                    break;
-                case WindowState.Maximized:
-                    _window.WindowState = WindowState.Normal;
-                    _window.MaxWidth = double.PositiveInfinity;
-                    break;
-                default:
-                    _window.WindowState = _window.WindowState;
-                    break;
+                if (isMax) return;
+
+                oldSize = new Size(_window.Width, _window.Height);
+                oldPoint = new Point(_window.Top, _window.Left);
+
+                var x = SystemParameters.WorkArea.Width;
+                var y = SystemParameters.WorkArea.Height;
+                wnd.WindowState = WindowState.Normal;
+                wnd.Top = 0;
+                wnd.Left = 0;
+                wnd.Width = x;
+                wnd.Height = y;
+                wnd.ResizeMode = ResizeMode.NoResize;
+
+                isMax = true;
+            }
+        }
+
+        public void Normal(Window wnd)
+        {
+            lock (_lock)
+            {
+                if (!isMax) return;
+
+                wnd.WindowState = WindowState.Normal;
+                wnd.Top = oldPoint.Y;
+                wnd.Left = oldPoint.X;
+                wnd.Width = oldSize.Width;
+                wnd.Height = oldSize.Height;
+                wnd.ResizeMode = ResizeMode.CanResize;
+
+                isMax = false;
             }
         }
     }
