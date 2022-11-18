@@ -42,7 +42,8 @@ namespace BookSales
                 return;
             }
 
-            _window.DragMove();
+            if(e.LeftButton == MouseButtonState.Pressed)
+                _window.DragMove();
         }
 
         public void DragMoveLeftBtnUp(object sender, MouseButtonEventArgs e)
@@ -66,25 +67,25 @@ namespace BookSales
             _mRestoreIfMove = false;
 
             var percentHorizontal = e.GetPosition(_window).X / _window.ActualWidth;
-            var targetHorizontal = _window.RestoreBounds.Width * percentHorizontal;
+            var targetHorizontal = oldSize.Width * percentHorizontal;
 
             var percentVertical = e.GetPosition(_window).Y / _window.ActualHeight;
-            var targetVertical = _window.RestoreBounds.Height * percentVertical;
-
+            var targetVertical = oldSize.Height * percentVertical;
 
             var point = _window.PointToScreen(e.MouseDevice.GetPosition(_window));
 
             _window.Left = point.X - targetHorizontal;
             _window.Top = point.Y - targetVertical;
 
-            _window.WindowState = WindowState.Normal;
+            Normal(_window, false);
 
-            _window.DragMove();
+            if (e.LeftButton == MouseButtonState.Pressed)
+                _window.DragMove();
         }
 
-        private bool isMax { get; set; }
-        private Size oldSize { get; set; }
-        private Point oldPoint { get; set; }
+        public bool isMax { get; private set; }
+        public Size oldSize { get; set; }
+        public Point oldLoc { get; set; }
 
         public void SwitchState()
         {
@@ -92,45 +93,36 @@ namespace BookSales
             else Normal(_window);
         }
 
-        private object _lock = new object();
-
-        public void Maximize(Window wnd)
+        private void Maximize(Window wnd)
         {
-            lock (_lock)
-            {
-                if (isMax) return;
+            if (isMax) return;
 
-                oldSize = new Size(_window.Width, _window.Height);
-                oldPoint = new Point(_window.Top, _window.Left);
+            oldSize = new Size(wnd.Width, wnd.Height);
+            oldLoc = new Point(wnd.Left, wnd.Top);
 
-                var x = SystemParameters.WorkArea.Width;
-                var y = SystemParameters.WorkArea.Height;
-                wnd.WindowState = WindowState.Normal;
-                wnd.Top = 0;
-                wnd.Left = 0;
-                wnd.Width = x;
-                wnd.Height = y;
-                wnd.ResizeMode = ResizeMode.NoResize;
-
-                isMax = true;
-            }
+            isMax = true;
+            wnd.WindowState = WindowState.Normal;
+            wnd.Top = 0;
+            wnd.Left = (oldLoc.X + (oldSize.Width / 2.5)) > SystemParameters.WorkArea.Width ? SystemParameters.WorkArea.Width : 0;
+            wnd.Width = SystemParameters.WorkArea.Width;
+            wnd.Height = SystemParameters.WorkArea.Height;
+            wnd.ResizeMode = ResizeMode.NoResize;
         }
 
-        public void Normal(Window wnd)
+        private void Normal(Window wnd, bool loc = true)
         {
-            lock (_lock)
+            if (!isMax) return;
+
+            isMax = false;
+            wnd.WindowState = WindowState.Normal;
+            if (loc)
             {
-                if (!isMax) return;
-
-                wnd.WindowState = WindowState.Normal;
-                wnd.Top = oldPoint.Y;
-                wnd.Left = oldPoint.X;
-                wnd.Width = oldSize.Width;
-                wnd.Height = oldSize.Height;
-                wnd.ResizeMode = ResizeMode.CanResize;
-
-                isMax = false;
+                wnd.Top = oldLoc.Y;
+                wnd.Left = oldLoc.X;
             }
+            wnd.Width = oldSize.Width;
+            wnd.Height = oldSize.Height;
+            wnd.ResizeMode = ResizeMode.CanResize;
         }
     }
 }

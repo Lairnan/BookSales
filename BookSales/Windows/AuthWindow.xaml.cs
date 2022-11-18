@@ -14,34 +14,35 @@ namespace BookSales.Windows
         {
             InitializeComponent();
             _windowMoves = new WindowMoves(this);
-            this.MaxHeight = SystemParameters.WorkArea.Height;
-			this.MouseDown += (s, e) => Keyboard.ClearFocus();
+            this.MouseDown += (s, e) => Keyboard.ClearFocus();
 			Loaded += OnLoaded;
+            StateChanged += (s, e) => { if (this.WindowState == WindowState.Maximized) _windowMoves.SwitchState(); };
+            SizeChanged += (s, e) => StateBtnText.Text = _windowMoves.isMax ? "2" : "1";
 		}
 
-		public bool IsDialog { get; set; } = false;
+        public bool IsDialog { get; set; } = false;
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
 			AuthFrame = AFrame;
 			AuthFrame.Content = new Authorization();
-			this.MouseMove += _windowMoves.DragMoveMouseMove;
-			this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
-			this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
+            this.MouseMove += _windowMoves.DragMoveMouseMove;
+            this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
+            this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
         }
 
-		private readonly WindowMoves _windowMoves;
+        public readonly WindowMoves _windowMoves;
 
-		internal static Frame AuthFrame { get; set; }
+        internal static Frame AuthFrame { get; set; }
 
         private void MinBtn_Click(object sender, RoutedEventArgs e)
         {
-			this.WindowState= WindowState.Minimized;
+			this.WindowState = WindowState.Minimized;
         }
 
         private void StateBtn_Click(object sender, RoutedEventArgs e)
         {
-			_windowMoves.SwitchState();
+            _windowMoves.SwitchState();
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)

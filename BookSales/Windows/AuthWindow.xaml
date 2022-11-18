@@ -51,20 +51,23 @@
                                 Orientation="Horizontal"
                                 Grid.Column="1">
                             <Button
-                                Content="-"
                                 Margin="5 0"
                                 Width="35"
-                                Click="MinBtn_Click"/>
+                                Click="MinBtn_Click">
+                                <TextBlock Text="0" FontFamily="Webdings"/>
+                            </Button>
                             <Button
-                                Content="-+"
                                 Margin="5 0"
                                 Width="35"
-                                Click="StateBtn_Click"/>
+                                Click="StateBtn_Click">
+                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings"/>
+                            </Button>
                             <Button
-                                Content="X"
                                 Margin="5 0"
                                 Width="35"
-                                Click="CloseBtn_Click"/>
+                                Click="CloseBtn_Click">
+                                <TextBlock Text="r" FontFamily="Webdings"/>
+                            </Button>
                         </StackPanel>
                     </Grid>
                     <ContentPresenter Grid.Row="1"/>
@@ -73,6 +76,7 @@
         </ControlTemplate>
     </Window.Template>
     <Grid>
+        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1" FontFamily="Webdings"/>
         <Frame
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

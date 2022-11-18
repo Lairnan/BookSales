@@ -12,14 +12,18 @@ namespace BookSales.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow((Size, Point) old)
         {
             InitializeComponent();
+            _old = old;
             _windowMoves = new WindowMoves(this);
-            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.MouseDown += (s, e) => Keyboard.ClearFocus();
             Loaded += OnLoaded;
+            StateChanged += (s, e) => { if (this.WindowState == WindowState.Maximized) _windowMoves.SwitchState(); };
+            SizeChanged += (s, e) => StateBtnText.Text = _windowMoves.isMax ? "2" : "1";
         }
+
+        private (Size, Point) _old { get; set; }
 
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {
@@ -38,6 +42,9 @@ namespace BookSales.Windows
 			this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
 			this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
             _windowMoves.SwitchState();
+
+            _windowMoves.oldLoc = _old.Item2;
+            _windowMoves.oldSize = _old.Item1;
 
             MainFrame = this.CurrentFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
