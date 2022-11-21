@@ -11,8 +11,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Поиск: "/>
-            <ff:PlaceholderTextBox Placeholder="Введите текст" Width="150"/>
+            <TextBlock Text="Поиск: " Style="{StaticResource TextBlockStyle}"/>
+            <ff:PlaceholderTextBox Placeholder="Введите текст" Width="150" Style="{StaticResource PlaceholderTextBoxStyle}"/>
         </StackPanel>
         <ListView
             x:Name="OrdersViewList"

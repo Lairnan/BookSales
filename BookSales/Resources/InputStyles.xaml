@@ -40,18 +40,18 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MainInputStyle}">
+    <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MainInputStyle}">
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Margin" Value="0 5"/>
     </Style>
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource InputBoxStyle}">
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource InputBoxStyle}">
     </Style>
-    <Style TargetType="{x:Type ff:PlaceholderTextBox}" BasedOn="{StaticResource {x:Type TextBox}}"/>
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource MainInputStyle}">
+    <Style x:Key="PlaceholderTextBoxStyle" TargetType="{x:Type ff:PlaceholderTextBox}" BasedOn="{StaticResource TextBoxStyle}"/>
+    <Style x:Key="LabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource MainInputStyle}">
     </Style>
-    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource InputBoxStyle}">
+    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource InputBoxStyle}">
     </Style>
-    <Style TargetType="{x:Type DatePickerTextBox}" BasedOn="{StaticResource MainInputStyle}">
+    <Style x:Key="DatePickerTextBoxStyle" TargetType="{x:Type DatePickerTextBox}" BasedOn="{StaticResource MainInputStyle}">
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -78,17 +78,17 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type Button}" x:Key="BtnDatePickerStyle">
-        <Setter Property="Cursor" Value="Hand" />
+    <Style x:Key="BtnDatePickerStyle" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <ContentPresenter />
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type DatePicker}">
+    <Style x:Key="DatePickerStyle" TargetType="{x:Type DatePicker}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -99,9 +99,10 @@
                         </Grid.ColumnDefinitions>
                         <DatePickerTextBox 
                             Width="172"
-                            x:Name="PART_TextBox"/>
+                            x:Name="PART_TextBox"
+                            Style="{StaticResource DatePickerTextBoxStyle}"/>
                         <Button
-                            Background="#fff"
+                            Background="Transparent"
                             Grid.Column="1"
                             Style="{StaticResource BtnDatePickerStyle}"
                             x:Name="PART_Button">
@@ -111,6 +112,7 @@
                                 Margin="4,3,4,3"
                                 Stretch="Fill"
                                 Stroke="Wheat"
+                                Fill="#FFFFFF"
                                 StrokeThickness="2"
                                 VerticalAlignment="Center"
                                 Width="20">

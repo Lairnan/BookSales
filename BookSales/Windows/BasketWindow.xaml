@@ -20,15 +20,19 @@
         <UniformGrid Columns="4">
             <TextBlock 
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Наименование"/>
             <TextBlock 
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Количество" />
             <TextBlock 
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Цена" />
             <TextBlock 
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Изменение"/>
         </UniformGrid>
         <ItemsControl 
@@ -40,14 +44,17 @@
                         <TextBlock
                             TextAlignment="Center"
                             VerticalAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             TextWrapping="Wrap"
                             Text="{Binding Book.name}"/>
                         <TextBlock 
                             VerticalAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             TextAlignment="Center"
                             Text="{Binding Count}"/>
                         <TextBlock 
                             VerticalAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             TextAlignment="Center"
                             Text="{Binding Book.retailPrice, StringFormat='{}{0:0.00 руб.}'}"/>
                         <WrapPanel
@@ -57,16 +64,19 @@
                                 VerticalAlignment="Center"
                                 Width="50"
                                 Text="1"
+                                Style="{StaticResource TextBoxStyle}"
                                 x:Name="Count"/>
                             <Button
                                 Margin="10 0 5 0"
                                 Width="40"
+                                Style="{StaticResource ButtonStyle}"
                                 Content="-"
                                 Click="RemoveBook_Click"
                                 CommandParameter="{Binding Text, ElementName=Count}"/>
                             <Button
                                 Width="40"
                                 Content="+"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="AddBook_Click"
                                 CommandParameter="{Binding Text, ElementName=Count}"/>
                         </WrapPanel>
@@ -79,10 +89,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="OrderPrice"/>
+            <TextBlock x:Name="OrderPrice" Style="{StaticResource TextBlockStyle}"/>
             <Button 
                 x:Name="OrderBtn"
                 Grid.Column="1"
+                Style="{StaticResource ButtonStyle}"
                 Content="Оформить заказ"
                 Margin="15 0"
                 IsEnabled="False"

@@ -31,10 +31,12 @@
                         VerticalAlignment="Center">
                         <TextBlock 
                             Text="{Binding name}" 
+                            Style="{StaticResource TextBlockStyle}"
                             FontSize="18"/>
-                        <TextBox x:Name="CountAdd" Text="1"/>
+                        <TextBox x:Name="CountAdd" Text="1" Style="{StaticResource TextBoxStyle}"/>
                         <Button
                             Content="Добавить"
+                            Style="{StaticResource ButtonStyle}"
                             Click="AddInBasketBtn_Click"
                             CommandParameter="{Binding Text, ElementName=CountAdd}"/>
                     </StackPanel>

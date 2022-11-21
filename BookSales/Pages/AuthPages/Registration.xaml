@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BookSales.Pages.AuthPages"
+      xmlns:controls="clr-namespace:BookSales.Controls"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,23 +15,23 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <TextBlock Text="Введите фамилию: "/>
-            <TextBlock Text="Введите имя: "/>
-            <TextBlock Text="Введите отчество(если имеется): "/>
-            <TextBlock Text="Введите дату рождения: "/>
-            <TextBlock Text="Введите логин: "/>
-            <TextBlock Text="Введите пароль: "/>
-            <TextBlock Text="Добавьте ваше изображение: "/>
+            <TextBlock Text="Введите фамилию: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Введите имя: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Введите отчество(если имеется): " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Введите дату рождения: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Введите логин: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Введите пароль: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Добавьте ваше изображение: " Style="{StaticResource TextBlockStyle}"/>
         </StackPanel>
         <StackPanel
             Grid.Row="0"
             Grid.Column="1">
-            <TextBox x:Name="SurnameBox"/>
-            <TextBox x:Name="NameBox"/>
-            <TextBox x:Name="PatronymicBox"/>
-            <DatePicker x:Name="DateOfBirthBox"/>
-            <TextBox x:Name="LoginBox"/>
-            <PasswordBox x:Name="PasswordBox"/>
+            <TextBox x:Name="SurnameBox" Style="{StaticResource TextBoxStyle}"/>
+            <TextBox x:Name="NameBox" Style="{StaticResource TextBoxStyle}"/>
+            <TextBox x:Name="PatronymicBox" Style="{StaticResource TextBoxStyle}"/>
+            <controls:DatePickerEx x:Name="DateOfBirthPicker"/>
+            <TextBox x:Name="LoginBox" Style="{StaticResource TextBoxStyle}"/>
+            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}"/>
             <Grid
                 Margin="0 0 0 5">
                 <Grid.ColumnDefinitions>
@@ -50,9 +50,11 @@
                     Grid.Column="1">
                     <Button
                         Content="Добавить"
+                        Style="{StaticResource ButtonStyle}"
                         Click="AddImageBtn_Click"/>
                     <Button
                         x:Name="BtnClear"
+                        Style="{StaticResource ButtonStyle}"
                         IsEnabled="False"
                         Content="Очистить"
                         Click="ClearImageBtn_Click"/>
@@ -68,11 +70,13 @@
             Grid.ColumnSpan="2">
             <Button
                 x:Name="RegBtn"
-                Content="Зарегистрироваться" 
+                Content="Зарегистрироваться"
+                Style="{StaticResource ButtonStyle}"
                 Click="RegBtn_Click" Cursor="Hand"/>
             <Button
                 Margin="5 0"
-                Content="Войти" 
+                Content="Войти"
+                Style="{StaticResource ButtonStyle}"
                 Click="AuthBtn_Click"/>
         </StackPanel>
     </Grid>

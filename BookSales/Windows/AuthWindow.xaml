@@ -45,6 +45,7 @@
                             <TextBlock 
                                 FontSize="18"
                                 FontWeight="Bold"
+                                Style="{StaticResource TextBlockStyle}"
                                 Text="{TemplateBinding Title}"/>
                         </StackPanel>
                         <StackPanel 
@@ -53,20 +54,23 @@
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="MinBtn_Click">
-                                <TextBlock Text="0" FontFamily="Webdings"/>
+                                <TextBlock Text="0" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="StateBtn_Click">
-                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings"/>
+                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="CloseBtn_Click">
-                                <TextBlock Text="r" FontFamily="Webdings"/>
+                                <TextBlock Text="r" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -76,7 +80,7 @@
         </ControlTemplate>
     </Window.Template>
     <Grid>
-        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1" FontFamily="Webdings"/>
+        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1"/>
         <Frame
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

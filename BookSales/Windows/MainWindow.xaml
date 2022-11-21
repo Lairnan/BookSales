@@ -46,6 +46,7 @@
                             <TextBlock 
                                 FontSize="18"
                                 FontWeight="Bold"
+                                Style="{StaticResource TextBlockStyle}"
                                 Text="{TemplateBinding Title}"/>
                         </StackPanel>
                         <StackPanel 
@@ -54,20 +55,23 @@
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="MinBtn_Click">
-                                <TextBlock Text="0" FontFamily="Webdings"/>
+                                <TextBlock Text="0" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="StateBtn_Click">
-                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings"/>
+                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                             <Button
                                 Margin="5 0"
                                 Width="35"
+                                Style="{StaticResource ButtonStyle}"
                                 Click="CloseBtn_Click">
-                                <TextBlock Text="r" FontFamily="Webdings"/>
+                                <TextBlock Text="r" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -82,7 +86,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1" FontFamily="Webdings"/>
+        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1"/>
         <StackPanel
             Margin="5 5">
             <StackPanel
@@ -91,18 +95,21 @@
                 <Button
                     x:Name="BackBtn"
                     Content="Назад"
+                    Style="{StaticResource ButtonStyle}"
                     IsEnabled="False"
                     Padding="15 5"
                     Click="BackBtn_Click"/>
                 <Button
                     x:Name="ExitBtn"
                     Content="Выйти"
+                    Style="{StaticResource ButtonStyle}"
                     Margin="5 0"
                     Padding="15 5"
                     Click="ExitBtn_Click"/>
                 <TextBlock
                     VerticalAlignment="Center"
-                    x:Name="AuthUser"/>
+                    x:Name="AuthUser"
+                    Style="{StaticResource TextBlockStyle}"/>
             </StackPanel>
             <StackPanel
                 HorizontalAlignment="Left"
@@ -110,10 +117,13 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="ViewStory"
+                    IsEnabled="False"
+                    Style="{StaticResource ButtonStyle}"
                     Content="Посмотреть историю заказа"
                     Click="ViewStoryBtn_Click"/>
                 <Button
                     x:Name="ViewBooks"
+                    Style="{StaticResource ButtonStyle}"
                     Content="Перейти к выбору книг"
                     Click="ViewBookBtn_Click"
                     Margin="5 0"
@@ -140,6 +150,7 @@
             <Button
                 BorderBrush="Transparent"
                 BorderThickness="0"
+                Style="{StaticResource ButtonStyle}"
                 Background="Transparent"
                 Content="Basket"
                 Click="OpenBasketWindow_Click"/>

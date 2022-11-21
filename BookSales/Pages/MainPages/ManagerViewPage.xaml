@@ -13,9 +13,11 @@
         </StackPanel.Resources>
         <Button
             Content="Посмотреть список пользователей"
+            Style="{StaticResource ButtonStyle}"
             Click="ViewUsersBtn_Click"/>
         <Button
             Content="Посмотреть список заказов"
+            Style="{StaticResource ButtonStyle}"
             Click="ViewOredersBtn_Click"/>
     </StackPanel>
 </Page>

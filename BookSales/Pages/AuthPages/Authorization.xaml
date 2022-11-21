@@ -5,6 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:BookSales.Pages.AuthPages"
       mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}"/>
+        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PasswordBoxStyle}"/>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,10 +29,12 @@
                 Text="Пароль: "/>
             <TextBlock
                 Visibility="Collapsed"
+                Style="{StaticResource CaptchaText}"
                 x:Name="CaptchaText"
                 Text=""/>
             <Label
                 Visibility="Collapsed"
+                Style="{StaticResource CaptchaLab}"
                 x:Name="CaptchaRefresh"
                 FontSize="10"
                 Padding="0"
@@ -54,11 +62,11 @@
                 HorizontalAlignment="Center">
                 <Button
                     x:Name="AuthBtn"
-                    Content="Войти" 
+                    Content="Войти"
                     Click="AuthBtn_Click"/>
                 <Button
                     Margin="5 0"
-                    Content="Зарегистрироваться" 
+                    Content="Зарегистрироваться"
                     Click="RegBtn_Click"/>
             </StackPanel>
             <Button

@@ -65,8 +65,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AuthStaticUser.cs" />
+    <Compile Include="Controls\DatePickerEx.cs" />
     <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
       <DependentUpon>StoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
@@ -146,6 +150,14 @@
     </Compile>
     <Compile Include="BehaviorsFiles\WindowMoves.cs" />
     <Page Include="Pages\MainPages\StoryViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DatePickerExStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

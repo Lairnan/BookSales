@@ -22,7 +22,7 @@ namespace BookSales.Pages.AuthPages
                     AuthBtn_Click(this, e);
                 }
             };
-            if (Application.Current.Windows.OfType<AuthWindow>().Single().IsDialog) 
+            if (Application.Current.Windows.OfType<AuthWindow>().Single().IsDialog)
             {
                 AuthGuest.IsEnabled = false;
             }

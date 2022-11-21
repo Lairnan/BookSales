@@ -34,8 +34,8 @@
     <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
         <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
     </ControlTemplate>
-    
-    <Style TargetType="{x:Type ComboBox}">
+
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Foreground" Value="White"/>

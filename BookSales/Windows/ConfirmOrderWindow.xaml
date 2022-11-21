@@ -19,14 +19,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="3">
-            <TextBlock 
+            <TextBlock
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Наименование"/>
-            <TextBlock 
+            <TextBlock
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Количество" />
-            <TextBlock 
+            <TextBlock
                 TextAlignment="Center"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Цена" />
         </UniformGrid>
         <ItemsControl
@@ -37,15 +40,18 @@
                     <UniformGrid Columns="3">
                         <TextBlock
                             TextAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             VerticalAlignment="Center"
                             TextWrapping="Wrap"
                             Text="{Binding Book.name}"/>
                         <TextBlock 
                             VerticalAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             TextAlignment="Center"
                             Text="{Binding Count}"/>
                         <TextBlock 
                             VerticalAlignment="Center"
+                            Style="{StaticResource TextBlockStyle}"
                             TextAlignment="Center"
                             Text="{Binding Book.retailPrice, StringFormat='{}{0:0.00 руб.}'}"/>
                     </UniformGrid>
@@ -57,12 +63,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="OrderPrice"/>
+            <TextBlock x:Name="OrderPrice" Style="{StaticResource TextBlockStyle}"/>
             <StackPanel 
                 Grid.Column="1"
                 Orientation="Horizontal">
                 <Button 
                     x:Name="CancelBtn"
+                    Style="{StaticResource ButtonStyle}"
                     Content="Подтвердить заказ"
                     Margin="15 0"
                     Click="ConfirmBtn_Click"/>
@@ -70,6 +77,7 @@
                     x:Name="ConfirmBtn"
                     Content="Отменить"
                     Margin="15 0"
+                    Style="{StaticResource ButtonStyle}"
                     Click="CancelBtn_Click"/>
             </StackPanel>
         </Grid>

@@ -30,17 +30,17 @@ namespace BookSales.Windows
             BackBtn.IsEnabled = MainFrame.CanGoBack;
 
             var frame = sender as Frame;
-            ViewStory.IsEnabled = !(frame.Content is StoryViewPage);
+            ViewStory.IsEnabled = !(frame.Content is StoryViewPage) && AuthStaticUser.AuthUser != null;
             BasketBtn.Visibility = frame.Content is ClientViewPage ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (AuthStaticUser.AuthUser != null) DrawAuthUser(AuthStaticUser.AuthUser);
-            
-			this.MouseMove += _windowMoves.DragMoveMouseMove;
-			this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
-			this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
+
+            this.MouseMove += _windowMoves.DragMoveMouseMove;
+            this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
+            this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
             _windowMoves.SwitchState();
 
             _windowMoves.oldLoc = _old.Item2;
@@ -49,8 +49,8 @@ namespace BookSales.Windows
             MainFrame = this.CurrentFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
 
-            if (AuthStaticUser.AuthUser == null) 
-            { 
+            if (AuthStaticUser.AuthUser == null)
+            {
                 MainFrame.Navigate(new ClientViewPage());
                 return;
             }

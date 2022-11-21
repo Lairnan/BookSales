@@ -1,4 +1,5 @@
 ﻿using BookSales.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -29,14 +30,14 @@ namespace BookSales
                 MessageBox.Show("Товара больше нет в наличии");
                 return;
             };
-            basket.Count += count;
+            basket.Count += Math.Abs(count);
         }
 
         public static void Remove(Books book, int count)
         {
             if (!BasketOrders.Select(s => s.Book).Contains(book)) return;
             var basket = BasketOrders.Single(s => s.Book == book);
-            basket.Count -= count;
+            basket.Count -= Math.Abs(count);
             if (basket.Count < 1)
                 BasketOrders.Remove(basket);
         }

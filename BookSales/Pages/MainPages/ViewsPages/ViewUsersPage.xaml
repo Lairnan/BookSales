@@ -11,8 +11,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Поиск: "/>
-            <ff:PlaceholderTextBox Placeholder="Введите текст" Width="150"/>
+            <TextBlock Text="Поиск: " Style="{StaticResource TextBlockStyle}"/>
+            <ff:PlaceholderTextBox Placeholder="Введите текст" Width="150" Style="{StaticResource TextBoxStyle}"/>
         </StackPanel>
         <ItemsControl
             x:Name="UsersViewList"
@@ -51,7 +51,7 @@
                             </Image>
                             <StackPanel
                                 Grid.Column="1">
-                                <TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockStyle}">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1} {2}">
                                             <Binding Path="surname"/>

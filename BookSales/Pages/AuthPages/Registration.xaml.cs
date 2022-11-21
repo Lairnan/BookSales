@@ -25,6 +25,10 @@ namespace BookSales.Pages.AuthPages
                     RegBtn_Click(this, e);
                 }
             };
+
+            var dateNow = DateTime.Now;
+            DateOfBirthPicker.DisplayDateEnd = DateTime.Parse($"{dateNow.Day}.{dateNow.Month}.{dateNow.Year - 5}");
+            DateOfBirthPicker.DisplayDateStart = DateTime.Parse("01.01.1900");
         }
 
         private string FileNamePath { get; set; }
@@ -64,10 +68,15 @@ namespace BookSales.Pages.AuthPages
             var surname = SurnameBox.Text;
             var name = NameBox.Text;
             var patronymic = PatronymicBox.Text;
-            var dateOfBirth = (DateTime)DateOfBirthBox.SelectedDate;
+            var dateOfBirth = (DateTime)DateOfBirthPicker.SelectedDate;
             if (dateOfBirth == null)
             {
                 MessageBox.Show("Выберите дату!");
+                return;
+            }
+            if(dateOfBirth < DateOfBirthPicker.DisplayDateEnd && dateOfBirth > DateOfBirthPicker.DisplayDateStart)
+            {
+                MessageBox.Show("Неверно выбранная дата");
                 return;
             }
             var login = LoginBox.Text;
@@ -105,7 +114,7 @@ namespace BookSales.Pages.AuthPages
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.ToString());
                 }
                 return false;
             }
