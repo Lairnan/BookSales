@@ -5,12 +5,34 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookSales.Pages.MainPages"
       xmlns:BookSales="clr-namespace:BookSales"
+      xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF"
       mc:Ignorable="d" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="Поиск по названию: " VerticalAlignment="Center" />
+            <TextBox Style="{StaticResource TextBoxStyle}" Width="175" x:Name="FilterText" TextChanged="FilterText_TextChanged" />
+            <StackPanel Margin="15 0 5 0">
+                <TextBlock TextAlignment="Center" Text="Сортировка по жанрам: " Style="{StaticResource TextBlockStyle}"/>
+                <ComboBox x:Name="GenreBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Width="200" Height="30" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding name}" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="15 0 5 0">
+                <TextBlock TextAlignment="Center" Text="Сортировка цене: " Style="{StaticResource TextBlockStyle}"/>
+                <ComboBox x:Name="OrderBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Height="30" Width="200" SelectionChanged="ComboBox_SelectionChanged">
+                    <TextBlock Text="По возрастанию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                    <TextBlock Text="По убыванию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
         <ItemsControl
             Grid.Row="1"
             Height="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
@@ -23,23 +45,63 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel
-                        Margin="15"
-                        Width="200"
-                        Height="200"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        <TextBlock 
-                            Text="{Binding name}" 
-                            Style="{StaticResource TextBlockStyle}"
-                            FontSize="18"/>
-                        <TextBox x:Name="CountAdd" Text="1" Style="{StaticResource TextBoxStyle}"/>
-                        <Button
-                            Content="Добавить"
-                            Style="{StaticResource ButtonStyle}"
-                            Click="AddInBasketBtn_Click"
-                            CommandParameter="{Binding Text, ElementName=CountAdd}"/>
-                    </StackPanel>
+                    <Border Margin="5" Width="500" BorderThickness="5" BorderBrush="Black">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image
+                                VerticalAlignment="Center"
+                                Height="150"
+                                Margin="5 0"
+                                Width="150"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.RowSpan="2">
+                                <Image.Source>
+                                    <Binding Path="image">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>../../Images/Nope.png</ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
+
+                            <StackPanel Grid.Row="0"
+                                        Grid.Column="1">
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding name, StringFormat='{}Название книги: {0}'}"/>
+                                <TextBlock Style="{StaticResource TextBlockStyle}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Автор: {0} {1} {2}">
+                                            <Binding Path="Authors.surname"/>
+                                            <Binding Path="Authors.name"/>
+                                            <Binding Path="Authors.patronymic"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Genres.name, StringFormat='{}Жанр: {0}'}"/>
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Publishers.name, StringFormat='{}Издатель: {0}'}"/>
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding pages, StringFormat='{}Количество страниц: {0}'}"/>
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding releaseDate, StringFormat='{}Дата выхода: {0:dd MMMM yyyy} г.'}"/>
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding retailPrice, StringFormat='{}Цена: {0:0.00} руб.'}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Row="1"
+                                        Grid.Column="1">
+                                <TextBox x:Name="CountAdd" Text="1" Style="{StaticResource TextBoxStyle}"/>
+                                <Button
+                                    Content="Добавить"
+                                    Style="{StaticResource ButtonStyle}"
+                                    Click="AddInBasketBtn_Click"
+                                    CommandParameter="{Binding Text, ElementName=CountAdd}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.Template>

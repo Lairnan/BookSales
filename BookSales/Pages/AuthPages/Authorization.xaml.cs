@@ -125,7 +125,7 @@ namespace BookSales.Pages.AuthPages
             AuthWindow.AuthFrame.Navigate(new Registration());
         }
 
-        private void CaptchaRefresh_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void CaptchaRefresh_MouseDown(object sender, MouseButtonEventArgs e)
         {
             CaptchaGenerate();
         }

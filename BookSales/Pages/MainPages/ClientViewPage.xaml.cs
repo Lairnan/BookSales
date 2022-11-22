@@ -1,8 +1,10 @@
 ﻿using BookSales.Context;
 using BookSales.Windows;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,10 +18,23 @@ namespace BookSales.Pages.MainPages
         public ClientViewPage()
         {
             InitializeComponent();
-            using(var db = new BookSalesEntities())
+            GetItemsAsync();
+        }
+
+        private ObservableCollection<Books> BooksList { get; set; }
+
+        private async void GetItemsAsync()
+        {
+            using (var db = new BookSalesEntities())
             {
-                BooksViewList.ItemsSource = db.Books.Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList();
+                var listBooks = db.Books.Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList();
+                BooksList = new ObservableCollection<Books>(listBooks);
+                BooksViewList.ItemsSource = listBooks;
                 PlaceHolders = db.PlaceHolder.ToList();
+                var listGenres = new List<Genres>();
+                listGenres.Add(new Genres { name = "Очистить" });
+                listGenres.AddRange(await Task.Run(() => db.Genres.ToList()));
+                GenreBox.ItemsSource = listGenres;
             }
         }
 
@@ -65,6 +80,39 @@ namespace BookSales.Pages.MainPages
             // Check if user not log in
             return AuthStaticUser.AuthUser == null;
 
+        }
+
+        private void FilterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BooksViewList == null) return;
+            ApplyFilter();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (BooksViewList == null) return;
+            ApplyFilter();
+        }
+
+        private async void ApplyFilter()
+        {
+            var list = BooksList;
+            var genre = GenreBox.SelectedItem as Genres;
+
+            var newList = await Task.Run(() => list.Where(s => s.name.ToLower().Trim().Contains(FilterText.Text.ToLower().Trim())));
+            if (GenreBox.SelectedIndex != 0) newList = await Task.Run(() => newList.Where(s => s.genreId == genre.id));
+
+            switch (OrderBox.SelectedIndex)
+            {
+                case 0:
+                    newList = newList.OrderBy(s => s.retailPrice);
+                    break;
+                case 1:
+                    newList = newList.OrderByDescending(s => s.retailPrice);
+                    break;
+            }
+
+            BooksViewList.ItemsSource = newList.ToList();
         }
     }
 }
