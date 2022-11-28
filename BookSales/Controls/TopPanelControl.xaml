@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="BookSales.Controls.TopPanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+    <Border MouseEnter="PnlControlBar_OnMouseEnter" MouseLeftButtonDown="PnlControlBar_OnMouseLeftButtonDown" Background="#004D47" Padding="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+                    <Image
+                        Margin="5 0"
+                        MaxHeight="32"
+                        MaxWidth="32"
+                        Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+                    <TextBlock
+                        FontFamily="Comic sans MS"
+                        FontSize="18"
+                        Foreground="White"
+                        Margin="5,5"
+                        Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+                </StackPanel>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Click="MinimizeBtn_Click"
+                        Style="{StaticResource BtnUp}">
+                        <TextBlock Text="0" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button
+                        Click="SwitchStateBtn_Click"
+                        Style="{StaticResource BtnUp}">
+                        <TextBlock x:Name="WindowCurrentState" Text="1" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button
+                        Click="CloseBtn_Click"
+                        Style="{StaticResource BtnUp}">
+                        <TextBlock Text="r" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <ContentPresenter Grid.Row="1" />
+        </Grid>
+    </Border>
+</UserControl>
