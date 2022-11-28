@@ -4,84 +4,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:BookSales"
+        xmlns:controls="clr-namespace:BookSales.Controls"
         mc:Ignorable="d"
         Title="Авторизация"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        ResizeMode="CanResize"
         AllowsTransparency="True"
         Icon="../Images/LibraryIcon.png"
         MinHeight="450"
         Height="500" 
         MinWidth="600"
         Width="800">
+
+    <Window.Background>
+        <ImageBrush ImageSource="../Background/Auth.jpg"/>
+    </Window.Background>
+    
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="0"
+                      GlassFrameThickness="0"
+                      NonClientFrameEdges="None"
+                      ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    <Window.Template>
-        <ControlTemplate TargetType="{x:Type Window}">
-            <Border>
-                <Border.Background>
-                    <ImageBrush ImageSource="../Background/Auth.jpg"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel 
-                            Orientation="Horizontal" 
-                            HorizontalAlignment="Center">
-                            <Image
-                                Margin="5,5"
-                                MaxHeight="32"
-                                MaxWidth="32"
-                                Source="{TemplateBinding Icon}"/>
-                            <TextBlock 
-                                FontSize="18"
-                                FontWeight="Bold"
-                                Style="{StaticResource TextBlockStyle}"
-                                Text="{TemplateBinding Title}"/>
-                        </StackPanel>
-                        <StackPanel 
-                                Orientation="Horizontal"
-                                Grid.Column="1">
-                            <Button
-                                Margin="5 0"
-                                Width="35"
-                                Style="{StaticResource ButtonStyle}"
-                                Click="MinBtn_Click">
-                                <TextBlock Text="0" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
-                            </Button>
-                            <Button
-                                Margin="5 0"
-                                Width="35"
-                                Style="{StaticResource ButtonStyle}"
-                                Click="StateBtn_Click">
-                                <TextBlock Text="{Binding ElementName=StateBtnText, Path=Text}" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
-                            </Button>
-                            <Button
-                                Margin="5 0"
-                                Width="35"
-                                Style="{StaticResource ButtonStyle}"
-                                Click="CloseBtn_Click">
-                                <TextBlock Text="r" FontFamily="Webdings" Style="{StaticResource TextBlockStyle}"/>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                    <ContentPresenter Grid.Row="1"/>
-                </Grid>
-            </Border>
-        </ControlTemplate>
-    </Window.Template>
+    
     <Grid>
-        <TextBlock x:Name="StateBtnText" Visibility="Collapsed" Text="1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <controls:TopPanelControl Grid.Row="0"/>
+        <TextBlock Grid.Row="1" x:Name="StateBtnText" Visibility="Collapsed" Text="1"/>
         <Frame
+            Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             x:Name="AFrame"

@@ -12,18 +12,12 @@ namespace BookSales.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow((Size, Point) old)
+        public MainWindow()
         {
             InitializeComponent();
-            _old = old;
-            _windowMoves = new WindowMoves(this);
             this.MouseDown += (s, e) => Keyboard.ClearFocus();
             Loaded += OnLoaded;
-            StateChanged += (s, e) => { if (this.WindowState == WindowState.Maximized) _windowMoves.SwitchState(); };
-            SizeChanged += (s, e) => StateBtnText.Text = _windowMoves.isMax ? "2" : "1";
         }
-
-        private (Size, Point) _old { get; set; }
 
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {
@@ -37,14 +31,6 @@ namespace BookSales.Windows
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (AuthStaticUser.AuthUser != null) DrawAuthUser(AuthStaticUser.AuthUser);
-
-            this.MouseMove += _windowMoves.DragMoveMouseMove;
-            this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
-            this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
-            _windowMoves.SwitchState();
-
-            _windowMoves.oldLoc = _old.Item2;
-            _windowMoves.oldSize = _old.Item1;
 
             MainFrame = this.CurrentFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
@@ -75,8 +61,6 @@ namespace BookSales.Windows
             }
         }
 
-        private readonly WindowMoves _windowMoves;
-
         private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
         {
             new BasketWindow().ShowDialog();
@@ -91,21 +75,6 @@ namespace BookSales.Windows
         }
 
         internal static Frame MainFrame { get; private set; }
-
-        private void MinBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void StateBtn_Click(object sender, RoutedEventArgs e)
-        {
-            _windowMoves.SwitchState();
-        }
-
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {

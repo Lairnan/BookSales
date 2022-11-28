@@ -47,11 +47,8 @@ namespace BookSales.Pages.AuthPages
                     if (user != null)
                     {
                         AuthStaticUser.AuthUser = user;
-                        (Size, Point) old;
-                        old.Item1 = Application.Current.Windows.OfType<AuthWindow>().Single()._windowMoves.oldSize;
-                        old.Item2 = Application.Current.Windows.OfType<AuthWindow>().Single()._windowMoves.oldLoc;
                         if (!Application.Current.Windows.OfType<AuthWindow>().Single().IsDialog)
-                            new MainWindow(old).Show();
+                            new MainWindow().Show();
                         Application.Current.Windows.OfType<AuthWindow>().Single().Close();
                         return;
                     }
@@ -133,10 +130,7 @@ namespace BookSales.Pages.AuthPages
         private void AuthGuestBtn_Click(object sender, RoutedEventArgs e)
         {
             AuthStaticUser.AuthUser = null;
-            (Size, Point) old;
-            old.Item1 = Application.Current.Windows.OfType<AuthWindow>().Single()._windowMoves.oldSize;
-            old.Item2 = Application.Current.Windows.OfType<AuthWindow>().Single()._windowMoves.oldLoc;
-            new MainWindow(old).Show();
+            new MainWindow().Show();
             Application.Current.Windows.OfType<AuthWindow>().Single().Close();
         }
     }

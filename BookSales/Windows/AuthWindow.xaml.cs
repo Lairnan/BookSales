@@ -13,11 +13,8 @@ namespace BookSales.Windows
 		public AuthWindow()
         {
             InitializeComponent();
-            _windowMoves = new WindowMoves(this);
             this.MouseDown += (s, e) => Keyboard.ClearFocus();
 			Loaded += OnLoaded;
-            StateChanged += (s, e) => { if (this.WindowState == WindowState.Maximized) _windowMoves.SwitchState(); };
-            SizeChanged += (s, e) => StateBtnText.Text = _windowMoves.isMax ? "2" : "1";
 		}
 
         public bool IsDialog { get; set; } = false;
@@ -26,29 +23,8 @@ namespace BookSales.Windows
 		{
 			AuthFrame = AFrame;
 			AuthFrame.Content = new Authorization();
-            this.MouseMove += _windowMoves.DragMoveMouseMove;
-            this.MouseLeftButtonDown += _windowMoves.DragMoveLeftBtnDown;
-            this.MouseLeftButtonUp += _windowMoves.DragMoveLeftBtnUp;
         }
-
-        public readonly WindowMoves _windowMoves;
 
         internal static Frame AuthFrame { get; set; }
-
-        private void MinBtn_Click(object sender, RoutedEventArgs e)
-        {
-			this.WindowState = WindowState.Minimized;
-        }
-
-        private void StateBtn_Click(object sender, RoutedEventArgs e)
-        {
-            _windowMoves.SwitchState();
-        }
-
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-			if (IsDialog) this.Close();
-			else Application.Current.Shutdown();
-        }
     }
 }

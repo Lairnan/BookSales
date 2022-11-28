@@ -13,6 +13,7 @@
                  <ResourceDictionary Source="Resources/MainStyles.xaml"/>
                  <ResourceDictionary Source="Resources/ItemsControlNullTarget.xaml"/>
                  <ResourceDictionary Source="Resources/DatePickerExStyle.xaml"/>
+                 <ResourceDictionary Source="Resources/WindowStyle.xaml"/>
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>
