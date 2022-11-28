@@ -4,21 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookSales"
+        xmlns:controls="clr-namespace:BookSales.Controls"
         mc:Ignorable="d"
         Title="ConfirmOrderWindow"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
         MinHeight="450"
         Height="500" 
         Background="#FF272727"
         MinWidth="800"
         Width="800">
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      GlassFrameThickness="0"
+                      NonClientFrameEdges="None"
+                      ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="3">
+        <controls:TopPanelControl Grid.Row="0"/>
+        <UniformGrid Grid.Row="1" Columns="3">
             <TextBlock
                 TextAlignment="Center"
                 Style="{StaticResource TextBlockStyle}"
@@ -34,7 +47,7 @@
         </UniformGrid>
         <ItemsControl
             x:Name="BasketViewList"
-            Grid.Row="1">
+            Grid.Row="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <UniformGrid Columns="3">
@@ -58,7 +71,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
