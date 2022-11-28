@@ -514,6 +514,7 @@
                 <Setter Property="FontFamily" Value="Trebuchet MS"/>
                 <Setter Property="Foreground" Value="#FFFFFF"/>
                 <Setter Property="Background" Value="#282F33"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">

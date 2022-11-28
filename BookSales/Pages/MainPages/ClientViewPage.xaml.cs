@@ -21,19 +21,19 @@ namespace BookSales.Pages.MainPages
             GetItemsAsync();
         }
 
-        private ObservableCollection<Books> BooksList { get; set; }
+        private ObservableCollection<Books> BooksList { get; set; } = new ObservableCollection<Books>();
 
         private async void GetItemsAsync()
         {
+            BooksViewList.ItemsSource = BooksList;
             using (var db = new BookSalesEntities())
             {
-                var listBooks = db.Books.Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList();
-                BooksList = new ObservableCollection<Books>(listBooks);
-                BooksViewList.ItemsSource = listBooks;
+                var listBooks = await Task.Run(() => db.Books.Include(s => s.Genres).Include(s => s.Authors).Include(s => s.Publishers).ToList());
+                listBooks.ForEach(s => BooksList.Add(s));
                 PlaceHolders = db.PlaceHolder.ToList();
                 var listGenres = new List<Genres>();
                 listGenres.Add(new Genres { name = "Очистить" });
-                listGenres.AddRange(await Task.Run(() => db.Genres.ToList()));
+                await Task.Run(() => listGenres.AddRange(db.Genres.ToList()));
                 GenreBox.ItemsSource = listGenres;
             }
         }
@@ -113,6 +113,10 @@ namespace BookSales.Pages.MainPages
             }
 
             BooksViewList.ItemsSource = newList.ToList();
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FilterText.Text = string.Empty;
         }
     }
 }

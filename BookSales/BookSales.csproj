@@ -66,6 +66,7 @@
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AuthStaticUser.cs" />
     <Compile Include="Controls\DatePickerEx.cs" />
+    <Compile Include="Controls\TopPanelControl.xaml.cs" />
     <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
       <DependentUpon>StoryViewPage.xaml</DependentUpon>
     </Compile>
@@ -149,6 +150,7 @@
       <DependentUpon>ViewUsersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BehaviorsFiles\WindowMoves.cs" />
+    <Page Include="Controls\TopPanelControl.xaml" />
     <Page Include="Pages\MainPages\StoryViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +159,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\WindowStyle.xaml" />
     <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

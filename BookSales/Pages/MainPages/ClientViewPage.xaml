@@ -15,6 +15,14 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource TextBlockStyle}" Text="Поиск по названию: " VerticalAlignment="Center" />
             <TextBox Style="{StaticResource TextBoxStyle}" Width="175" x:Name="FilterText" TextChanged="FilterText_TextChanged" />
+            <Button Style="{StaticResource ButtonStyle}"
+                    Width="35"
+                    Height="35"
+                    Background="Transparent"
+                    Margin="5 0 0 0"
+                    Click="Button_Click">
+                <TextBlock Text="r" FontFamily="Webdings"/>
+            </Button>
             <StackPanel Margin="15 0 5 0">
                 <TextBlock TextAlignment="Center" Text="Сортировка по жанрам: " Style="{StaticResource TextBlockStyle}"/>
                 <ComboBox x:Name="GenreBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Width="200" Height="30" SelectionChanged="ComboBox_SelectionChanged">
@@ -26,7 +34,7 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Margin="15 0 5 0">
-                <TextBlock TextAlignment="Center" Text="Сортировка цене: " Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock TextAlignment="Center" Text="Сортировка по цене: " Style="{StaticResource TextBlockStyle}"/>
                 <ComboBox x:Name="OrderBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Height="30" Width="200" SelectionChanged="ComboBox_SelectionChanged">
                     <TextBlock Text="По возрастанию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
                     <TextBlock Text="По убыванию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
