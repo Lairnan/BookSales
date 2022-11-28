@@ -98,9 +98,19 @@ namespace BookSales.Pages.MainPages
         {
             var list = BooksList;
             var genre = GenreBox.SelectedItem as Genres;
+            var filter = FilterText.Text.ToLower().Trim();
 
-            var newList = await Task.Run(() => list.Where(s => s.name.ToLower().Trim().Contains(FilterText.Text.ToLower().Trim())));
-            if (GenreBox.SelectedIndex != 0) newList = await Task.Run(() => newList.Where(s => s.genreId == genre.id));
+            var newList = await Task.Run(() =>
+            {
+                if (!filter.StartsWith("@")) return list.Where(s => s.name.ToLower().Trim().Contains(filter));
+                
+                filter = filter.Remove(0, 1);
+                return list.Where(s => s.Authors.surname.ToLower().Trim().Contains(filter)
+                                       || s.Authors.name.ToLower().Trim().Contains(filter)
+                                       || (s.Authors.patronymic != null &&
+                                           s.Authors.patronymic.ToLower().Trim().Contains(filter))).ToList();
+            });
+            if (GenreBox.SelectedIndex != 0) newList = await Task.Run(() => newList.Where(s => s.genreId == genre?.id));
 
             switch (OrderBox.SelectedIndex)
             {
