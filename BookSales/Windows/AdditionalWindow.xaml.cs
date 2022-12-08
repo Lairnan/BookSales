@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookSales.Pages.Adds;
+using BookSales.Pages.Edits;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BookSales.Windows
 {
@@ -32,6 +24,12 @@ namespace BookSales.Windows
         {
             var frame = sender as Frame;
             this.Title = (frame.Content as Page).Title;
+            if(frame.Content is AddBookPage addBookPage) addBookPage.InitializeValues();
+            else if(frame.Content is EditBookPage editBookPage) editBookPage.InitializeValues();
+            this.MinWidth = (frame.Content as Page).Width + 50;
+            this.MinHeight = (frame.Content as Page).Height + 100;
+            this.Width = (frame.Content as Page).Width + 100;
+            this.Height = (frame.Content as Page).Height + 150;
         }
 
         internal static Frame AddFrame { get; set; }

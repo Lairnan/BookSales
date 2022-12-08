@@ -62,9 +62,9 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBox x:Name="DateOrderBox" Style="{StaticResource TextBoxStyle}" IsReadOnly="True"/>
-                    <CheckBox x:Name="PaidBox" Margin="0 10"/>
+                    <CheckBox x:Name="PaidBox" Margin="0 15"/>
                     <CheckBox x:Name="PerformedBox" Margin="0 10"/>
-                    <Button Content="Просмотреть" Click="ViewOrderConsist_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button Content="Просмотреть" Click="ViewOrderConsist_Click" Margin="0 5" Style="{StaticResource ButtonStyle}"/>
                     <TextBox x:Name="PriceBox" Style="{StaticResource TextBoxStyle}" IsReadOnly="True"/>
                 </StackPanel>
             </Grid>

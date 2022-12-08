@@ -3,29 +3,36 @@ using BookSales.Context;
 using BookSales.Windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace BookSales.Pages.AuthPages
+namespace BookSales.Pages.Adds
 {
     /// <summary>
-    /// Логика взаимодействия для Registration.xaml
+    /// Логика взаимодействия для AddUserPage.xaml
     /// </summary>
-    public partial class Registration : Page
+    public partial class AddUserPage : Page
     {
-        public Registration()
+        public AddUserPage()
         {
             InitializeComponent();
-            KeyDown += (s, e) =>
+
+            using(var db = new BookSalesEntities())
             {
-                if (e.Key == Key.Enter & RegBtn.IsEnabled)
-                {
-                    RegBtn_Click(this, e);
-                }
-            };
+                PositionBox.ItemsSource = db.Positions.OrderBy(s => s.id).ToList();
+            }
 
             var dateNow = DateTime.Today;
             DateOfBirthPicker.DisplayDateEnd = DateTime.Parse($"{dateNow.Day}.{dateNow.Month}.{dateNow.Year - 5}");
@@ -57,52 +64,6 @@ namespace BookSales.Pages.AuthPages
             BtnClear.IsEnabled = false;
         }
 
-        private async void RegBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsNullOrWhiteSpace())
-            {
-                MessageBox.Show("Поля не могут быть пустыми");
-                return;
-            }
-
-            RegBtn.IsEnabled = false;
-            var surname = SurnameBox.Text;
-            var name = NameBox.Text;
-            var patronymic = string.IsNullOrWhiteSpace(PatronymicBox.Text) ? null : PatronymicBox.Text;
-            var dateOfBirth = (DateTime)DateOfBirthPicker.SelectedDate;
-            if (dateOfBirth == null)
-            {
-                MessageBox.Show("Выберите дату!");
-                return;
-            }
-            if(dateOfBirth > DateOfBirthPicker.DisplayDateEnd || dateOfBirth < DateOfBirthPicker.DisplayDateStart)
-            {
-                MessageBox.Show("Неверно выбранная дата");
-                return;
-            }
-            var login = LoginBox.Text;
-            var password = PasswordBox.Password;
-            byte[] image = null;
-            if (!string.IsNullOrWhiteSpace(FileNamePath))
-                image = File.ReadAllBytes(FileNamePath);
-
-            var user = new Users
-            {
-                surname = surname,
-                name = name,
-                patronymic = patronymic,
-                login = login,
-                positionId = 1,
-                dateOfBirth = dateOfBirth,
-                password = password,
-                image = image,
-                dateOfStart = DateTime.Now
-            };
-            if(await TryAddUser(user))
-                MessageBox.Show("Вы успешно зарегистрировались!");
-            RegBtn.IsEnabled = true;
-        }
-
         private async Task<bool> TryAddUser(Users user)
         {
             using (var db = await Task.Run(() => new BookSalesEntities()))
@@ -111,7 +72,6 @@ namespace BookSales.Pages.AuthPages
                 {
                     db.Users.Add(user);
                     await db.SaveChangesAsync();
-                    AuthWindow.AuthFrame.Navigate(new Authorization());
                     return true;
                 }
                 catch (Exception ex)
@@ -132,9 +92,64 @@ namespace BookSales.Pages.AuthPages
             return false;
         }
 
-        private void AuthBtn_Click(object sender, RoutedEventArgs e)
+        private async void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            AuthWindow.AuthFrame.Navigate(new Authorization());
+            if (IsNullOrWhiteSpace())
+            {
+                MessageBox.Show("Поля не могут быть пустыми");
+                return;
+            }
+
+            AddUserBtn.IsEnabled = false;
+            var surname = SurnameBox.Text;
+            var name = NameBox.Text;
+            var patronymic = string.IsNullOrWhiteSpace(PatronymicBox.Text) ? null : PatronymicBox.Text;
+            var dateOfBirth = (DateTime)DateOfBirthPicker.SelectedDate;
+            if (dateOfBirth == null)
+            {
+                MessageBox.Show("Выберите дату!");
+                return;
+            }
+            if (dateOfBirth > DateOfBirthPicker.DisplayDateEnd || dateOfBirth < DateOfBirthPicker.DisplayDateStart)
+            {
+                MessageBox.Show("Неверно выбранная дата");
+                return;
+            }
+            var position = PositionBox.SelectedItem as Positions;
+            var login = LoginBox.Text;
+            var password = PasswordBox.Password;
+            byte[] image = null;
+            if (!string.IsNullOrWhiteSpace(FileNamePath))
+                image = File.ReadAllBytes(FileNamePath);
+
+            var user = new Users
+            {
+                surname = surname,
+                name = name,
+                patronymic = patronymic,
+                login = login,
+                positionId = position.id,
+                dateOfBirth = dateOfBirth,
+                password = password,
+                image = image,
+                dateOfStart = DateTime.Now
+            };
+            if (await TryAddUser(user))
+            {
+                MessageBox.Show("Успешно добавлена!");
+
+                var wnd = Window.GetWindow(this);
+                wnd.DialogResult = true;
+                wnd.Close();
+            }
+            AddUserBtn.IsEnabled = true;
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var wnd = Window.GetWindow(this);
+            wnd.DialogResult = false;
+            wnd.Close();
         }
     }
 }

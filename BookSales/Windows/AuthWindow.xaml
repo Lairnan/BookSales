@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:BookSales.Controls"
         mc:Ignorable="d"
         Title="Авторизация"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterOwner"
         WindowStyle="None"
         AllowsTransparency="True"
         Icon="../Images/LibraryIcon.png"

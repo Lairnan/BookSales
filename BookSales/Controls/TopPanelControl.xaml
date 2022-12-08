@@ -36,6 +36,7 @@
                         <TextBlock Text="0" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button
+                        x:Name="SwitchStateBtn"
                         Click="SwitchStateBtn_Click"
                         Style="{StaticResource BtnUp}">
                         <TextBlock x:Name="WindowCurrentState" Text="1" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>

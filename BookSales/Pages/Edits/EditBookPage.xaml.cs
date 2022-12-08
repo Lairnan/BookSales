@@ -7,42 +7,41 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.Entity;
+using BookSales.Pages.Adds;
 
-namespace BookSales.Pages.Adds
+namespace BookSales.Pages.Edits
 {
     /// <summary>
-    /// Логика взаимодействия для AddBookPage.xaml
+    /// Логика взаимодействия для EditBookPage.xaml
     /// </summary>
-    public partial class AddBookPage : Page
+    public partial class EditBookPage : Page
     {
-        public AddBookPage()
+        public EditBookPage(Books book)
         {
             InitializeComponent();
 
-            ReleaseDateBox.DisplayDateStart = DateTime.Parse("01.01.1900");
             ReleaseDateBox.DisplayDateEnd = DateTime.Today;
 
+            Book = book;
+
             InitializeValues();
+
+            NameBox.Text = book.name;
+            ImageBox.Source = book.image?.ToImageSource();
+            PageCountBox.Text = book.pages.ToString();
+            RetailPriceBox.Text = book.retailPrice.ToString("0.00");
+            ReleaseDateBox.SelectedDate = book.releaseDate;
+
         }
+
+        private Books Book { get; set; }
 
         public async void InitializeValues()
         {
-            var authorIndex = (AuthorBox?.SelectedIndex ?? 0) < 1 ? 0 : AuthorBox.SelectedIndex;
-            var genreIndex = (GenreBox?.SelectedIndex ?? 0) < 1 ? 0 : GenreBox.SelectedIndex;
-            var publisherIndex = (PublisherBox?.SelectedIndex ?? 0) < 1 ? 0 : PublisherBox.SelectedIndex;
-            var storageIndex = (StorageBox?.SelectedIndex ?? 0) < 1 ? 0 : StorageBox.SelectedIndex;
-
             using(var db = new BookSalesEntities())
             {
                 var listAuthors = await Task.Run(() => db.Authors.ToList());
@@ -55,10 +54,10 @@ namespace BookSales.Pages.Adds
                 PublisherBox.ItemsSource = listPublishers;
                 StorageBox.ItemsSource = listStorages;
 
-                AuthorBox.SelectedIndex = authorIndex;
-                GenreBox.SelectedIndex = genreIndex;
-                PublisherBox.SelectedIndex = publisherIndex;
-                StorageBox.SelectedIndex = storageIndex;
+                AuthorBox.SelectedItem = (AuthorBox.ItemsSource as List<Authors>).First(s => s.id == Book.authorId);
+                GenreBox.SelectedItem = (GenreBox.ItemsSource as List<Genres>).First(s => s.id == Book.genreId);
+                PublisherBox.SelectedItem = (PublisherBox.ItemsSource as List<Publishers>).First(s => s.id == Book.publisherId);
+                StorageBox.SelectedItem = (StorageBox.ItemsSource as List<Storage>).First(s => s.id == Book.PlaceHolder.idStorage);
             }
         }
 
@@ -87,7 +86,7 @@ namespace BookSales.Pages.Adds
             BtnClear.IsEnabled = false;
         }
 
-        private async void AddBookBtn_Click(object sender, RoutedEventArgs e)
+        private async void SaveBookBtn_Click(object sender, RoutedEventArgs e)
         {
             if (IsNullOrWhiteSpace())
             {
@@ -96,19 +95,19 @@ namespace BookSales.Pages.Adds
             }
             try
             {
-                AddBookBtn.IsEnabled = false;
+                SaveBookBtn.IsEnabled = false;
                 var name = NameBox.Text;
                 var author = AuthorBox.SelectedItem as Authors;
                 var genre = GenreBox.SelectedItem as Genres;
                 var publisher = PublisherBox.SelectedItem as Publishers;
-                var pageCount = Math.Abs(int.Parse(PageCountBox.Text));
+                var pageCount = int.Parse(PageCountBox.Text);
                 var releaseDate = ReleaseDateBox.SelectedDate.Value;
                 if (releaseDate == null)
                 {
                     MessageBox.Show("Выберите дату!");
                     return;
                 }
-                if (releaseDate > ReleaseDateBox.DisplayDateEnd || releaseDate < ReleaseDateBox.DisplayDateStart)
+                if (releaseDate > ReleaseDateBox.DisplayDateEnd)
                 {
                     MessageBox.Show("Неверно выбранная дата");
                     return;
@@ -119,34 +118,23 @@ namespace BookSales.Pages.Adds
                 byte[] image = null;
                 if (!string.IsNullOrWhiteSpace(FileNamePath))
                     image = File.ReadAllBytes(FileNamePath);
+                else if (string.IsNullOrWhiteSpace(FileNamePath) && ImageBox.Source != null) image = Book.image;
 
                 using(var db = new BookSalesEntities())
                 {
-                    var book = new Books
-                    {
-                        name = name,
-                        authorId = author.id,
-                        genreId = genre.id,
-                        publisherId = publisher.id,
-                        pages = pageCount,
-                        releaseDate = releaseDate,
-                        retailPrice = retailPrice,
-                        image = image,
-                    };
-
-                    db.Books.Add(book);
+                    var book = db.Books.Include(s => s.PlaceHolder).First(s => s.id == Book.id);
+                    book.name = name;
+                    book.authorId = author.id;
+                    book.genreId = genre.id;
+                    book.publisherId = publisher.id;
+                    book.pages = pageCount;
+                    book.releaseDate = releaseDate;
+                    book.retailPrice = retailPrice;
+                    book.image = image;
+                    book.PlaceHolder.stock = amount;
+                    book.PlaceHolder.idStorage = storage.id;
                     await db.SaveChangesAsync();
-
-                    var placeHolder = new PlaceHolder
-                    {
-                        idBook = book.id,
-                        idStorage = storage.id,
-                        stock = amount
-                    };
-                    
-                    db.PlaceHolder.Add(placeHolder);
-                    await db.SaveChangesAsync();
-                    MessageBox.Show("Успешно добавлено");
+                    MessageBox.Show("Изменения сохранены");
                 }
 
                 var wnd = Window.GetWindow(this);
@@ -157,7 +145,7 @@ namespace BookSales.Pages.Adds
             {
                 MessageBox.Show(ex.Message);
             }
-            AddBookBtn.IsEnabled = true;
+            SaveBookBtn.IsEnabled = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

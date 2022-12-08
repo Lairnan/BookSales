@@ -65,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AuthStaticUser.cs" />
+    <Compile Include="BehaviorsFiles\FixedGridViewColumn.cs" />
     <Compile Include="Context\Authors.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
@@ -118,8 +119,53 @@
     <Compile Include="Pages\Adds\AddBookPage.xaml.cs">
       <DependentUpon>AddBookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Adds\AddGenrePage.xaml.cs">
+      <DependentUpon>AddGenrePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Adds\AddPublisherPage.xaml.cs">
+      <DependentUpon>AddPublisherPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Adds\AddStoragePage.xaml.cs">
+      <DependentUpon>AddStoragePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Adds\AddUserPage.xaml.cs">
+      <DependentUpon>AddUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditAuthorPage.xaml.cs">
+      <DependentUpon>EditAuthorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditBookPage.xaml.cs">
+      <DependentUpon>EditBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditGenrePage.xaml.cs">
+      <DependentUpon>EditGenrePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditPublisherPage.xaml.cs">
+      <DependentUpon>EditPublisherPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditStoragePage.xaml.cs">
+      <DependentUpon>EditStoragePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Edits\EditUserPage.xaml.cs">
+      <DependentUpon>EditUserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
       <DependentUpon>StoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewAuthorsPage.xaml.cs">
+      <DependentUpon>ViewAuthorsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewBooksPage.xaml.cs">
+      <DependentUpon>ViewBooksPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewGenresPage.xaml.cs">
+      <DependentUpon>ViewGenresPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewPublishersPage.xaml.cs">
+      <DependentUpon>ViewPublishersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewsPages\ViewStoragesPage.xaml.cs">
+      <DependentUpon>ViewStoragesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
@@ -146,9 +192,6 @@
     <Compile Include="Pages\AuthPages\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPages\ManagerViewPage.xaml.cs">
-      <DependentUpon>ManagerViewPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\MainPages\ClientViewPage.xaml.cs">
       <DependentUpon>ClientViewPage.xaml</DependentUpon>
     </Compile>
@@ -170,7 +213,67 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Adds\AddGenrePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Adds\AddPublisherPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Adds\AddStoragePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Adds\AddUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Edits\EditAuthorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Edits\EditBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Edits\EditGenrePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Edits\EditPublisherPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Edits\EditStoragePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Edits\EditUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\MainPages\StoryViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewAuthorsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewBooksPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewGenresPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewPublishersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewsPages\ViewStoragesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,10 +320,6 @@
     </Compile>
     <Page Include="Pages\AuthPages\Authorization.xaml" />
     <Page Include="Pages\AuthPages\Registration.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\MainPages\ManagerViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

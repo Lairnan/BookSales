@@ -1,13 +1,13 @@
-﻿<Page x:Class="BookSales.Pages.MainPages.ViewsPages.ViewUsersPage"
+﻿<Page x:Class="BookSales.Pages.MainPages.ViewsPages.ViewBooksPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookSales.Pages.MainPages.ViewsPages"
       xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF"
       xmlns:bf="clr-namespace:BookSales.BehaviorsFiles"
-      xmlns:local="clr-namespace:BookSales.Context"
-      Title="Список пользователей"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      Title="Список книг">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
@@ -35,12 +36,42 @@
                     <TextBlock Text="r" FontFamily="Webdings"/>
                 </Button>
             </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="2">
+                <StackPanel Margin="15 0 5 0">
+                    <TextBlock TextAlignment="Center" Text="Сортировка по жанрам: " Style="{StaticResource TextBlockStyle}"/>
+                    <ComboBox x:Name="GenreBox"
+                              SelectedIndex="0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              Height="30"
+                              Width="200"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding name}" Style="{StaticResource ComboBoxTextBlockStyle}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Margin="15 0 5 0">
+                    <TextBlock TextAlignment="Center" Text="Сортировка по цене: " Style="{StaticResource TextBlockStyle}"/>
+                    <ComboBox x:Name="OrderBox"
+                              SelectedIndex="0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              Height="30"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        <TextBlock Text="По возрастанию" Style="{StaticResource ComboBoxTextBlockStyle}" />
+                        <TextBlock Text="По убыванию" Style="{StaticResource ComboBoxTextBlockStyle}" />
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
             <Button Style="{StaticResource ButtonStyle}"
                     Click="RefreshBtn_Click"
                     Margin="15 0 0 0"
                     VerticalAlignment="Center"
                     Padding="5"
-                    Grid.Column="2">
+                    Grid.Column="3">
                 <TextBlock FontFamily="Webdings" Text="q"/>
             </Button>
         </Grid>
@@ -49,7 +80,7 @@
                   Foreground="#fff"
                   Background="#AA222222"
                   SelectionMode="Single"
-                  x:Name="UsersViewList">
+                  x:Name="BooksViewList">
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
                     <Style.Triggers>
@@ -74,8 +105,8 @@
 
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Изменить" Click="EditUserMenu_Click"/>
-                    <MenuItem Header="Удалить" Click="RemoveUserMenu_Click"/>
+                    <MenuItem Header="Изменить" Click="EditBookMenu_Click"/>
+                    <MenuItem Header="Удалить" Click="RemoveBookMenu_Click"/>
                 </ContextMenu>
             </ListView.ContextMenu>
 
@@ -87,6 +118,7 @@
                                 <Image Height="75"
                                        Width="75"
                                        Stretch="Uniform"
+                                       HorizontalAlignment="Center"
                                        ToolTipService.InitialShowDelay="150">
                                     <Image.Source>
                                         <Binding Path="image">
@@ -113,31 +145,35 @@
                             </DataTemplate>
                         </bf:FixedGridViewColumn.CellTemplate>
                     </bf:FixedGridViewColumn>
-                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding surname}" Width="150"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding name}" Width="150"/>
-                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding patronymic, TargetNullValue='Отсутствует'}" Width="150"/>
-                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding dateOfBirth, StringFormat='{}{0:dd.MM.yyyy}'}" Width="150"/>
-                    <GridViewColumn Header="Дата регистрации" DisplayMemberBinding="{Binding dateOfStart, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="150"/>
-                    <GridViewColumn Header="Должность" Width="150">
+                    <GridViewColumn Header="Наименование" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Positions.name}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding positionId}" Value="3">
-                                                    <Setter Property="Foreground" Value="Red"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding positionId}" Value="2">
-                                                    <Setter Property="Foreground" Value="Orange"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Автор" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Authors.surname"/>
+                                            <Binding Path="Authors.name"/>
+                                            <Binding Path="Authors.patronymic"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
                                 </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Жанр" DisplayMemberBinding="{Binding Genres.name}" Width="Auto"/>
+                    <GridViewColumn Header="Издательство" DisplayMemberBinding="{Binding Publishers.name}" Width="Auto"/>
+                    <GridViewColumn Header="Количество страниц" DisplayMemberBinding="{Binding pages}" Width="Auto"/>
+                    <GridViewColumn Header="Дата выпуска" DisplayMemberBinding="{Binding releaseDate, StringFormat='{}{0:dd.MM.yyyy}'}" Width="Auto"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding retailPrice, StringFormat='{}{0:0.00} руб.'}" Width="Auto"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding PlaceHolder.stock}" Width="Auto"/>
+                    <GridViewColumn Header="Склад" DisplayMemberBinding="{Binding PlaceHolder.Storage.address}" Width="Auto"/>
                 </GridView>
             </ListView.View>
         </ListView>

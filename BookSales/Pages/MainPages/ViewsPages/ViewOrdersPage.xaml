@@ -13,7 +13,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource TextBlockStyle}" Text="Поиск по названию: " VerticalAlignment="Center" />
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="Поиск по ФИО: " VerticalAlignment="Center" />
             <TextBox Width="200" VerticalAlignment="Center" x:Name="FilterText" Style="{StaticResource TextBoxStyle}" TextChanged="FilterText_TextChanged" />
             <Button Style="{StaticResource ButtonStyle}"
                     Width="35"
@@ -34,8 +34,8 @@
             <StackPanel Margin="15 0 5 0">
                 <TextBlock TextAlignment="Center" Text="Сортировка по дате: " Style="{StaticResource TextBlockStyle}"/>
                 <ComboBox x:Name="DateOrderBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Height="30" Width="200" SelectionChanged="ComboBox_SelectionChanged">
-                    <TextBlock Text="Сначала новое" Style="{StaticResource TextBlockStyle}" Margin="0"/>
                     <TextBlock Text="Сначала старое" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                    <TextBlock Text="Сначала новое" Style="{StaticResource TextBlockStyle}" Margin="0"/>
                 </ComboBox>
             </StackPanel>
             <Button Content="Обновить"
@@ -47,7 +47,31 @@
         <ListView
             x:Name="OrdersViewList"
             Grid.Row="1"
+            Foreground="#fff"
+            Background="#AA222222"
+            SelectionMode="Single"
             Margin="5">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#555"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#333"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" Value="#000"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Посмотреть состав" Click="ViewOrderConsist_Click"/>
@@ -62,7 +86,17 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Order.Users.surname}" Width="Auto"/>
+                    <GridViewColumn Header="ФИО" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Order.Users.surname}"/>
+                                    <TextBlock Text="{Binding Order.Users.name, StringFormat='{} {0}'}"/>
+                                    <TextBlock Text="{Binding Order.Users.patronymic, StringFormat='{} {0}'}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Цена заказа" DisplayMemberBinding="{Binding Order.price, StringFormat='{}{0:0.00} руб.'}" Width="Auto"/>
                     <GridViewColumn Header="Дата заказа" DisplayMemberBinding="{Binding Order.dateOrder, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}" Width="Auto"/>
                     <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}" Width="Auto"/>

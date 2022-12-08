@@ -37,7 +37,7 @@ namespace BookSales.Pages.Adds
 
             try
             {
-                AddAuthorBtn.IsEnabled = false;
+                AddGenreBtn.IsEnabled = false;
                 var name = NameBox.Text;
 
                 using (var db = new BookSalesEntities())
@@ -68,7 +68,7 @@ namespace BookSales.Pages.Adds
             {
                 MessageBox.Show(ex.Message);
             }
-            AddAuthorBtn.IsEnabled = true;
+            AddGenreBtn.IsEnabled = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

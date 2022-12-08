@@ -13,7 +13,13 @@ namespace BookSales.Controls
 		public TopPanelControl()
 		{
 			InitializeComponent();
-		}
+            Loaded += (s, e) =>
+            {
+                var window = (this.Parent as Grid).Parent as Window;
+                SwitchStateBtn.Visibility = window.ResizeMode != ResizeMode.NoResize ? Visibility.Visible : Visibility.Collapsed;
+                WindowCurrentState.Text = window.WindowState == WindowState.Maximized ? "2" : "1";
+            };
+        }
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);

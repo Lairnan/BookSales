@@ -1,33 +1,31 @@
 ﻿using BookSales.Context;
 using BookSales.Windows;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace BookSales.Pages.Adds
+namespace BookSales.Pages.Edits
 {
     /// <summary>
-    /// Логика взаимодействия для AddAuthorPage.xaml
+    /// Логика взаимодействия для EditAuthorPage.xaml
     /// </summary>
-    public partial class AddAuthorPage : Page
+    public partial class EditAuthorPage : Page
     {
-        public AddAuthorPage()
+        public EditAuthorPage(Authors author)
         {
             InitializeComponent();
+
+            SurnameBox.Text = author.surname;
+            NameBox.Text = author.name;
+            PatronymicBox.Text = author.patronymic;
+
+            Author = author;
         }
 
-        private async void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
+        private Authors Author { get; set; }
+
+        private async void SaveAuthorBtn_Click(object sender, RoutedEventArgs e)
         {
             if (IsNullOrWhiteSpace())
             {
@@ -37,41 +35,30 @@ namespace BookSales.Pages.Adds
 
             try
             {
-                AddAuthorBtn.IsEnabled = false;
+                SaveAuthorBtn.IsEnabled = false;
                 var surname = SurnameBox.Text;
                 var name = NameBox.Text;
                 var patronymic = string.IsNullOrWhiteSpace(PatronymicBox.Text) ? null : PatronymicBox.Text;
 
                 using (var db = new BookSalesEntities())
                 {
-                    var author = new Authors
-                    {
-                        surname = surname,
-                        name = name,
-                        patronymic = patronymic
-                    };
-
-                    db.Authors.Add(author);
+                    var author = db.Authors.First(s => s.id == Author.id);
+                    author.surname = surname;
+                    author.name = name;
+                    author.patronymic = patronymic;
                     await db.SaveChangesAsync();
-                    MessageBox.Show("Успешно добавлено");
+                    MessageBox.Show("Изменения сохранены");
                 }
 
-                if (AdditionalWindow.AddFrame.CanGoBack)
-                {
-                    AdditionalWindow.AddFrame.GoBack();
-                }
-                else
-                {
-                    var wnd = Window.GetWindow(this);
-                    wnd.DialogResult = true;
-                    wnd.Close();
-                }
+                var wnd = Window.GetWindow(this);
+                wnd.DialogResult = true;
+                wnd.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            AddAuthorBtn.IsEnabled = true;
+            SaveAuthorBtn.IsEnabled = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Linq;
 using System.Data.Entity;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
@@ -20,7 +19,7 @@ namespace BookSales.Pages.MainPages.ViewsPages
         public ViewOrdersPage()
         {
             InitializeComponent();
-            ApplyFilter();
+            Loaded += (s, e) => ApplyFilter();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -35,11 +34,17 @@ namespace BookSales.Pages.MainPages.ViewsPages
             {
                 IEnumerable<BookingsConsist> newList = await Task.Run(() => db.Orders
                                     .Include(s => s.Users)
+                                    .ToList()
                                     .Select(s => new BookingsConsist { Order = s }));
 
-                newList = await Task.Run(() => newList.Where(s => s.Order.dateOrder.ToString().Contains(FilterText.Text)));
+                var filter = FilterText.Text.ToLower().Trim();
 
-                if (StatusBox.SelectedIndex != 0)
+                newList = await Task.Run(() => newList.Where(s => s.Order.Users.surname.ToLower().Trim().Contains(filter)
+                                                                || s.Order.Users.name.ToLower().Trim().Contains(filter)
+                                                                || (s.Order.Users.patronymic != null 
+                                                                    && s.Order.Users.patronymic.ToLower().Trim().Contains(filter))));
+
+                if (StatusBox?.SelectedIndex > 0)
                 {
                     switch (StatusBox.SelectedIndex)
                     {
@@ -52,13 +57,13 @@ namespace BookSales.Pages.MainPages.ViewsPages
                     }
                 }
 
-                switch (DateOrderBox.SelectedIndex)
+                switch (DateOrderBox?.SelectedIndex)
                 {
                     case 0:
-                        newList = newList.OrderByDescending(s => s.Order.dateOrder);
+                        newList = newList.OrderBy(s => s.Order.dateOrder);
                         break;
                     case 1:
-                        newList = newList.OrderBy(s => s.Order.dateOrder);
+                        newList = newList.OrderByDescending(s => s.Order.dateOrder);
                         break;
                 }
 

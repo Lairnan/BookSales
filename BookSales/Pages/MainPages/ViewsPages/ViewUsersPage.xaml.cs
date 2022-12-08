@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Data.Entity;
-using System.Collections.Generic;
 using BookSales.Context;
+using BookSales.Pages.Edits;
+using BookSales.Windows;
+using System;
 
 namespace BookSales.Pages.MainPages.ViewsPages
 {
@@ -16,59 +18,27 @@ namespace BookSales.Pages.MainPages.ViewsPages
         public ViewUsersPage()
         {
             InitializeComponent();
-            Loaded += ViewUsersPage_Loaded;
+            Loaded += (s, e) => ApplyFilter();
         }
 
-        private async void ViewUsersPage_Loaded(object sender, RoutedEventArgs e)
+        public async void ApplyFilter()
         {
-            using(var db = new BookSalesEntities())
-            {
-                var listUsers = await GetUsersList(db);
-                UsersViewList.ItemsSource = listUsers;
-                var style = UsersViewList.Style;
-                UsersViewList.Style = null;
-                UsersViewList.Style = style;
-            }
-        }
-
-        private async void ApplyFilter()
-        {
-            string filter;
-            await Task.Delay(45);
-            if (FilterText.isPlaceholder) filter = string.Empty;
-            else filter = FilterText.Text.Trim().ToLower();
+            var filter = FilterText.Text.Trim().ToLower();
             using (var db = new BookSalesEntities())
             {
-                var listUsers = await GetUsersList(db);
+                var listUsers = await Task.Run(() => db.Users.Include(s => s.Positions));
 
                 listUsers = await Task.Run(() => listUsers.Where(s => s.surname.ToLower().Trim().Contains(filter)
                                     || s.name.ToLower().Trim().Contains(filter)
-                                    || s.patronymic.ToLower().Trim().Contains(filter)));
+                                    || (s.patronymic != null && s.patronymic.ToLower().Trim().Contains(filter))));
 
                 UsersViewList.ItemsSource = await Task.Run(() => listUsers.ToList());
-
-                var style = UsersViewList.Style;
-                UsersViewList.Style = null;
-                UsersViewList.Style = style;
             }
         }
 
-        private async Task<IEnumerable<UsersViewListClass>> GetUsersList(BookSalesEntities db)
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
-            var list = await Task.Run(() => db.Users.Include(s => s.Positions).Select(s => new UsersViewListClass
-            {
-                id = s.id,
-                name = s.name,
-                surname = s.surname,
-                patronymic = s.patronymic,
-                login = s.login,
-                password = s.password,
-                dateOfBirth = s.dateOfBirth,
-                image = s.image,
-                positionId = s.positionId,
-                Positions = s.Positions,
-            }));
-            return list.ToList();
+            FilterText.Text = string.Empty;
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
@@ -94,10 +64,39 @@ namespace BookSales.Pages.MainPages.ViewsPages
         {
             if (UsersViewList?.ItemsSource != null) ApplyFilter();
         }
-    }
 
-    public class UsersViewListClass : Users
-    {
-        public int Count { get; set; }
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ApplyFilter();
+        }
+
+        private void EditUserMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var user = UsersViewList.SelectedItem as Users;
+            var addWindow = new AdditionalWindow();
+            AdditionalWindow.AddFrame.Navigate(new EditUserPage(user));
+            if (addWindow.ShowDialog() == true) ApplyFilter();
+        }
+
+        private void RemoveUserMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Information)
+                != MessageBoxResult.Yes) return;
+            try
+            {
+                var user = UsersViewList.SelectedItem as Users;
+                using (var db = new BookSalesEntities())
+                {
+                    var userDb = db.Users.First(s => s.id == user.id);
+                    db.Users.Remove(userDb);
+                    db.SaveChanges();
+                    ApplyFilter();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

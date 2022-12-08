@@ -1,77 +1,45 @@
-﻿using BookSales.BehaviorsFiles;
-using BookSales.Context;
-using BookSales.Windows;
+﻿using BookSales.Context;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Data.Entity;
+using BookSales.Pages.Edits;
+using BookSales.Windows;
+using System;
 
-namespace BookSales.Pages.MainPages
+namespace BookSales.Pages.MainPages.ViewsPages
 {
     /// <summary>
     /// Логика взаимодействия для ViewBooksPage.xaml
     /// </summary>
-    public partial class ClientViewPage : Page
+    public partial class ViewBooksPage : Page
     {
-        public ClientViewPage()
+        public ViewBooksPage()
         {
             InitializeComponent();
-            GetItemsAsync();
+            Loaded += (s, e) => RefreshItems();
         }
 
-        public async void GetItemsAsync()
+        public void RefreshItems()
         {
             var index = (GenreBox?.SelectedIndex ?? 0) < 1 ? 0 : GenreBox.SelectedIndex;
+
             using (var db = new BookSalesEntities())
             {
-                var listBooks = await Task.Run(() => db.Books
-                                        .Include(s => s.Genres)
-                                        .Include(s => s.Authors)
-                                        .Include(s => s.Publishers)
-                                        .Include(s => s.PlaceHolder)
-                                        .ToList());
-                BooksViewList.ItemsSource = listBooks;
-                var listGenres = new List<Genres>();
-                listGenres.Add(new Genres { name = "Очистить" });
-                await Task.Run(() => listGenres.AddRange(db.Genres.ToList()));
-                GenreBox.ItemsSource = listGenres;
+                var list = new List<Genres> { new Genres { name = "Очистить" } };
+
+                list.AddRange(db.Genres.ToList());
+
+                GenreBox.ItemsSource = list;
                 GenreBox.SelectedIndex = index;
             }
-        }
 
-        private void AddInBasketBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var book = btn.DataContext as Books;
-            var count = btn.CommandParameter as string;
-            int countInt;
-            if (string.IsNullOrWhiteSpace(count) || !int.TryParse(count, out countInt)) countInt = 1;
-            if (book.PlaceHolder.stock < 1)
-            {
-                MessageBox.Show("Данной книги нет в наличии");
-                return;
-            }
-            BasketOrder.Add(book, countInt, book.PlaceHolder.stock);
-            BooksViewList.Items.Refresh();
-        }
-
-        private void FilterText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (BooksViewList == null) return;
             ApplyFilter();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (BooksViewList == null) return;
-            ApplyFilter();
-        }
-
-        public async void ApplyFilter()
+        private async void ApplyFilter()
         {
             using (var db = new BookSalesEntities())
             {
@@ -96,7 +64,7 @@ namespace BookSales.Pages.MainPages
 
                 if (GenreBox?.SelectedIndex > 0) newList = await Task.Run(() => newList.Where(s => s.genreId == genre?.id));
 
-                switch (OrderBox.SelectedIndex)
+                switch (OrderBox?.SelectedIndex)
                 {
                     case 0:
                         newList = newList.OrderBy(s => s.retailPrice);
@@ -109,9 +77,55 @@ namespace BookSales.Pages.MainPages
                 BooksViewList.ItemsSource = newList.ToList();
             }
         }
+
+        private void FilterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BooksViewList?.ItemsSource != null) ApplyFilter();
+        }
+
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FilterText.Text = string.Empty;
+            RefreshItems();
+        }
+
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             FilterText.Text = string.Empty;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (BooksViewList?.ItemsSource != null) ApplyFilter();
+        }
+
+        private void EditBookMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var book = BooksViewList.SelectedItem as Books;
+            var addWindow = new AdditionalWindow();
+            AdditionalWindow.AddFrame.Navigate(new EditBookPage(book));
+            if (addWindow.ShowDialog() == true) RefreshItems();
+        }
+
+        private void RemoveBookMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Information)
+                != MessageBoxResult.Yes) return;
+            try
+            {
+                var book = BooksViewList.SelectedItem as Books;
+                using (var db = new BookSalesEntities())
+                {
+                    var bookDb = db.Books.First(s => s.id == book.id);
+                    db.Books.Remove(bookDb);
+                    db.SaveChanges();
+                    RefreshItems();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ namespace BookSales.Context
         public string password { get; set; }
         public int positionId { get; set; }
         public byte[] image { get; set; }
+        public System.DateTime dateOfStart { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }

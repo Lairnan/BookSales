@@ -70,6 +70,10 @@ namespace BookSales.Windows
         private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
         {
             new BasketWindow().ShowDialog();
+            if(MainFrame.Content is ClientViewPage clientViewPage)
+            {
+                clientViewPage.BooksViewList.Items.Refresh();
+            }
         }
 
         public void DrawAuthUser(Users authUser)
@@ -110,27 +114,32 @@ namespace BookSales.Windows
 
         private void ViewBooksMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MainFrame.Content is ViewBooksPage) return;
+            MainFrame.Navigate(new ViewBooksPage());
         }
 
         private void ViewAuthorsMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MainFrame.Content is ViewAuthorsPage) return;
+            MainFrame.Navigate(new ViewAuthorsPage());
         }
 
         private void ViewGenresMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MainFrame.Content is ViewGenresPage) return;
+            MainFrame.Navigate(new ViewGenresPage());
         }
 
         private void ViewPublishersMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MainFrame.Content is ViewPublishersPage) return;
+            MainFrame.Navigate(new ViewPublishersPage());
         }
 
         private void ViewUsersMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MainFrame.Content is ViewUsersPage) return;
+            MainFrame.Navigate(new ViewUsersPage());
         }
 
         private void ViewOrdersMenu_Click(object sender, RoutedEventArgs e)
@@ -141,8 +150,8 @@ namespace BookSales.Windows
 
         private void ViewStoragesMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (MainFrame.Content is ViewOrdersPage) return;
-            MainFrame.Navigate(new ViewOrdersPage());
+            if (MainFrame.Content is ViewStoragesPage) return;
+            MainFrame.Navigate(new ViewStoragesPage());
         }
 
         private void AddBookMenu_Click(object sender, RoutedEventArgs e)
@@ -182,12 +191,20 @@ namespace BookSales.Windows
 
         private void AddUserMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            var addWindow = new AdditionalWindow();
+            AdditionalWindow.AddFrame.Navigate(new AddUserPage());
+            if (addWindow.ShowDialog() == true) RefreshItems();
         }
 
         private void RefreshItems()
         {
-            if (MainFrame.Content is ClientViewPage clientPage) clientPage.ApplyFilter();
+            if (MainFrame.Content is ClientViewPage clientPage) { clientPage.GetItemsAsync(); clientPage.ApplyFilter(); }
+            else if (MainFrame.Content is ViewBooksPage viewBooksPage) viewBooksPage.RefreshItems();
+            else if (MainFrame.Content is ViewAuthorsPage viewAuthorsPage) viewAuthorsPage.ApplyFilter();
+            else if (MainFrame.Content is ViewGenresPage viewGenresPage) viewGenresPage.ApplyFilter();
+            else if (MainFrame.Content is ViewPublishersPage viewPublishersPage) viewPublishersPage.ApplyFilter();
+            else if (MainFrame.Content is ViewUsersPage viewUsersPage) viewUsersPage.ApplyFilter();
+            else if (MainFrame.Content is ViewStoragesPage viewStoragesPage) viewStoragesPage.ApplyFilter();
         }
     }
 }

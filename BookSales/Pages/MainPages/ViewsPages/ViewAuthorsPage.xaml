@@ -1,0 +1,89 @@
+﻿<Page x:Class="BookSales.Pages.MainPages.ViewsPages.ViewAuthorsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookSales.Pages.MainPages.ViewsPages"
+      mc:Ignorable="d"
+      Title="Список авторов">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Поиск: " Style="{StaticResource TextBlockStyle}"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBox x:Name="FilterText"
+                         HorizontalAlignment="Left"
+                         Width="150"
+                         Style="{StaticResource TextBoxStyle}"
+                         TextChanged="FilterText_TextChanged"/>
+                <Button Style="{StaticResource ButtonStyle}"
+                        Width="35"
+                        Height="35"
+                        Margin="5 0 0 0"
+                        Background="Transparent"
+                        Click="ClearBtn_Click">
+                    <TextBlock Text="r" FontFamily="Webdings"/>
+                </Button>
+            </StackPanel>
+            <Button Style="{StaticResource ButtonStyle}"
+                    Click="RefreshBtn_Click"
+                    Margin="15 0 0 0"
+                    VerticalAlignment="Center"
+                    Padding="5"
+                    Grid.Column="2">
+                <TextBlock FontFamily="Webdings" Text="q"/>
+            </Button>
+        </Grid>
+        <ListView Grid.Row="1"
+                  Margin="15"
+                  Foreground="#fff"
+                  Background="#AA222222"
+                  SelectionMode="Single"
+                  x:Name="AuthorsViewList">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#555"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#333"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" Value="#000"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Изменить" Click="EditAuthorMenu_Click"/>
+                    <MenuItem Header="Удалить" Click="RemoveAuthorMenu_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding surname}" Width="Auto"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding name}" Width="Auto"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding patronymic}" Width="Auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

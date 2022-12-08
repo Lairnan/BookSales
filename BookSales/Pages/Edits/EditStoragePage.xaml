@@ -1,13 +1,13 @@
-﻿<Page x:Class="BookSales.Pages.Adds.AddPublisherPage"
+﻿<Page x:Class="BookSales.Pages.Edits.EditStoragePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BookSales.Pages.Adds"
+      xmlns:local="clr-namespace:BookSales.Pages.Edits"
       mc:Ignorable="d" 
-      Width="450"
-      Height="100"
-      Title="Добавление издателя">
+      Width="400"
+      Height="150"
+      Title="Изменение автора">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,13 +25,16 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="0"
                         Margin="0 0 10 0">
-                <TextBlock Text="Введите наименование:"
+                <TextBlock Text="Введите название:"
+                           Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="Введите адрес:"
                            Style="{StaticResource TextBlockStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
                         Margin="10 0">
                 <TextBox x:Name="NameBox" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox x:Name="AddressBox" Style="{StaticResource TextBoxStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
@@ -40,9 +43,9 @@
                         Margin="0 10"
                         HorizontalAlignment="Center">
                 <Button Content="Добавить"
-                        x:Name="AddPublisherBtn"
+                        x:Name="SaveStorageBtn"
                         Style="{StaticResource ButtonStyle}"
-                        Click="AddPublisherBtn_Click"/>
+                        Click="SaveStorageBtn_Click"/>
                 <Button Content="Отменить"
                         Margin="10 0 0 0"
                         Style="{StaticResource ButtonStyle}"

@@ -9,9 +9,11 @@
 
 namespace BookSales.Context
 {
+    using BookSales.BehaviorsFiles;
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Books
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -36,5 +38,10 @@ namespace BookSales.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderConsist> OrderConsist { get; set; }
         public virtual PlaceHolder PlaceHolder { get; set; }
+
+        public int count => this.PlaceHolder.stock - (BasketOrder.BasketOrders.FirstOrDefault(s => s.Book.id == this.id)?.Count ?? 0);
+
+        public bool countStyle => this.count <= 5;
+        public bool stockStyle => this.PlaceHolder.stock < 15;
     }
 }

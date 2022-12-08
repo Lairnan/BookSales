@@ -99,6 +99,7 @@
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="positionId" Type="int" Nullable="false" />
           <Property Name="image" Type="image" />
+          <Property Name="dateOfStart" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Books__authorId__30F848ED">
           <End Role="Authors" Type="Self.Authors" Multiplicity="0..1">
@@ -390,6 +391,7 @@
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idUser__4316F928" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Positions" Relationship="Self.FK__Users__positionI__403A8C7D" FromRole="Users" ToRole="Positions" />
+          <Property Name="dateOfStart" Type="DateTime" Precision="3" Nullable="false" />
         </EntityType>
         <Association Name="FK__Books__authorId__30F848ED">
           <End Role="Authors" Type="Self.Authors" Multiplicity="0..1">
@@ -664,6 +666,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BookSalesModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="dateOfStart" ColumnName="dateOfStart" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
