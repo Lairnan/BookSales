@@ -111,8 +111,8 @@ create table [OrderConsist] (
     foreign key (idBook) references [Books](id) on delete cascade on update cascade
 );
 end
-insert into [Positions] (name) VALUES ('Клиент');
-insert into [Positions] (name) VALUES ('Менеджер');
-insert into [Positions] (name) VALUES ('Администратор');
+insert into [Positions] (name) VALUES (N'Клиент');
+insert into [Positions] (name) VALUES (N'Менеджер');
+insert into [Positions] (name) VALUES (N'Администратор');
 go
 use [master]
