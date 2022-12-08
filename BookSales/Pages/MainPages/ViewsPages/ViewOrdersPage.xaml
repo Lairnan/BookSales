@@ -3,7 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF" xmlns:controls="clr-namespace:BookSales.Controls"
+      xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF"
+      xmlns:controls="clr-namespace:BookSales.Controls"
+      Title="Список заказов"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -12,13 +14,13 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource TextBlockStyle}" Text="Поиск по названию: " VerticalAlignment="Center" />
-            <controls:DatePickerEx Width="200" VerticalAlignment="Center" x:Name="FilterText" SelectedDateChanged="FilterText_SelectedDateChanged" />
+            <TextBox Width="200" VerticalAlignment="Center" x:Name="FilterText" Style="{StaticResource TextBoxStyle}" TextChanged="FilterText_TextChanged" />
             <Button Style="{StaticResource ButtonStyle}"
                     Width="35"
                     Height="35"
                     Margin="5 0 0 0"
                     Background="Transparent"
-                    Click="Button_Click">
+                    Click="ClearBtn_Click">
                 <TextBlock Text="r" FontFamily="Webdings"/>
             </Button>
             <StackPanel Margin="15 0 5 0">
@@ -30,25 +32,63 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Margin="15 0 5 0">
-                <TextBlock TextAlignment="Center" Text="Сортировка по цене: " Style="{StaticResource TextBlockStyle}"/>
-                <ComboBox x:Name="OrderBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Height="30" Width="200" SelectionChanged="ComboBox_SelectionChanged">
-                    <TextBlock Text="По возрастанию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
-                    <TextBlock Text="По убыванию" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                <TextBlock TextAlignment="Center" Text="Сортировка по дате: " Style="{StaticResource TextBlockStyle}"/>
+                <ComboBox x:Name="DateOrderBox" SelectedIndex="0" Style="{StaticResource ComboBoxStyle}" Height="30" Width="200" SelectionChanged="ComboBox_SelectionChanged">
+                    <TextBlock Text="Сначала новое" Style="{StaticResource TextBlockStyle}" Margin="0"/>
+                    <TextBlock Text="Сначала старое" Style="{StaticResource TextBlockStyle}" Margin="0"/>
                 </ComboBox>
             </StackPanel>
+            <Button Content="Обновить"
+                    Margin="5 0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                    Click="UpdateBtn_Click"/>
         </StackPanel>
         <ListView
             x:Name="OrdersViewList"
             Grid.Row="1"
             Margin="5">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Посмотреть состав" Click="ViewOrderConsist_Click"/>
+                    <MenuItem Header="Изменить" Click="MenuEditOrder_Click"/>
+                    <MenuItem Header="Удалить" Click="MenuDeleteOrder_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="№Заказа" DisplayMemberBinding="{Binding Order.id}" Width="100"/>
-                    <GridViewColumn Header="Дата заказа" DisplayMemberBinding="{Binding Order.dateOrder, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}" Width="150"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}" Width="125"/>
-                    <GridViewColumn Header="Цена заказа" DisplayMemberBinding="{Binding Price, StringFormat='{}{0:0.00} руб.'}" Width="125"/>
-                    <GridViewColumn Header="Оплачено" DisplayMemberBinding="{Binding Order.paid}" Width="75"/>
-                    <GridViewColumn Header="Выполнено" DisplayMemberBinding="{Binding Order.performed}" Width="75"/>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Order.Users.surname}" Width="Auto"/>
+                    <GridViewColumn Header="Цена заказа" DisplayMemberBinding="{Binding Order.price, StringFormat='{}{0:0.00} руб.'}" Width="Auto"/>
+                    <GridViewColumn Header="Дата заказа" DisplayMemberBinding="{Binding Order.dateOrder, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}" Width="Auto"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}" Width="Auto"/>
+                    <GridViewColumn Header="Оплачено" DisplayMemberBinding="{Binding Order.paid}" Width="Auto"/>
+                    <GridViewColumn Header="Выполнено" DisplayMemberBinding="{Binding Order.performed}" Width="Auto"/>
+                    <GridViewColumn Header="Дата завершения" DisplayMemberBinding="{Binding Order.dateSuccess, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}" Width="Auto"/>
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Завершить" Click="CompleteOrderBtn_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Order.performed}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Style.Setters>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

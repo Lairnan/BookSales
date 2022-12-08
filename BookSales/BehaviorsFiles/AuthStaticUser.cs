@@ -1,6 +1,6 @@
 ﻿using BookSales.Context;
 
-namespace BookSales
+namespace BookSales.BehaviorsFiles
 {
     internal static class AuthStaticUser
     {

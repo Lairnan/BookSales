@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Windows.Input;
 using System.Windows;
 using BookSales.Windows;
+using BookSales.BehaviorsFiles;
 
 namespace BookSales.Pages.MainPages
 {

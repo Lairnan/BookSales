@@ -1,4 +1,5 @@
-﻿using BookSales.Context;
+﻿using BookSales.BehaviorsFiles;
+using BookSales.Context;
 using BookSales.Windows;
 using Microsoft.Win32;
 using System;
@@ -26,7 +27,7 @@ namespace BookSales.Pages.AuthPages
                 }
             };
 
-            var dateNow = DateTime.Now;
+            var dateNow = DateTime.Today;
             DateOfBirthPicker.DisplayDateEnd = DateTime.Parse($"{dateNow.Day}.{dateNow.Month}.{dateNow.Year - 5}");
             DateOfBirthPicker.DisplayDateStart = DateTime.Parse("01.01.1900");
         }
@@ -74,7 +75,7 @@ namespace BookSales.Pages.AuthPages
                 MessageBox.Show("Выберите дату!");
                 return;
             }
-            if(dateOfBirth < DateOfBirthPicker.DisplayDateEnd && dateOfBirth > DateOfBirthPicker.DisplayDateStart)
+            if(dateOfBirth > DateOfBirthPicker.DisplayDateEnd || dateOfBirth < DateOfBirthPicker.DisplayDateStart)
             {
                 MessageBox.Show("Неверно выбранная дата");
                 return;

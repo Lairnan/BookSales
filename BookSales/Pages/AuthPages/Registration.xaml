@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:controls="clr-namespace:BookSales.Controls"
+      Title="Окно регистрации"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
             <TextBox x:Name="PatronymicBox" Style="{StaticResource TextBoxStyle}"/>
             <controls:DatePickerEx x:Name="DateOfBirthPicker"/>
             <TextBox x:Name="LoginBox" Style="{StaticResource TextBoxStyle}"/>
-            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}"/>
+            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PassBoxStyle}"/>
             <Grid
                 Margin="0 0 0 5">
                 <Grid.ColumnDefinitions>

@@ -4,6 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF"
+      xmlns:bf="clr-namespace:BookSales.BehaviorsFiles"
+      Title="Список пользователей"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -12,7 +14,11 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Поиск: " Style="{StaticResource TextBlockStyle}"/>
-            <ff:PlaceholderTextBox Placeholder="Введите текст" Width="150" Style="{StaticResource TextBoxStyle}"/>
+            <ff:PlaceholderTextBox x:Name="FilterText"
+                                   Placeholder="Введите текст"
+                                   Width="150"
+                                   Style="{StaticResource TextBoxStyle}"
+                                   TextChanged="FilterText_TextChanged"/>
         </StackPanel>
         <ItemsControl
             x:Name="UsersViewList"
@@ -29,17 +35,23 @@
                         Margin="5"
                         CornerRadius="15"
                         BorderThickness="3"
-                        BorderBrush="#FF423A14">
+                        BorderBrush="#DA22A2">
                         <Grid
                             Margin="5"
                             Width="400"
                             Height="200">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Image
                                 Width="145"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
                                 Height="145">
                                 <Image.Source>
                                     <Binding Path="image">
@@ -50,16 +62,46 @@
                                 </Image.Source>
                             </Image>
                             <StackPanel
+                                Margin="5 0"
                                 Grid.Column="1">
                                 <TextBlock Style="{StaticResource TextBlockStyle}">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                        <MultiBinding StringFormat="{}ФИО: {0} {1} {2}">
                                             <Binding Path="surname"/>
                                             <Binding Path="name"/>
                                             <Binding Path="patronymic"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
+                                <TextBlock Text="{Binding dateOfBirth, StringFormat='{}Дата рождения: {0:dd.MM.yyyy} г.'}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Text="{Binding Positions.name, StringFormat='{}Должность: {0}'}" Style="{StaticResource TextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1"
+                                        Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="5">
+                                <TextBlock Text="" Style="{StaticResource TextBlockStyle}"/>
+                                <Button Content="Изменить"
+                                        Style="{StaticResource ButtonStyle}"
+                                        Click="EditBtn_Click"
+                                        Margin="5 0"/>
+                                <Button Content="Удалить"
+                                        Click="RemoveBtn_Click"
+                                        Margin="5 0">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ThisUser}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Style.Setters>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Border>

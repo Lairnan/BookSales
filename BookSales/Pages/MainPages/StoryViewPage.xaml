@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:BookSales.Pages.MainPages"
       xmlns:BookSales="clr-namespace:BookSales"
       xmlns:Context="clr-namespace:BookSales.Context"
+      Title="История заказов"
       mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
@@ -17,10 +18,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="3">
+        <UniformGrid Columns="6">
             <TextBlock Width="200" Text="Дата заказа"/>
             <TextBlock Text="Количество книг"/>
             <TextBlock Text="Цена"/>
+            <TextBlock Text="Статус оплаты"/>
+            <TextBlock Text="Статус выдачи"/>
+            <TextBlock Text="Дата выдачи"/>
         </UniformGrid>
         <ItemsControl
             Grid.Row="1"
@@ -28,15 +32,47 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel MouseDown="StoryView_Click" Cursor="Hand">
-                        <UniformGrid Columns="3">
+                        <UniformGrid Columns="6">
                             <UniformGrid.Resources>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+                                <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockStyleStory" BasedOn="{StaticResource TextBlockStyle}">
                                     <Setter Property="Foreground" Value="#FFFFFF"/>
+                                    <Setter Property="TextAlignment" Value="Center"/>
                                 </Style>
                             </UniformGrid.Resources>
-                            <TextBlock Width="200" Text="{Binding Order.dateOrder, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
-                            <TextBlock Text="{Binding Count}"/>
-                            <TextBlock Text="{Binding Price, StringFormat=\{0:0.00 руб.\}}"/>
+                            <TextBlock Width="200" Text="{Binding Order.dateOrder, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Style="{StaticResource TextBlockStyleStory}"/>
+                            <TextBlock Text="{Binding Count}" Style="{StaticResource TextBlockStyleStory}"/>
+                            <TextBlock Text="{Binding Order.price, StringFormat=\{0:0.00 руб.\}}" Style="{StaticResource TextBlockStyleStory}"/>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyleStory}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Order.paid}" Value="True">
+                                                <Setter Property="Text" Value="Оплачено"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Style.Setters>
+                                            <Setter Property="Text" Value="Ожидание"/>
+                                        </Style.Setters>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyleStory}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Order.performed}" Value="True">
+                                                <Setter Property="Text" Value="Выдано"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Style.Setters>
+                                            <Setter Property="Text" Value="Ожидание"/>
+                                        </Style.Setters>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Width="200"
+                                       Text="{Binding Order.dateSuccess, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}, TargetNullValue='Ожидание'}"
+                                       Style="{StaticResource TextBlockStyleStory}"/>
                         </UniformGrid>
                         <StackPanel
                             Visibility="Collapsed"

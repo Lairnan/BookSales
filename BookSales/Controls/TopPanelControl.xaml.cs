@@ -40,7 +40,8 @@ namespace BookSales.Controls
 
 		private void CloseBtn_Click(object sender, RoutedEventArgs e)
 		{
-			Application.Current.Shutdown();
+			var window = (this.Parent as Grid).Parent as Window;
+			window.Close();
 		}
 
 		private void MinimizeBtn_Click(object sender, RoutedEventArgs e)

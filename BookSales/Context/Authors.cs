@@ -24,7 +24,6 @@ namespace BookSales.Context
         public string surname { get; set; }
         public string name { get; set; }
         public string patronymic { get; set; }
-        public string cipher { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books> Books { get; set; }

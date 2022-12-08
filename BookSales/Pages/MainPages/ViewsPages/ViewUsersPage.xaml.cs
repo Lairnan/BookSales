@@ -31,7 +31,29 @@ namespace BookSales.Pages.MainPages.ViewsPages
             }
         }
 
-        private async Task<List<UsersViewListClass>> GetUsersList(BookSalesEntities db)
+        private async void ApplyFilter()
+        {
+            string filter;
+            await Task.Delay(45);
+            if (FilterText.isPlaceholder) filter = string.Empty;
+            else filter = FilterText.Text.Trim().ToLower();
+            using (var db = new BookSalesEntities())
+            {
+                var listUsers = await GetUsersList(db);
+
+                listUsers = await Task.Run(() => listUsers.Where(s => s.surname.ToLower().Trim().Contains(filter)
+                                    || s.name.ToLower().Trim().Contains(filter)
+                                    || s.patronymic.ToLower().Trim().Contains(filter)));
+
+                UsersViewList.ItemsSource = await Task.Run(() => listUsers.ToList());
+
+                var style = UsersViewList.Style;
+                UsersViewList.Style = null;
+                UsersViewList.Style = style;
+            }
+        }
+
+        private async Task<IEnumerable<UsersViewListClass>> GetUsersList(BookSalesEntities db)
         {
             var list = await Task.Run(() => db.Users.Include(s => s.Positions).Select(s => new UsersViewListClass
             {
@@ -47,6 +69,30 @@ namespace BookSales.Pages.MainPages.ViewsPages
                 Positions = s.Positions,
             }));
             return list.ToList();
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var user = (sender as Button).DataContext as Users;
+        }
+
+        private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) 
+                != MessageBoxResult.Yes) return;
+            var user = (sender as Button).DataContext as Users;
+            using(var db = new BookSalesEntities())
+            {
+                var dbUser = db.Users.First(s => s.id == user.id);
+                db.Users.Remove(dbUser);
+                db.SaveChanges();
+            }
+            ApplyFilter();
+        }
+
+        private void FilterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (UsersViewList?.ItemsSource != null) ApplyFilter();
         }
     }
 

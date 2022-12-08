@@ -7,38 +7,47 @@
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
             <Border
-                  x:Name="Border" 
-                  Grid.ColumnSpan="2"
-                  CornerRadius="0"
-                  Background="#FF3F3F3F"
-                  BorderBrush="#FF97A0A5"
-                  BorderThickness="1" />
-            <Border 
-                  Grid.Column="0"
-                  CornerRadius="0" 
-                  Margin="1" 
-                  Background="#FF3F3F3F" 
-                  BorderBrush="#FF97A0A5"
-                  BorderThickness="0,0,1,0" />
+                x:Name="Border" 
+                Grid.ColumnSpan="2"
+                CornerRadius="0"
+                Background="#FF3F3F3F"
+                BorderBrush="#FF97A0A5"
+                BorderThickness="1" />
             <Path 
-                  x:Name="Arrow"
-                  Grid.Column="1"     
-                  Fill="White"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
-                />
+                x:Name="Arrow"
+                Grid.Column="1"
+                Fill="White"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Path.Style>
+                    <Style TargetType="Path">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True">
+                                <Setter Property="Data" Value="M0,8 L0,6 L4,2 L8,6 L8,8 L4,4 z"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Style.Setters>
+                            <Setter Property="Data" Value="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
+                        </Style.Setters>
+                    </Style>
+                </Path.Style>
+            </Path>
         </Grid>
     </ControlTemplate>
 
     <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
-        <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        <Border x:Name="PART_ContentHost" 
+                Focusable="False" 
+                CornerRadius="5"
+                BorderBrush="#0AD2CF"
+                BorderThickness="1"
+                Background="{TemplateBinding Background}" />
     </ControlTemplate>
 
     <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
-        
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="MinHeight" Value="30"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="OverridesDefaultStyle" Value="False"/>
         <Setter Property="Template">
@@ -54,43 +63,46 @@
                             ClickMode="Press">
                         </ToggleButton>
                         <ContentPresenter 
-                            Name="ContentSite" 
-                            IsHitTestVisible="False" 
+                            x:Name="ContentSite"
+                            IsHitTestVisible="False"
                             Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                            Margin="3,3,23,3"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" />
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"/>
                         <TextBox x:Name="PART_EditableTextBox"
-                            Style="{x:Null}" 
-                            Template="{StaticResource ComboBoxTextBox}" 
-                            HorizontalAlignment="Left" 
-                            VerticalAlignment="Center" 
-                            Margin="3,3,23,3"
-                            Focusable="True" 
-                            Background="#FF3F3F3F"
-                            Foreground="Green"
-                            Visibility="Hidden"
-                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                                 Style="{x:Null}"
+                                 Template="{StaticResource ComboBoxTextBox}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 Margin="3,3,23,3"
+                                 Focusable="True"
+                                 Background="#FF3F3F3F"
+                                 Foreground="Green"
+                                 Visibility="Hidden"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"/>
                         <Popup 
-                            Name="Popup"
+                            x:Name="Popup"
                             Placement="Bottom"
+                            HorizontalAlignment="Center"
                             IsOpen="{TemplateBinding IsDropDownOpen}"
                             AllowsTransparency="True" 
                             Focusable="False"
                             PopupAnimation="Slide">
-
-                            <Grid Name="DropDown"
-                              SnapsToDevicePixels="True"                
-                              MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                            <Grid x:Name="DropDown"
+                                  SnapsToDevicePixels="True"                
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border 
                                 x:Name="DropDownBorder"
                                 Background="#FF3F3F3F"
                                 BorderThickness="1"
                                 BorderBrush="#888888"/>
-                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                <ScrollViewer Margin="4,6,4,6"
+                                              Width="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=ActualWidth}"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Grid>
@@ -98,7 +110,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasItems" Value="false">
-                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="30"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#888888"/>
@@ -117,6 +129,15 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ComboBoxTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <Binding RelativeSource="{RelativeSource Mode=Self}" Path="Text"/>
             </Setter.Value>
         </Setter>
     </Style>

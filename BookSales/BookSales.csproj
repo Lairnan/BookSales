@@ -65,26 +65,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AuthStaticUser.cs" />
-    <Compile Include="Controls\DatePickerEx.cs" />
-    <Compile Include="Controls\TopPanelControl.xaml.cs" />
-    <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
-      <DependentUpon>StoryViewPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\AuthWindow.xaml.cs">
-      <DependentUpon>AuthWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="BehaviorsFiles\BasketOrder.cs" />
-    <Compile Include="Windows\BasketWindow.xaml.cs">
-      <DependentUpon>BasketWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="BehaviorsFiles\BookingsConsist.cs" />
-    <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
-    <Compile Include="Windows\ConfirmOrderWindow.xaml.cs">
-      <DependentUpon>ConfirmOrderWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Context\Authors.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
@@ -130,6 +110,35 @@
     <Compile Include="Context\Users.cs">
       <DependentUpon>BookSalesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DatePickerEx.cs" />
+    <Compile Include="Controls\TopPanelControl.xaml.cs" />
+    <Compile Include="Pages\Adds\AddAuthorPage.xaml.cs">
+      <DependentUpon>AddAuthorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Adds\AddBookPage.xaml.cs">
+      <DependentUpon>AddBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\StoryViewPage.xaml.cs">
+      <DependentUpon>StoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AdditionalWindow.xaml.cs">
+      <DependentUpon>AdditionalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BehaviorsFiles\BasketOrder.cs" />
+    <Compile Include="Windows\BasketWindow.xaml.cs">
+      <DependentUpon>BasketWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BehaviorsFiles\BookingsConsist.cs" />
+    <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="Windows\ConfirmOrderWindow.xaml.cs">
+      <DependentUpon>ConfirmOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BehaviorsFiles\Extension.cs" />
     <Compile Include="Pages\AuthPages\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
@@ -149,8 +158,18 @@
     <Compile Include="Pages\MainPages\ViewsPages\ViewUsersPage.xaml.cs">
       <DependentUpon>ViewUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BehaviorsFiles\WindowMoves.cs" />
+    <Compile Include="Windows\ViewOrderConsistWindow.xaml.cs">
+      <DependentUpon>ViewOrderConsistWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\TopPanelControl.xaml" />
+    <Page Include="Pages\Adds\AddAuthorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Adds\AddBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPages\StoryViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,12 +183,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AdditionalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AuthWindow.xaml" />
     <Page Include="Windows\BasketWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ConfirmOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditOrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,6 +207,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Windows\EditOrderWindow.xaml.cs">
+      <DependentUpon>EditOrderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -231,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\ViewOrderConsistWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -280,7 +314,18 @@
       <Name>PlaceholderWPF</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Context\BookSalesModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BookSalesModel.edmx</DependentUpon>
+      <LastGenOutput>BookSalesModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Context\BookSalesModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BookSalesModel.edmx</DependentUpon>
+      <LastGenOutput>BookSalesModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BookSalesIcon.png" />
     <Resource Include="Images\BookSalesIconBlack.png" />
@@ -294,16 +339,6 @@
     <Resource Include="Background\8.jpg" />
     <Resource Include="Background\9.jpg" />
     <Resource Include="Background\Auth.jpg" />
-    <Content Include="Context\BookSalesModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookSalesModel.edmx</DependentUpon>
-      <LastGenOutput>BookSalesModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Context\BookSalesModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookSalesModel.edmx</DependentUpon>
-      <LastGenOutput>BookSalesModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Images\BookSalesMain.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

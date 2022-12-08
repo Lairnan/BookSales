@@ -18,7 +18,6 @@ namespace BookSales.Context
         public Books()
         {
             this.OrderConsist = new HashSet<OrderConsist>();
-            this.PlaceHolder = new HashSet<PlaceHolder>();
         }
     
         public int id { get; set; }
@@ -36,7 +35,6 @@ namespace BookSales.Context
         public virtual Publishers Publishers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderConsist> OrderConsist { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlaceHolder> PlaceHolder { get; set; }
+        public virtual PlaceHolder PlaceHolder { get; set; }
     }
 }

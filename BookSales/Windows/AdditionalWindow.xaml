@@ -1,32 +1,31 @@
-﻿<Window x:Class="BookSales.Windows.AuthWindow"
+﻿<Window x:Class="BookSales.Windows.AdditionalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:BookSales"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookSales.Windows"
         xmlns:controls="clr-namespace:BookSales.Controls"
         mc:Ignorable="d"
-        Title="Авторизация"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Icon="../Images/LibraryIcon.png"
+        Height="700"
+        Width="800"
         MinHeight="450"
-        Height="500" 
-        MinWidth="600"
-        Width="800">
+        MinWidth="600">
 
     <Window.Background>
-        <ImageBrush ImageSource="../Background/Auth.jpg"/>
+        <ImageBrush ImageSource="../Background/5.jpg"/>
     </Window.Background>
-    
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
                       GlassFrameThickness="0"
                       NonClientFrameEdges="None"
                       ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

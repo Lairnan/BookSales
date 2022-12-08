@@ -1,4 +1,6 @@
-﻿using BookSales.Context;
+﻿using BookSales.BehaviorsFiles;
+using BookSales.Context;
+using BookSales.Pages.MainPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,9 +60,29 @@ namespace BookSales.Windows
 
         private async void OrderBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Check if user auth how guest
+            if (AuthStaticUser.AuthUser == null)
+            {
+                // Say user that he need auth for add item in basket
+                if (MessageBox.Show("Для добавления товара в корзину, вам необходимо пройти авторизация",
+                    "Не удалось добавить товар в корзину",
+                    MessageBoxButton.OKCancel, MessageBoxImage.Warning) != MessageBoxResult.OK) return;
+
+                if (IsAuthNull()) return;
+
+                // Draw auth user in top panel
+                Application.Current.Windows.OfType<MainWindow>().Single().DrawAuthUser(AuthStaticUser.AuthUser);
+                Application.Current.Windows.OfType<MainWindow>().Single().ViewStory.Visibility = Visibility.Visible;
+                Application.Current.Windows.OfType<MainWindow>().Single().MenuAdmin.Visibility = AuthStaticUser.AuthUser.positionId == 3 
+                                ? Visibility.Visible 
+                                : Visibility.Collapsed;
+                Application.Current.Windows.OfType<MainWindow>().Single().MenuManager.Visibility = AuthStaticUser.AuthUser.positionId == 2 
+                                ? Visibility.Visible 
+                                : Visibility.Collapsed;
+            }
+
             OrderBtn.IsEnabled = false;
-            var confirmWindow = new ConfirmOrderWindow();
-            if(confirmWindow.ShowDialog() == true)
+            if(new ConfirmOrderWindow().ShowDialog() == true)
             {
                 using (var db = new BookSalesEntities())
                 {
@@ -89,6 +111,16 @@ namespace BookSales.Windows
             OrderBtn.IsEnabled = true;
         }
 
+        private bool IsAuthNull()
+        {
+            // Open AuthWindow
+            new AuthWindow().ShowDialog();
+
+            // Check if user not log in
+            return AuthStaticUser.AuthUser == null;
+
+        }
+
         private Orders GetOrder()
         {
             return new Orders
@@ -96,7 +128,8 @@ namespace BookSales.Windows
                 idUser = AuthStaticUser.AuthUser.id,
                 dateOrder = DateTime.Now,
                 paid = true,
-                performed = false
+                performed = false,
+                price = BasketOrder.BasketOrders.Sum(s => s.Book.retailPrice * s.Count)
             };
         }
     }

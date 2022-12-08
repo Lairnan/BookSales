@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BookSales"
+        xmlns:bf="clr-namespace:BookSales.BehaviorsFiles"
         xmlns:controls="clr-namespace:BookSales.Controls"
         mc:Ignorable="d"
         Title="Книжный магазин"
@@ -32,12 +32,111 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <controls:TopPanelControl/>
+        <Menu Grid.Row="1"
+              Background="Transparent"
+              Foreground="White"
+              FontSize="14"
+              x:Name="MenuManager"
+              IsTabStop="False">
+            <Menu.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="IsTabStop" Value="False"/>
+                </Style>
+            </Menu.Resources>
+            <Menu.Style>
+                <Style TargetType="{x:Type Menu}"
+                       BasedOn="{StaticResource MainInputStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Static bf:AuthStaticUser.AuthUser}, Path=positionId}" Value="2">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Style.Setters>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style.Setters>
+                </Style>
+            </Menu.Style>
+            <MenuItem Header="Просмотр">
+                <MenuItem Header="Заказы"
+                          Foreground="Black"
+                          Click="ViewOrdersMenu_Click"/>
+            </MenuItem>
+        </Menu>
+        <Menu Grid.Row="1"
+              Background="Transparent"
+              Foreground="White"
+              FontSize="14"
+              x:Name="MenuAdmin"
+              IsTabStop="False">
+            <Menu.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="IsTabStop" Value="False"/>
+                </Style>
+            </Menu.Resources>
+            <Menu.Style>
+                <Style TargetType="{x:Type Menu}"
+                       BasedOn="{StaticResource MainInputStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Static bf:AuthStaticUser.AuthUser}, Path=positionId}" Value="3">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Style.Setters>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style.Setters>
+                </Style>
+            </Menu.Style>
+            <MenuItem Header="Добавить">
+                <MenuItem Header="Книгу"
+                          Foreground="Black"
+                          Click="AddBookMenu_Click"/>
+                <MenuItem Header="Автора"
+                          Foreground="Black"
+                          Click="AddAuthorMenu_Click"/>
+                <MenuItem Header="Жанр"
+                          Foreground="Black"
+                          Click="AddGenreMenu_Click"/>
+                <MenuItem Header="Издателя"
+                          Foreground="Black"
+                          Click="AddPublisherMenu_Click"/>
+                <MenuItem Header="Пользователя"
+                          Foreground="Black"
+                          Click="AddUserMenu_Click"/>
+                <MenuItem Header="Склад"
+                          Foreground="Black"
+                          Click="AddStorageMenu_Click"/>
+            </MenuItem>
+            <MenuItem Header="Просмотр">
+                <MenuItem Header="Книг"
+                          Foreground="Black"
+                          Click="ViewBooksMenu_Click"/>
+                <MenuItem Header="Автора"
+                          Foreground="Black"
+                          Click="ViewAuthorsMenu_Click"/>
+                <MenuItem Header="Жанр"
+                          Foreground="Black"
+                          Click="ViewGenresMenu_Click"/>
+                <MenuItem Header="Издателя"
+                          Foreground="Black"
+                          Click="ViewPublishersMenu_Click"/>
+                <MenuItem Header="Пользователей"
+                          Foreground="Black"
+                          Click="ViewUsersMenu_Click"/>
+                <MenuItem Header="Склады"
+                          Foreground="Black"
+                          Click="ViewStoragesMenu_Click"/>
+                <MenuItem Header="Заказы"
+                          Foreground="Black"
+                          Click="ViewOrdersMenu_Click"/>
+            </MenuItem>
+        </Menu>
         <StackPanel
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="5 5">
             <StackPanel
                 x:Name="TopPanelBlock"
@@ -67,24 +166,25 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="ViewStory"
-                    IsEnabled="False"
+                    Visibility="Collapsed"
                     Style="{StaticResource ButtonStyle}"
                     Content="Посмотреть историю заказа"
-                    Click="ViewStoryBtn_Click"/>
+                    Click="ViewStoryBtn_Click" Cursor="Hand"/>
                 <Button
                     x:Name="ViewBooks"
                     Style="{StaticResource ButtonStyle}"
                     Content="Перейти к выбору книг"
-                    Click="ViewBookBtn_Click"
+                    Click="ViewClientPageBtn_Click"
                     Margin="5 0"
                     Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>
         <Frame
-            Grid.Row="2"
+            Grid.Row="3"
             x:Name="CurrentFrame"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            IsTabStop="False"
             NavigationUIVisibility="Hidden"/>
         <Border
             x:Name="BasketBtn"
@@ -94,7 +194,7 @@
             Background="#FF111CBB"
             BorderBrush="#FF17EF4C"
             BorderThickness="1"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Right"
             Margin="15 30">
             <Button

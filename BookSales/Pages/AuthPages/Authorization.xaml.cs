@@ -7,6 +7,8 @@ using System.Windows.Input;
 using System.Data.Entity;
 using BookSales.Context;
 using BookSales.Windows;
+using System.Windows.Interop;
+using BookSales.BehaviorsFiles;
 
 namespace BookSales.Pages.AuthPages
 {
@@ -22,10 +24,12 @@ namespace BookSales.Pages.AuthPages
                     AuthBtn_Click(this, e);
                 }
             };
-            if (Application.Current.Windows.OfType<AuthWindow>().Single().IsDialog)
-            {
-                AuthGuest.IsEnabled = false;
-            }
+            Loaded += Authorization_Loaded;
+        }
+
+        private void Authorization_Loaded(object sender, RoutedEventArgs e)
+        {
+            AuthGuest.IsEnabled = !ComponentDispatcher.IsThreadModal;
         }
 
         private async void AuthBtn_Click(object sender, RoutedEventArgs e)
@@ -47,9 +51,10 @@ namespace BookSales.Pages.AuthPages
                     if (user != null)
                     {
                         AuthStaticUser.AuthUser = user;
-                        if (!Application.Current.Windows.OfType<AuthWindow>().Single().IsDialog)
-                            new MainWindow().Show();
-                        Application.Current.Windows.OfType<AuthWindow>().Single().Close();
+                        var wnd = Window.GetWindow(this);
+                        if (!ComponentDispatcher.IsThreadModal) new MainWindow().Show();
+                        else wnd.DialogResult = false;
+                        wnd.Close();
                         return;
                     }
                     MessageBox.Show("Неверный логин или пароль");

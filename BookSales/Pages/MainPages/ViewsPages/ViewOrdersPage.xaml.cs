@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using System.Windows;
+using BookSales.Windows;
+using BookSales.BehaviorsFiles;
 
 namespace BookSales.Pages.MainPages.ViewsPages
 {
@@ -18,20 +20,8 @@ namespace BookSales.Pages.MainPages.ViewsPages
         public ViewOrdersPage()
         {
             InitializeComponent();
-            GetItemsAsync();
+            ApplyFilter();
         }
-
-        private async void GetItemsAsync()
-        {
-            OrdersViewList.ItemsSource = OrdersList;
-            using (var db = new BookSalesEntities())
-            {
-                var listBooks = await Task.Run(() => db.Orders.Include(s => s.Users).Select(s => new BookingsConsist {Order = s}).ToList());
-                listBooks.ForEach(s => OrdersList.Add(s));
-            }
-        }
-
-        private ObservableCollection<BookingsConsist> OrdersList { get; set; } = new ObservableCollection<BookingsConsist>();
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -41,46 +31,117 @@ namespace BookSales.Pages.MainPages.ViewsPages
 
         private async void ApplyFilter()
         {
-            var list = OrdersList;
-            IEnumerable<BookingsConsist> newList;
-            if (DateTime.TryParse(FilterText.Text, out var date))
-                newList = await Task.Run(() => list.Where(s => s.Order.dateOrder == date));
-            else newList = list;
-            if (StatusBox.SelectedIndex != 0) 
+            using (var db = new BookSalesEntities())
             {
-                switch (StatusBox.SelectedIndex)
+                IEnumerable<BookingsConsist> newList = await Task.Run(() => db.Orders
+                                    .Include(s => s.Users)
+                                    .Select(s => new BookingsConsist { Order = s }));
+
+                newList = await Task.Run(() => newList.Where(s => s.Order.dateOrder.ToString().Contains(FilterText.Text)));
+
+                if (StatusBox.SelectedIndex != 0)
                 {
-                    case 1:
-                        newList = await Task.Run(() => newList.Where(s => s.Order.performed));
+                    switch (StatusBox.SelectedIndex)
+                    {
+                        case 1:
+                            newList = await Task.Run(() => newList.Where(s => s.Order.performed));
+                            break;
+                        case 2:
+                            newList = await Task.Run(() => newList.Where(s => !s.Order.performed));
+                            break;
+                    }
+                }
+
+                switch (DateOrderBox.SelectedIndex)
+                {
+                    case 0:
+                        newList = newList.OrderByDescending(s => s.Order.dateOrder);
                         break;
-                    case 2:
-                        newList = await Task.Run(() => newList.Where(s => !s.Order.performed));
+                    case 1:
+                        newList = newList.OrderBy(s => s.Order.dateOrder);
                         break;
                 }
-            }
 
-            switch (OrderBox.SelectedIndex)
-            {
-                case 0:
-                    newList = newList.OrderBy(s => s.Price);
-                    break;
-                case 1:
-                    newList = newList.OrderByDescending(s => s.Price);
-                    break;
+                OrdersViewList.ItemsSource = newList.ToList();
             }
-
-            OrdersViewList.ItemsSource = newList.ToList();
         }
 
-        private void FilterText_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void FilterText_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (OrdersViewList == null) return;
             ApplyFilter();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             FilterText.Text = string.Empty;
+        }
+
+        private async void CompleteOrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var order = btn.DataContext as BookingsConsist;
+            if (order.Order.performed)
+            {
+                MessageBox.Show("Заказ уже завершён");
+                return;
+            }
+            if (MessageBox.Show("Завершить заказ?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Information) != MessageBoxResult.Yes) return;
+
+            using(var db = new BookSalesEntities())
+            {
+                var orderDb = await db.Orders.FirstAsync(s => s.id == order.Order.id);
+                orderDb.performed = true;
+                orderDb.dateSuccess = DateTime.Now;
+                await db.SaveChangesAsync();
+            }
+            ApplyFilter();
+        }
+
+        private void MenuEditOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var bookingConsist = OrdersViewList.SelectedItem as BookingsConsist;
+            if(bookingConsist == null)
+            {
+                MessageBox.Show("Выберите элемент для редактирования!");
+                return;
+            }
+            var editOrderWindow = new EditOrderWindow(bookingConsist);
+            if (editOrderWindow.ShowDialog() == true)
+            {
+                ApplyFilter();
+            }
+        }
+
+        private async void MenuDeleteOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var bookingConsist = OrdersViewList.SelectedItem as BookingsConsist;
+            if (bookingConsist == null)
+            {
+                MessageBox.Show("Выберите элемент для удаления!");
+                return;
+            }
+            if (MessageBox.Show("Удалить заказ?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Information) != MessageBoxResult.Yes) return;
+
+            using (var db = new BookSalesEntities())
+            {
+                var orderDb = await db.Orders.FirstAsync(s => s.id == bookingConsist.Order.id);
+                db.Orders.Remove(orderDb);
+                await db.SaveChangesAsync();
+            }
+            ApplyFilter();
+        }
+
+        private void ViewOrderConsist_Click(object sender, RoutedEventArgs e)
+        {
+            var bookingConsist = OrdersViewList.SelectedItem as BookingsConsist;
+            var viewOrderConsist = new ViewOrderConsistWindow(bookingConsist);
+            viewOrderConsist.ShowDialog();
+        }
+
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ApplyFilter();
         }
     }
 }

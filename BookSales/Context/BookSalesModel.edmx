@@ -13,7 +13,6 @@
           <Property Name="surname" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="patronymic" Type="nvarchar" MaxLength="30" />
-          <Property Name="cipher" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="Books">
           <Key>
@@ -26,7 +25,7 @@
           <Property Name="publisherId" Type="int" />
           <Property Name="pages" Type="int" Nullable="false" />
           <Property Name="releaseDate" Type="date" Nullable="false" />
-          <Property Name="retailPrice" Type="money" Nullable="false" />
+          <Property Name="retailPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="image" Type="image" />
         </EntityType>
         <EntityType Name="Genres">
@@ -54,12 +53,13 @@
           <Property Name="dateOrder" Type="datetime" Nullable="false" />
           <Property Name="paid" Type="bit" Nullable="false" />
           <Property Name="performed" Type="bit" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dateSuccess" Type="datetime" />
         </EntityType>
         <EntityType Name="PlaceHolder">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="idBook" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idBook" Type="int" Nullable="false" />
           <Property Name="idStorage" Type="int" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
@@ -77,7 +77,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="cipher" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="Storage">
           <Key>
@@ -189,7 +188,7 @@
           <End Role="Books" Type="Self.Books" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PlaceHolder" Type="Self.PlaceHolder" Multiplicity="*" />
+          <End Role="PlaceHolder" Type="Self.PlaceHolder" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Books">
               <PropertyRef Name="id" />
@@ -287,8 +286,7 @@
           <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="cipher" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Books__authorId__440B1D61" FromRole="Authors" ToRole="Books" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__authorId__30F848ED" FromRole="Authors" ToRole="Books" />
         </EntityType>
         <EntityType Name="Books">
           <Key>
@@ -301,13 +299,13 @@
           <Property Name="publisherId" Type="Int32" />
           <Property Name="pages" Type="Int32" Nullable="false" />
           <Property Name="releaseDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="retailPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="retailPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Authors" Relationship="Self.FK__Books__authorId__440B1D61" FromRole="Books" ToRole="Authors" />
-          <NavigationProperty Name="Genres" Relationship="Self.FK__Books__genreId__44FF419A" FromRole="Books" ToRole="Genres" />
-          <NavigationProperty Name="Publishers" Relationship="Self.FK__Books__publisher__46E78A0C" FromRole="Books" ToRole="Publishers" />
-          <NavigationProperty Name="OrderConsist" Relationship="Self.FK__OrderCons__idBoo__59FA5E80" FromRole="Books" ToRole="OrderConsist" />
-          <NavigationProperty Name="PlaceHolder" Relationship="Self.FK__PlaceHold__idBoo__4BAC3F29" FromRole="Books" ToRole="PlaceHolder" />
+          <NavigationProperty Name="Authors" Relationship="Self.FK__Books__authorId__30F848ED" FromRole="Books" ToRole="Authors" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK__Books__genreId__31EC6D26" FromRole="Books" ToRole="Genres" />
+          <NavigationProperty Name="Publishers" Relationship="Self.FK__Books__publisher__33D4B598" FromRole="Books" ToRole="Publishers" />
+          <NavigationProperty Name="OrderConsist" Relationship="Self.FK__OrderCons__idBoo__46E78A0C" FromRole="Books" ToRole="OrderConsist" />
+          <NavigationProperty Name="PlaceHolder" Relationship="BookSalesModel.FK__PlaceHold__idBoo__38996AB5" FromRole="Books" ToRole="PlaceHolder" />
         </EntityType>
         <EntityType Name="Genres">
           <Key>
@@ -315,7 +313,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Books__genreId__44FF419A" FromRole="Genres" ToRole="Books" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__genreId__31EC6D26" FromRole="Genres" ToRole="Books" />
         </EntityType>
         <EntityType Name="OrderConsist">
           <Key>
@@ -325,8 +323,8 @@
           <Property Name="idOrder" Type="Int32" Nullable="false" />
           <Property Name="idBook" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__OrderCons__idBoo__59FA5E80" FromRole="OrderConsist" ToRole="Books" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__OrderCons__idOrd__59063A47" FromRole="OrderConsist" ToRole="Orders" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__OrderCons__idBoo__46E78A0C" FromRole="OrderConsist" ToRole="Books" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__OrderCons__idOrd__45F365D3" FromRole="OrderConsist" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -337,19 +335,20 @@
           <Property Name="dateOrder" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="paid" Type="Boolean" Nullable="false" />
           <Property Name="performed" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="OrderConsist" Relationship="Self.FK__OrderCons__idOrd__59063A47" FromRole="Orders" ToRole="OrderConsist" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Orders__idUser__5629CD9C" FromRole="Orders" ToRole="Users" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dateSuccess" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrderConsist" Relationship="Self.FK__OrderCons__idOrd__45F365D3" FromRole="Orders" ToRole="OrderConsist" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Orders__idUser__4316F928" FromRole="Orders" ToRole="Users" />
         </EntityType>
         <EntityType Name="PlaceHolder">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="idBook" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idBook" Type="Int32" Nullable="false" />
+          <Property Name="idBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="idStorage" Type="Int32" Nullable="false" />
           <Property Name="stock" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__PlaceHold__idBoo__4BAC3F29" FromRole="PlaceHolder" ToRole="Books" />
-          <NavigationProperty Name="Storage" Relationship="Self.FK__PlaceHold__idSto__4CA06362" FromRole="PlaceHolder" ToRole="Storage" />
+          <NavigationProperty Name="Books" Relationship="BookSalesModel.FK__PlaceHold__idBoo__38996AB5" FromRole="PlaceHolder" ToRole="Books" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK__PlaceHold__idSto__398D8EEE" FromRole="PlaceHolder" ToRole="Storage" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -357,7 +356,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__positionI__534D60F1" FromRole="Positions" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__positionI__403A8C7D" FromRole="Positions" ToRole="Users" />
         </EntityType>
         <EntityType Name="Publishers">
           <Key>
@@ -365,8 +364,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="cipher" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Books__publisher__46E78A0C" FromRole="Publishers" ToRole="Books" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__publisher__33D4B598" FromRole="Publishers" ToRole="Books" />
         </EntityType>
         <EntityType Name="Storage">
           <Key>
@@ -375,7 +373,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PlaceHolder" Relationship="Self.FK__PlaceHold__idSto__4CA06362" FromRole="Storage" ToRole="PlaceHolder" />
+          <NavigationProperty Name="PlaceHolder" Relationship="Self.FK__PlaceHold__idSto__398D8EEE" FromRole="Storage" ToRole="PlaceHolder" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -390,10 +388,10 @@
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="positionId" Type="Int32" Nullable="false" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idUser__5629CD9C" FromRole="Users" ToRole="Orders" />
-          <NavigationProperty Name="Positions" Relationship="Self.FK__Users__positionI__534D60F1" FromRole="Users" ToRole="Positions" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idUser__4316F928" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Positions" Relationship="Self.FK__Users__positionI__403A8C7D" FromRole="Users" ToRole="Positions" />
         </EntityType>
-        <Association Name="FK__Books__authorId__440B1D61">
+        <Association Name="FK__Books__authorId__30F848ED">
           <End Role="Authors" Type="Self.Authors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -407,7 +405,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Books__genreId__44FF419A">
+        <Association Name="FK__Books__genreId__31EC6D26">
           <End Role="Genres" Type="Self.Genres" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -421,7 +419,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Books__publisher__46E78A0C">
+        <Association Name="FK__Books__publisher__33D4B598">
           <End Role="Publishers" Type="Self.Publishers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -435,7 +433,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderCons__idBoo__59FA5E80">
+        <Association Name="FK__OrderCons__idBoo__46E78A0C">
           <End Role="Books" Type="Self.Books" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -449,11 +447,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlaceHold__idBoo__4BAC3F29">
+        <Association Name="FK__PlaceHold__idBoo__38996AB5">
           <End Role="Books" Type="Self.Books" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PlaceHolder" Type="Self.PlaceHolder" Multiplicity="*" />
+          <End Role="PlaceHolder" Type="Self.PlaceHolder" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="Books">
               <PropertyRef Name="id" />
@@ -463,7 +461,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderCons__idOrd__59063A47">
+        <Association Name="FK__OrderCons__idOrd__45F365D3">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -477,7 +475,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__idUser__5629CD9C">
+        <Association Name="FK__Orders__idUser__4316F928">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -491,7 +489,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlaceHold__idSto__4CA06362">
+        <Association Name="FK__PlaceHold__idSto__398D8EEE">
           <End Role="Storage" Type="Self.Storage" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -505,7 +503,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__positionI__534D60F1">
+        <Association Name="FK__Users__positionI__403A8C7D">
           <End Role="Positions" Type="Self.Positions" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -530,39 +528,39 @@
           <EntitySet Name="Publishers" EntityType="Self.Publishers" />
           <EntitySet Name="Storage" EntityType="Self.Storage" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Books__authorId__440B1D61" Association="Self.FK__Books__authorId__440B1D61">
+          <AssociationSet Name="FK__Books__authorId__30F848ED" Association="Self.FK__Books__authorId__30F848ED">
             <End Role="Authors" EntitySet="Authors" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
-          <AssociationSet Name="FK__Books__genreId__44FF419A" Association="Self.FK__Books__genreId__44FF419A">
+          <AssociationSet Name="FK__Books__genreId__31EC6D26" Association="Self.FK__Books__genreId__31EC6D26">
             <End Role="Genres" EntitySet="Genres" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
-          <AssociationSet Name="FK__Books__publisher__46E78A0C" Association="Self.FK__Books__publisher__46E78A0C">
+          <AssociationSet Name="FK__Books__publisher__33D4B598" Association="Self.FK__Books__publisher__33D4B598">
             <End Role="Publishers" EntitySet="Publishers" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderCons__idBoo__59FA5E80" Association="Self.FK__OrderCons__idBoo__59FA5E80">
+          <AssociationSet Name="FK__OrderCons__idBoo__46E78A0C" Association="Self.FK__OrderCons__idBoo__46E78A0C">
             <End Role="Books" EntitySet="Books" />
             <End Role="OrderConsist" EntitySet="OrderConsist" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlaceHold__idBoo__4BAC3F29" Association="Self.FK__PlaceHold__idBoo__4BAC3F29">
+          <AssociationSet Name="FK__PlaceHold__idBoo__38996AB5" Association="Self.FK__PlaceHold__idBoo__38996AB5">
             <End Role="Books" EntitySet="Books" />
             <End Role="PlaceHolder" EntitySet="PlaceHolder" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderCons__idOrd__59063A47" Association="Self.FK__OrderCons__idOrd__59063A47">
+          <AssociationSet Name="FK__OrderCons__idOrd__45F365D3" Association="Self.FK__OrderCons__idOrd__45F365D3">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderConsist" EntitySet="OrderConsist" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__idUser__5629CD9C" Association="Self.FK__Orders__idUser__5629CD9C">
+          <AssociationSet Name="FK__Orders__idUser__4316F928" Association="Self.FK__Orders__idUser__4316F928">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlaceHold__idSto__4CA06362" Association="Self.FK__PlaceHold__idSto__4CA06362">
+          <AssociationSet Name="FK__PlaceHold__idSto__398D8EEE" Association="Self.FK__PlaceHold__idSto__398D8EEE">
             <End Role="Storage" EntitySet="Storage" />
             <End Role="PlaceHolder" EntitySet="PlaceHolder" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__positionI__534D60F1" Association="Self.FK__Users__positionI__534D60F1">
+          <AssociationSet Name="FK__Users__positionI__403A8C7D" Association="Self.FK__Users__positionI__403A8C7D">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -580,7 +578,6 @@
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="patronymic" ColumnName="patronymic" />
-                <ScalarProperty Name="cipher" ColumnName="cipher" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -625,13 +622,14 @@
                 <ScalarProperty Name="dateOrder" ColumnName="dateOrder" />
                 <ScalarProperty Name="paid" ColumnName="paid" />
                 <ScalarProperty Name="performed" ColumnName="performed" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="dateSuccess" ColumnName="dateSuccess" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PlaceHolder">
             <EntityTypeMapping TypeName="BookSalesModel.PlaceHolder">
               <MappingFragment StoreEntitySet="PlaceHolder">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idBook" ColumnName="idBook" />
                 <ScalarProperty Name="idStorage" ColumnName="idStorage" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
@@ -651,7 +649,6 @@
               <MappingFragment StoreEntitySet="Publishers">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="cipher" ColumnName="cipher" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

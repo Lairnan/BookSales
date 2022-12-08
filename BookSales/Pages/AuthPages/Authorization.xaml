@@ -4,11 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:BookSales.Pages.AuthPages"
+      Title="Окно авторизации"
       mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}"/>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}"/>
-        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PasswordBoxStyle}"/>
+        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PassBoxStyle}"/>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}"/>
     </Page.Resources>
     <Grid>
@@ -17,7 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel
@@ -72,6 +73,7 @@
             <Button
                 x:Name="AuthGuest"
                 Content="Войти как гость"
+                IsEnabled="False"
                 HorizontalAlignment="Center"
                 Margin="0 5"
                 Click="AuthGuestBtn_Click"/>

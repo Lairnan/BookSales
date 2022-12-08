@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace BookSales
+namespace BookSales.BehaviorsFiles
 {
     internal class BasketOrder
     {
@@ -16,7 +16,7 @@ namespace BookSales
 
         public static void Add(Books book, int count, int stock)
         {
-            var tempBask = BasketOrders.SingleOrDefault(s => s.Book == book);
+            var tempBask = BasketOrders.SingleOrDefault(s => s.Book.id == book.id);
             if (count > stock - (tempBask == null ? 0 : tempBask.Count))
             {
                 MessageBox.Show("Такого количества на складе нет");
@@ -36,7 +36,7 @@ namespace BookSales
         public static void Remove(Books book, int count)
         {
             if (!BasketOrders.Select(s => s.Book).Contains(book)) return;
-            var basket = BasketOrders.Single(s => s.Book == book);
+            var basket = BasketOrders.Single(s => s.Book.id == book.id);
             basket.Count -= Math.Abs(count);
             if (basket.Count < 1)
                 BasketOrders.Remove(basket);

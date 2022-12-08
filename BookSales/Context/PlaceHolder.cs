@@ -14,7 +14,6 @@ namespace BookSales.Context
     
     public partial class PlaceHolder
     {
-        public int id { get; set; }
         public int idBook { get; set; }
         public int idStorage { get; set; }
         public int stock { get; set; }

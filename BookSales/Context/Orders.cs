@@ -25,6 +25,8 @@ namespace BookSales.Context
         public System.DateTime dateOrder { get; set; }
         public bool paid { get; set; }
         public bool performed { get; set; }
+        public decimal price { get; set; }
+        public Nullable<System.DateTime> dateSuccess { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderConsist> OrderConsist { get; set; }

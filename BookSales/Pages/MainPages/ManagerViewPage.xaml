@@ -4,20 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookSales.Pages.MainPages"
+      Title="Главное меню"
       mc:Ignorable="d">
     <StackPanel>
         <StackPanel.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
                 <Setter Property="Margin" Value="0 5"/>
             </Style>
         </StackPanel.Resources>
         <Button
             Content="Посмотреть список пользователей"
-            Style="{StaticResource ButtonStyle}"
             Click="ViewUsersBtn_Click"/>
         <Button
             Content="Посмотреть список заказов"
-            Style="{StaticResource ButtonStyle}"
             Click="ViewOredersBtn_Click"/>
     </StackPanel>
 </Page>

@@ -1,0 +1,85 @@
+﻿<Window x:Class="BookSales.Windows.EditOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookSales.Windows"
+        xmlns:controls="clr-namespace:BookSales.Controls"
+        mc:Ignorable="d"
+        Icon="../Images/LibraryIcon.png"
+        Title="Редактирование заказа"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Height="450"
+        Width="600"
+        ResizeMode="NoResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      GlassFrameThickness="0"
+                      NonClientFrameEdges="None"
+                      ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
+    <Window.Background>
+        <ImageBrush ImageSource="../Background/5.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <controls:TopPanelControl Grid.Row="0"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="№Заказа" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Пользователь" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Дата заказа" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Оплачено" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Выполнено" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Состав заказа" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Итоговая цена" Style="{StaticResource TextBlockStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="3 0 0 0">
+                    <TextBox x:Name="IdOrderBox" IsEnabled="False" Style="{StaticResource TextBoxStyle}"/>
+                    <ComboBox x:Name="UsersBox" MaxWidth="{Binding ElementName=IdOrderBox, Path=Width}" SelectedIndex="0" Height="30" Style="{StaticResource ComboBoxStyle}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding surname, StringFormat='{}{0}'}" Style="{StaticResource MainInputStyle}" FontSize="14"/>
+                                    <TextBlock Text="{Binding name, StringFormat='{} {0}'}" Style="{StaticResource MainInputStyle}" FontSize="14"/>
+                                    <TextBlock Text="{Binding patronymic, StringFormat='{} {0}'}" Style="{StaticResource MainInputStyle}" FontSize="14"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBox x:Name="DateOrderBox" Style="{StaticResource TextBoxStyle}" IsReadOnly="True"/>
+                    <CheckBox x:Name="PaidBox" Margin="0 10"/>
+                    <CheckBox x:Name="PerformedBox" Margin="0 10"/>
+                    <Button Content="Просмотреть" Click="ViewOrderConsist_Click" Style="{StaticResource ButtonStyle}"/>
+                    <TextBox x:Name="PriceBox" Style="{StaticResource TextBoxStyle}" IsReadOnly="True"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Margin="0 5">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                        <Setter Property="Margin" Value="5 0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="SaveBtn" Content="Сохранить" IsEnabled="False" Click="SaveBtn_Click"/>
+                <Button Content="Отменить" Click="CancelBtn_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

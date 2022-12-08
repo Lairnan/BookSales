@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows;
 
-namespace BookSales
+namespace BookSales.BehaviorsFiles
 {
     public class AnyItemsToVisibilityConverter : IValueConverter
     {
