@@ -73,40 +73,51 @@ namespace BookSales.Windows
                 // Draw auth user in top panel
                 Application.Current.Windows.OfType<MainWindow>().Single().DrawAuthUser(AuthStaticUser.AuthUser);
                 Application.Current.Windows.OfType<MainWindow>().Single().ViewStory.Visibility = Visibility.Visible;
-                Application.Current.Windows.OfType<MainWindow>().Single().MenuAdmin.Visibility = AuthStaticUser.AuthUser.positionId == 3 
-                                ? Visibility.Visible 
+                Application.Current.Windows.OfType<MainWindow>().Single().MenuAdmin.Visibility = AuthStaticUser.AuthUser.positionId == 3
+                                ? Visibility.Visible
                                 : Visibility.Collapsed;
-                Application.Current.Windows.OfType<MainWindow>().Single().MenuManager.Visibility = AuthStaticUser.AuthUser.positionId == 2 
-                                ? Visibility.Visible 
+                Application.Current.Windows.OfType<MainWindow>().Single().MenuManager.Visibility = AuthStaticUser.AuthUser.positionId == 2
+                                ? Visibility.Visible
                                 : Visibility.Collapsed;
             }
 
-            OrderBtn.IsEnabled = false;
-            if(new ConfirmOrderWindow().ShowDialog() == true)
+            try
             {
-                using (var db = new BookSalesEntities())
+                OrderBtn.IsEnabled = false;
+                if (new ConfirmOrderWindow().ShowDialog() == true)
                 {
-                    var order = GetOrder();
-
-                    db.Orders.Add(order);
-
-                    foreach (var basket in BasketOrder.BasketOrders)
+                    using (var db = new BookSalesEntities())
                     {
-                        var orderConsist = new OrderConsist
-                        {
-                            idOrder = order.id,
-                            idBook = basket.Book.id,
-                            amount = basket.Count
-                        };
+                        var order = GetOrder();
 
-                        db.OrderConsist.Add(orderConsist);
+                        db.Orders.Add(order);
+
+                        foreach (var basket in BasketOrder.BasketOrders)
+                        {
+                            var orderConsist = new OrderConsist
+                            {
+                                idOrder = order.id,
+                                idBook = basket.Book.id,
+                                amount = basket.Count
+                            };
+
+                            var book = db.Books.First(s => s.id == basket.Book.id);
+                            book.PlaceHolder.stock -= basket.Count;
+
+                            db.OrderConsist.Add(orderConsist);
+                        }
+                        await db.SaveChangesAsync();
+                        MessageBox.Show("Заказ успешно сформирован");
+                        BasketOrder.BasketOrders.Clear();
+                        this.DialogResult = true;
+                        this.Close();
+                        UpdateOrder();
                     }
-                    await db.SaveChangesAsync();
-                    MessageBox.Show("Заказ успешно сформирован");
-                    BasketOrder.BasketOrders.Clear();
-                    this.Close();
-                    UpdateOrder();
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             OrderBtn.IsEnabled = true;
         }

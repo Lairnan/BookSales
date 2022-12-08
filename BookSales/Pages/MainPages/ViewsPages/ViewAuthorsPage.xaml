@@ -81,7 +81,7 @@
                 <GridView>
                     <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding surname}" Width="Auto"/>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding name}" Width="Auto"/>
-                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding patronymic}" Width="Auto"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding patronymic, TargetNullValue='Отсутствует'}" Width="Auto"/>
                 </GridView>
             </ListView.View>
         </ListView>

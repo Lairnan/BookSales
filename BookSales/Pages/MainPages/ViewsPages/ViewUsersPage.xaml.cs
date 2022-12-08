@@ -7,6 +7,7 @@ using BookSales.Context;
 using BookSales.Pages.Edits;
 using BookSales.Windows;
 using System;
+using BookSales.BehaviorsFiles;
 
 namespace BookSales.Pages.MainPages.ViewsPages
 {
@@ -85,6 +86,11 @@ namespace BookSales.Pages.MainPages.ViewsPages
             try
             {
                 var user = UsersViewList.SelectedItem as Users;
+                if(user.id == AuthStaticUser.AuthUser.id)
+                {
+                    MessageBox.Show("Вы не можете удалить самого себя");
+                    return;
+                }
                 using (var db = new BookSalesEntities())
                 {
                     var userDb = db.Users.First(s => s.id == user.id);

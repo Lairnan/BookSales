@@ -69,10 +69,13 @@ namespace BookSales.Windows
 
         private void OpenBasketWindow_Click(object sender, RoutedEventArgs e)
         {
-            new BasketWindow().ShowDialog();
-            if(MainFrame.Content is ClientViewPage clientViewPage)
+            if (new BasketWindow().ShowDialog() == true)
             {
-                clientViewPage.BooksViewList.Items.Refresh();
+                if (MainFrame.Content is ClientViewPage clientViewPage)
+                {
+                    clientViewPage.GetItemsAsync();
+                    clientViewPage.ApplyFilter();
+                }
             }
         }
 
