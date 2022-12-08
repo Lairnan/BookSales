@@ -24,9 +24,9 @@ namespace BookSales.Context
     
         public int id { get; set; }
         public string name { get; set; }
-        public Nullable<int> authorId { get; set; }
-        public Nullable<int> genreId { get; set; }
-        public Nullable<int> publisherId { get; set; }
+        public int authorId { get; set; }
+        public int genreId { get; set; }
+        public int publisherId { get; set; }
         public int pages { get; set; }
         public System.DateTime releaseDate { get; set; }
         public decimal retailPrice { get; set; }

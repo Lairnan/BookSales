@@ -23,9 +23,8 @@ namespace BookSales.Context
         public int id { get; set; }
         public int idUser { get; set; }
         public System.DateTime dateOrder { get; set; }
-        public bool paid { get; set; }
-        public bool performed { get; set; }
-        public decimal price { get; set; }
+        public Nullable<bool> paid { get; set; }
+        public Nullable<bool> performed { get; set; }
         public Nullable<System.DateTime> dateSuccess { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
