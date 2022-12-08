@@ -23,6 +23,7 @@ namespace BookSales.Context
         public int id { get; set; }
         public int idUser { get; set; }
         public System.DateTime dateOrder { get; set; }
+        public decimal price { get; set; }
         public Nullable<bool> paid { get; set; }
         public Nullable<bool> performed { get; set; }
         public Nullable<System.DateTime> dateSuccess { get; set; }

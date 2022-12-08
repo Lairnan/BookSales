@@ -18,7 +18,7 @@
         Width="800">
 
     <Window.Background>
-        <ImageBrush ImageSource="../Background/3.jpg"/>
+        <ImageBrush ImageSource="../Images/BookSalesMain.jpg"/>
     </Window.Background>
     
     <WindowChrome.WindowChrome>
@@ -186,24 +186,26 @@
             VerticalAlignment="Center"
             IsTabStop="False"
             NavigationUIVisibility="Hidden"/>
-        <Border
+        <Button
             x:Name="BasketBtn"
-            CornerRadius="50"
-            Width="50"
-            Height="50"
-            Background="#FF111CBB"
             BorderBrush="#FF17EF4C"
             BorderThickness="1"
+            Width="50"
+            Height="50"
             Grid.Row="2"
             HorizontalAlignment="Right"
-            Margin="15 30">
-            <Button
-                BorderBrush="Transparent"
-                BorderThickness="0"
-                Style="{StaticResource ButtonStyle}"
-                Background="Transparent"
-                Content="Basket"
-                Click="OpenBasketWindow_Click"/>
-        </Border>
+            Margin="15 30"
+            Style="{StaticResource ButtonStyle}"
+            Background="#FF37817B"
+            Click="OpenBasketWindow_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50"/>
+                </Style>
+            </Button.Resources>
+            <Button.Content>
+                <Image Source="../Images/Basket.png"/>
+            </Button.Content>
+        </Button>
     </Grid>
 </Window>

@@ -93,6 +93,7 @@ create table [Orders] (
     id int primary key identity(1,1),
     idUser int not null,
     dateOrder datetime not null,
+    price decimal(18,2) not null,
 	paid bit,
 	performed bit,
 	dateSuccess datetime null,

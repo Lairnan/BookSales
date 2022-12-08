@@ -17,7 +17,7 @@
         Width="800">
 
     <Window.Background>
-        <ImageBrush ImageSource="../Background/Auth.jpg"/>
+        <ImageBrush ImageSource="../Images/BookSalesAuth.jpg"/>
     </Window.Background>
     
     <WindowChrome.WindowChrome>

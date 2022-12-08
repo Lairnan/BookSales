@@ -49,10 +49,10 @@ namespace BookSales.Pages.MainPages.ViewsPages
                     switch (StatusBox.SelectedIndex)
                     {
                         case 1:
-                            newList = await Task.Run(() => newList.Where(s => s.Order.performed));
+                            newList = await Task.Run(() => newList.Where(s => s.Order.performed ?? false));
                             break;
                         case 2:
-                            newList = await Task.Run(() => newList.Where(s => !s.Order.performed));
+                            newList = await Task.Run(() => newList.Where(s => !s.Order.performed ?? false));
                             break;
                     }
                 }
@@ -86,7 +86,7 @@ namespace BookSales.Pages.MainPages.ViewsPages
         {
             var btn = sender as Button;
             var order = btn.DataContext as BookingsConsist;
-            if (order.Order.performed)
+            if (order.Order.performed ?? false)
             {
                 MessageBox.Show("Заказ уже завершён");
                 return;

@@ -51,6 +51,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idUser" Type="int" Nullable="false" />
           <Property Name="dateOrder" Type="datetime" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="paid" Type="bit" />
           <Property Name="performed" Type="bit" />
           <Property Name="dateSuccess" Type="datetime" />
@@ -334,6 +335,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idUser" Type="Int32" Nullable="false" />
           <Property Name="dateOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="paid" Type="Boolean" />
           <Property Name="performed" Type="Boolean" />
           <Property Name="dateSuccess" Type="DateTime" Precision="3" />
@@ -621,6 +623,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="dateOrder" ColumnName="dateOrder" />
+                <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="paid" ColumnName="paid" />
                 <ScalarProperty Name="performed" ColumnName="performed" />
                 <ScalarProperty Name="dateSuccess" ColumnName="dateSuccess" />

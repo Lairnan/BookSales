@@ -16,7 +16,7 @@
         MinWidth="600">
 
     <Window.Background>
-        <ImageBrush ImageSource="../Background/5.jpg"/>
+        <ImageBrush ImageSource="../Images/BookSalesAdditional.jpg"/>
     </Window.Background>
 
     <WindowChrome.WindowChrome>
