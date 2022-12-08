@@ -35,6 +35,7 @@ namespace BookSales.Pages.Edits
             PageCountBox.Text = book.pages.ToString();
             RetailPriceBox.Text = book.retailPrice.ToString("0.00");
             ReleaseDateBox.SelectedDate = book.releaseDate;
+            AmountBox.Text = book.PlaceHolder.stock.ToString();
 
         }
 
@@ -112,7 +113,7 @@ namespace BookSales.Pages.Edits
                     MessageBox.Show("Неверно выбранная дата");
                     return;
                 }
-                var retailPrice = decimal.Parse(RetailPriceBox.Text, CultureInfo.InvariantCulture);
+                var retailPrice = decimal.Parse(RetailPriceBox.Text.Replace('.', ','));
                 var amount = Math.Abs(int.Parse(AmountBox.Text));
                 var storage = StorageBox.SelectedItem as Storage;
                 byte[] image = null;

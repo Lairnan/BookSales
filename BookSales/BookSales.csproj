@@ -167,9 +167,6 @@
     <Compile Include="Pages\MainPages\ViewsPages\ViewStoragesPage.xaml.cs">
       <DependentUpon>ViewStoragesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\AdditionalWindow.xaml.cs">
       <DependentUpon>AdditionalWindow.xaml</DependentUpon>
     </Compile>
@@ -282,10 +279,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\WindowStyle.xaml" />
-    <Page Include="Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\AdditionalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -406,12 +399,6 @@
     <Resource Include="Images\Nope.png" />
     <Resource Include="Images\LibraryIcon.png" />
     <Resource Include="Images\BookSalesAuth.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlaceholderWPF\PlaceholderWPF.csproj">
-      <Project>{001eb607-383c-4cf1-8d6e-64dbf6e39d21}</Project>
-      <Name>PlaceholderWPF</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Context\BookSalesModel.Context.tt">

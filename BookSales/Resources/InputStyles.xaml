@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ff="clr-namespace:PlaceholderWPF;assembly=PlaceholderWPF">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
     <Style x:Key="MainInputStyle">
@@ -171,6 +170,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="PlaceholderTextBoxStyle" TargetType="{x:Type ff:PlaceholderTextBox}" BasedOn="{StaticResource TextBoxStyle}"/>
 </ResourceDictionary>
