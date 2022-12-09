@@ -47,7 +47,8 @@ namespace BookSales.Pages.MainPages.ViewsPages
                                                 .Include(s => s.Genres)
                                                 .Include(s => s.Authors)
                                                 .Include(s => s.Publishers)
-                                                .Include(s => s.PlaceHolder));
+                                                .Include(s => s.PlaceHolder)
+                                                .Include(s => s.PlaceHolder.Storage));
 
                 var genre = GenreBox.SelectedItem as Genres;
                 var filter = FilterText.Text.ToLower().Trim();
