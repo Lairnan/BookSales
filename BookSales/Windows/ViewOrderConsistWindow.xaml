@@ -52,7 +52,8 @@
                 <GridView>
                     <GridViewColumn Header="Книга" DisplayMemberBinding="{Binding Books.name}"/>
                     <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding amount}"/>
-                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding priceConsist}"/>
+                    <GridViewColumn Header="Цена книги" DisplayMemberBinding="{Binding Books.retailPrice}"/>
+                    <GridViewColumn Header="Общая цена" DisplayMemberBinding="{Binding totalPrice}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -21,5 +21,7 @@ namespace BookSales.Context
     
         public virtual Books Books { get; set; }
         public virtual Orders Orders { get; set; }
+
+        public decimal totalPrice => Books.retailPrice * amount;
     }
 }

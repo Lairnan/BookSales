@@ -153,7 +153,7 @@
                                     Content="Добавить"
                                     Style="{StaticResource ButtonStyle}"
                                     Click="AddInBasketBtn_Click"
-                                    CommandParameter="{Binding Text, ElementName=CountAdd}" Background="#FF37817B"/>
+                                    CommandParameter="{Binding Text, ElementName=CountAdd}"/>
                             </Grid>
                         </Grid>
                     </Border>
