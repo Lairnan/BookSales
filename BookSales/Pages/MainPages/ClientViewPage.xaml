@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
       Title="Главное меню"
-      mc:Ignorable="d" >
+      mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -61,7 +61,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="5" Width="500" BorderThickness="5" BorderBrush="Black">
+                    <Border Margin="5" Width="500" Background="#AA222222" BorderThickness="5" BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -86,6 +86,20 @@
                                         </Binding.TargetNullValue>
                                     </Binding>
                                 </Image.Source>
+                                <Image.ToolTip>
+                                    <ToolTip Width="400"
+                                                 Height="400">
+                                        <Image Stretch="FIll">
+                                            <Image.Source>
+                                                <Binding Path="image">
+                                                    <Binding.TargetNullValue>
+                                                        <BitmapImage UriSource="../../../Images/Nope.png"/>
+                                                    </Binding.TargetNullValue>
+                                                </Binding>
+                                            </Image.Source>
+                                        </Image>
+                                    </ToolTip>
+                                </Image.ToolTip>
                             </Image>
 
                             <StackPanel Grid.Row="0"

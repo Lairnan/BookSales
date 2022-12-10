@@ -7,7 +7,8 @@
       xmlns:BookSales="clr-namespace:BookSales"
       xmlns:Context="clr-namespace:BookSales.Context"
       Title="История заказов"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      Background="#AA222222">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="TextAlignment" Value="Center"/>

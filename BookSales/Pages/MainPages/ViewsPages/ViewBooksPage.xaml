@@ -129,7 +129,7 @@
                                     <Image.ToolTip>
                                         <ToolTip Width="400"
                                                  Height="400">
-                                            <Image Stretch="Uniform">
+                                            <Image Stretch="Fill">
                                                 <Image.Source>
                                                     <Binding Path="image">
                                                         <Binding.TargetNullValue>
